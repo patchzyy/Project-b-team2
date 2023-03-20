@@ -16,5 +16,7 @@
 /_/   \_\_|_|  |_|_|_| |_|\___||___/
         
         ");
+        Thread.Sleep(2000);
+        Console.WriteLine("yooo");
     }
 }
