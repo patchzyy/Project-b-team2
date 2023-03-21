@@ -17,12 +17,11 @@
         
         ");
         Thread.Sleep(2000);
-        Console.WriteLine(@"
-Rotterdam Airlines is gevestigd in Rotterdam South Airport
+        Console.Write(@"
+Rotterdam Airlines is gevestigd in Rotterdam South Airport in
         ");
         Thread.Sleep(1000);
         Console.WriteLine(@"
-ADRES:
 Driemanssteeweg 107,
 3011 WN,
 Rotterdam
