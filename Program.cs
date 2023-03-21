@@ -1,5 +1,6 @@
 ﻿class Program
 {
+    
     public static void Main()
     {
         Register test = new();
@@ -17,11 +18,11 @@
 /_/   \_\_|_|  |_|_|_| |_|\___||___/
         
         ");
-        Thread.Sleep(2000);
+        // Thread.Sleep(2000);
         Console.Write(@"
 Rotterdam Airlines is gevestigd in Rotterdam South Airport in
         ");
-        Thread.Sleep(1000);
+        // Thread.Sleep(1000);
         Console.WriteLine(@"
 Driemanssteeweg 107,
 3011 WN,
