@@ -27,5 +27,8 @@ Driemanssteeweg 107,
 3011 WN,
 Rotterdam
         ");
+    Menu menu = new Menu();
     }
+
+
 }
