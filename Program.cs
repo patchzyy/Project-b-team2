@@ -2,6 +2,7 @@
 {
     public static void Main()
     {
+        Register test = new();
         Console.WriteLine(@"
  ____       _   _               _                 
 |  _ \ ___ | |_| |_ ___ _ __ __| | __ _ _ __ ___  
