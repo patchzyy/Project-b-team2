@@ -3,7 +3,6 @@
     
     public static void Main()
     {
-        Register test = new();
         Console.WriteLine(@"
  ____       _   _               _                 
 |  _ \ ___ | |_| |_ ___ _ __ __| | __ _ _ __ ___  
@@ -28,8 +27,21 @@ Driemanssteeweg 107,
 3011 WN,
 Rotterdam
         ");
-    Menu menu = new Menu();
+        Menu menu = new Menu();
     }
 
 
+    /*
+    BELANGRIJK:
+    Om code te besparen is het hetbeste als we hier de connectie aanmaken naar de database!
+    via:
+        connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+
+    Zo kunnen we de connection meegeven als parameter bij het gebruik van class methods!
+    dank alsvast
+
+    -Siebe
+    
+    */
 }
