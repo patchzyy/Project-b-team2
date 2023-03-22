@@ -17,17 +17,22 @@
 /_/   \_\_|_|  |_|_|_| |_|\___||___/
         
         ");
-        // Thread.Sleep(2000);
+        Thread.Sleep(2000);
         Console.Write(@"
 Rotterdam Airlines is gevestigd in Rotterdam South Airport in
         ");
-        // Thread.Sleep(1000);
+        Thread.Sleep(1000);
         Console.WriteLine(@"
 Driemanssteeweg 107,
 3011 WN,
 Rotterdam
         ");
-        Menu menu = new Menu();
+                Thread.Sleep(1000);
+    List<string> mainMenuItems = new List<string> { "Item 1", "Item 2", "Item 3" };
+    Menu mainMenu = new Menu(mainMenuItems);
+    int selectedOption = mainMenu.ShowMenu();
+
+    Console.WriteLine($"Selected option: {1 + selectedOption}");
     }
 
 
