@@ -12,6 +12,7 @@ Ook is dit een tijdelijke oplossing, er wordt nu niet gecheckt op leeftijd etc..
 */
 
 
+// Admin is geinherrit van User class.
 class User{
     public int id {get; set; }
     public string Name {get; set; }
@@ -43,6 +44,8 @@ class User{
 
     
     //Voegt toe nieuwe User toe aan de database..
+    // datbase wrapper die de verbinding instand houdt.
+    // last rowid, bij user inserrt en dan ID ophalen.
     private void AddToDatabase(SqliteConnection connection){
         string sql = "INSERT INTO users (name, email, password, has_admin) VALUES (@name, @email, @password, @has_admin)";
 
