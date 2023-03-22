@@ -28,7 +28,7 @@ Driemanssteeweg 107,
 Rotterdam
         ");
                 Thread.Sleep(1000);
-    List<string> mainMenuItems = new List<string> { "Item 1", "Item 2", "Item 3" };
+    List<string> mainMenuItems = new List<string> { "Item 1", "Item 2", "Item 3" , "issam"};
     Menu mainMenu = new Menu(mainMenuItems);
     int selectedOption = mainMenu.ShowMenu();
 

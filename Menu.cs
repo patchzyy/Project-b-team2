@@ -44,6 +44,20 @@ class Menu
 
         return option;
     }
+    public int mainmenu(Boolean loggedin){
+        if (loggedin){
+        List<string> mainMenuItems = new List<string> { "item 1", "Item 2", "Item 3" , "issam"};
+        Menu mainMenu = new Menu(mainMenuItems);
+        int selectedOption = mainMenu.ShowMenu();
+        return selectedOption;
+        }
+        else{
+        List<string> mainMenuItems = new List<string> { "Login", "Register", "Item 3" , "issam"};
+        Menu mainMenu = new Menu(mainMenuItems);
+        int selectedOption = mainMenu.ShowMenu();
+        return selectedOption;
+        }
+    }
 }
 
 
