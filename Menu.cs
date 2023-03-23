@@ -1,6 +1,6 @@
 class Menu
 {
-    public static int ShowMenu(List<string> OptionList)
+    public static int ShowMenu(List<string> optionList)
     {
         bool selected = false;
         ConsoleKeyInfo key;
@@ -15,19 +15,19 @@ class Menu
             Console.WriteLine("Use up and down arrows to scroll through the menu");
             Console.SetCursorPosition(left, top);
 
-            for (int i = 0; i < OptionList.Count; i++)
+            for (int i = 0; i < optionList.Count; i++)
             {
-                Console.WriteLine($"{(option == i ? color : "    ")}{OptionList[i]}\u001b[0m");
+                Console.WriteLine($"{(option == i ? color : "    ")}{optionList[i]}\u001b[0m");
             }
 
             key = Console.ReadKey(true);
             switch (key.Key)
             {
                 case ConsoleKey.DownArrow:
-                    option = (option + 1) % OptionList.Count;
+                    option = (option + 1) % optionList.Count;
                     break;
                 case ConsoleKey.UpArrow:
-                    option = (option - 1 + OptionList.Count) % OptionList.Count;
+                    option = (option - 1 + optionList.Count) % optionList.Count;
                     break;
                 case ConsoleKey.Enter:
                     selected = true;

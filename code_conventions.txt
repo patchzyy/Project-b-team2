@@ -1,0 +1,6 @@
+Variables/fields:
+
+Public + Protected: camelCase
+Private: _camelCase 
+
+Properties + Classes: PascalCase
