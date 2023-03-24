@@ -37,5 +37,10 @@ class Menu
 
         return option;
     }
+    // dit returned de string ipv de index. dus dit zou "login" returnen ipv 0
+    public static string ShowMenu_ReturnString(List<string> optionlist){
+        int option = ShowMenu(optionlist);
+        return optionlist[option];
+    }
 
 }

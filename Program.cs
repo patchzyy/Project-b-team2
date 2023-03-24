@@ -28,7 +28,9 @@
         Rotterdam
         ");
         Thread.Sleep(1000);
-    
+        User currentuser = null;
+        if (currentuser == null)
+        {
         int selectedOption = Menu.ShowMenu(new List<string>() {"Login", "Registreer", "Informatie", "Boeken"});
         // 1: Login, 2: Registreer, 3: Informatie, 4: Boeken
         switch (selectedOption)
@@ -47,6 +49,21 @@
                 break;
         }
     }
+        else{
+            int selectedOption = Menu.ShowMenu(new List<string>() {"Informatie", "Boeken", "Logout"});
+            switch(selectedOption){
+                case 1:
+                    // Informatie code
+                    break;
+                case 2:
+                    // Boeken code
+                    break;
+                case 3:
+                    // Logout code
+                    break;
+            }
+        }
+}
 
 
     /*
