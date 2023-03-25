@@ -1,6 +1,13 @@
 class Menu
 {
-    public static int ShowMenu(List<string> optionList)
+    private List<string> optionList;
+    
+    public Menu(List<string> options)
+    {
+        this.optionList = options;
+    }
+    
+    public int ShowMenu()
     {
         bool selected = false;
         ConsoleKeyInfo key;
@@ -10,7 +17,7 @@ class Menu
         (int left, int top) = Console.GetCursorPosition();
 
         while (!selected)
- {
+        {
             Console.Clear();
             Console.WriteLine("Use up and down arrows to scroll through the menu");
             Console.SetCursorPosition(left, top);
@@ -37,10 +44,37 @@ class Menu
 
         return option;
     }
-    // dit returned de string ipv de index. dus dit zou "login" returnen ipv 0
-    public static string ShowMenu_ReturnString(List<string> optionlist){
-        int option = ShowMenu(optionlist);
-        return optionlist[option];
+// returned de string inplaats van de index
+    public string ShowMenu_ReturnString()
+    {
+        int option = ShowMenu();
+        return optionList[option];
     }
-
+// voegt een optie toe aan de lijst 
+    public void AddOption(string option)
+    {
+        optionList.Add(option);
+    }
+// verwijderd een optie uit de lijst
+    public void RemoveOption(int index)
+    {
+        optionList.RemoveAt(index);
+    }
+// returned de lengte van de lijst
+    public int GetOptionCount()
+    {
+        return optionList.Count;
+    }
 }
+
+// TODO:
+ // print het menu maar ook nog met een header, dus text boven het menu
+/// handig voor bijvoorbeeld het tonen van de logo
+//     public int ShowMenuWithHeader(string header)
+//     {
+//         Console.WriteLine(header);
+//         Console.WriteLine();
+
+//         return ShowMenu();
+//     }
+// }

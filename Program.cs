@@ -3,7 +3,7 @@
     
     public static void Main()
     {
-        Console.WriteLine(@"
+        string logo = @"
  ____       _   _               _                 
 |  _ \ ___ | |_| |_ ___ _ __ __| | __ _ _ __ ___  
 | |_) / _ \| __| __/ _ \ '__/ _` |/ _` | '_ ` _ \ 
@@ -16,7 +16,8 @@
  / ___ \| | |  | | | | | |  __/\__ \
 /_/   \_\_|_|  |_|_|_| |_|\___||___/
         
-        ");
+        ";
+        Console.WriteLine(logo);
         Thread.Sleep(2000);
         Console.Write(@"
         Rotterdam Airlines is gevestigd in Rotterdam South Airport in
@@ -31,7 +32,8 @@
         User currentuser = null;
         if (currentuser == null)
         {
-        int selectedOption = Menu.ShowMenu(new List<string>() {"Login", "Registreer", "Informatie", "Boeken"});
+        Menu mainmenu = new Menu(new List<string>() {"Login", "Registreer", "Informatie", "Boeken"});
+        int selectedOption = mainmenu.ShowMenu();
         // 1: Login, 2: Registreer, 3: Informatie, 4: Boeken
         switch (selectedOption)
         {
@@ -50,7 +52,8 @@
         }
     }
         else{
-            int selectedOption = Menu.ShowMenu(new List<string>() {"Informatie", "Boeken", "Logout"});
+            Menu usermenu = new Menu(new List<string>() {"Informatie", "Boeken", "Logout"});
+            int selectedOption = usermenu.ShowMenu();
             switch(selectedOption){
                 case 1:
                     // Informatie code
