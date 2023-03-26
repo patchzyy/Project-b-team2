@@ -4,3 +4,20 @@ Public + Protected: camelCase
 Private: _camelCase 
 
 Properties + Classes: PascalCase
+
+--------
+
+Methods schrijf je als volgt:
+public void Foo(string foo)
+{
+
+}
+
+--------
+
+Constructors maak je als volgt:
+field Name
+public ClassName(string name)
+{
+    Name = name;
+}

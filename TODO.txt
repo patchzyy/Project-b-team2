@@ -1,0 +1,10 @@
+Verbeterpunten in de code:
+
+1:  Niet alles in de void Main() doen. Maak bijvoorbeeld
+    method showOptions() aan die de 4 opties zullen laten zien
+    zodra de gebruiker terug wil naar de menu. 
+    De void Main() hoor je in je hele applicatie maar 1 keer
+    te gebruiken en waardes alvast daar toe te kennen,
+    bijvoorbeeld currentuser = null;.
+
+2: 
