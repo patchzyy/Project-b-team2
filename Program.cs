@@ -1,38 +1,16 @@
 ﻿class Program
 {
-    
+
     public static void Main()
     {
-        string logo = @"
- ____       _   _               _                 
-|  _ \ ___ | |_| |_ ___ _ __ __| | __ _ _ __ ___  
-| |_) / _ \| __| __/ _ \ '__/ _` |/ _` | '_ ` _ \ 
-|  _ < (_) | |_| ||  __/ | | (_| | (_| | | | | | |
-|_| \_\___/ \__|\__\___|_|  \__,_|\__,_|_| |_| |_|
-                                                  
-    _    _      _ _                 
-   / \  (_)_ __| (_)_ __   ___  ___ 
-  / _ \ | | '__| | | '_ \ / _ \/ __|
- / ___ \| | |  | | | | | |  __/\__ \
-/_/   \_\_|_|  |_|_|_| |_|\___||___/
-        
-        ";
-        Console.WriteLine(logo);
+        Information.DisplayLogo();
         Thread.Sleep(2000);
-        Console.Write(@"
-        Rotterdam Airlines is gevestigd in Rotterdam South Airport in
-        ");
-        Thread.Sleep(1000);
-        Console.WriteLine(@"
-        Driemanssteeweg 107,
-        3011 WN,
-        Rotterdam
-        ");
+        Information.GetInformation();
         Thread.Sleep(1000);
         User currentuser = null;
         if (currentuser == null)
         {
-            Menu mainmenu = new Menu(new List<string>() {"Login", "Registreer", "Informatie", "Boeken"});
+            Menu mainmenu = new Menu(new List<string>() { "Login", "Registreer", "Informatie", "Boeken" });
             int selectedOption = mainmenu.ShowMenu();
             // 1: Login, 2: Registreer, 3: Informatie, 4: Boeken
             switch (selectedOption)
@@ -49,13 +27,16 @@
                 case 4:
                     // Boeken code
                     break;
+
+
             }
         }
         else
         {
-            Menu usermenu = new Menu(new List<string>() {"Informatie", "Boeken", "Logout"});
+            Menu usermenu = new Menu(new List<string>() { "Informatie", "Boeken", "Logout" });
             int selectedOption = usermenu.ShowMenu();
-            switch(selectedOption){
+            switch (selectedOption)
+            {
                 case 1:
                     // Informatie code
                     break;
@@ -67,7 +48,7 @@
                     break;
             }
         }
-}
+    }
 
 
     /*
