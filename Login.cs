@@ -5,15 +5,15 @@ class Login : User
 
     }
 
-    public User LoggingIn(string email, string password)
-    {
-        // if CheckDatabase is true
-        // create the designated User object
-        // return User object
-    }
+    // public User LoggingIn(string email, string password)
+    // {
+    //     // if CheckDatabase is true
+    //     // create the designated User object
+    //     // return User object
+    // }
 
-    private bool CheckDatabase(string email, string password)
-    {
-        // return account found in database
-    }
+    // private bool CheckDatabase(string email, string password)
+    // {
+    //     // return account found in database
+    // }
 }
