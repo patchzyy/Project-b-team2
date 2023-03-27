@@ -8,3 +8,64 @@ Verbeterpunten in de code:
     bijvoorbeeld currentuser = null;.
 
 2: 
+
+
+-----------------------------------------------------------------
+Layout
+-----------------------------------------------------------------
+Presentation layer: This layer provides the interface for users to interact with the application through the console. It includes features such as:
+
+    Displaying the main menu for the user to select various options
+    Prompting the user for inputs such as flight details, seat selection, payment information, etc.
+    Displaying flight schedules, available seats, and the total cost of the reservation
+    Providing feedback and status updates during the reservation process
+
+
+Business logic layer: This layer contains the core logic of the application and processes the user's requests. It includes features such as:
+
+    Authenticating users and managing user accounts
+    Processing flight bookings and seat reservations
+    Determining the price per seat based on the seat's location
+    Providing information about the airport and catering options
+    Generating reservation codes for bookings
+    Managing flight schedules and availability
+    Managing payment transactions
+
+
+Data access layer: This layer deals with the storage and retrieval of data used by the application. It includes features such as:
+
+    Storing user account information and flight booking details
+    Managing flight schedules and availability
+    Storing payment transaction records
+    Providing data for generating reports and analytics
+    Managing the database for efficient data retrieval and storage
+
+
+
+-----------------------------------------------------------------
+Layout in class format:
+-----------------------------------------------------------------
+Presentation layer:
+The presentation layer is responsible for handling the user interface of the application. It includes features such as displaying the main menu, prompting the user for inputs, and providing feedback during the reservation process. Here are some possible classes for this layer:
+
+    ConsoleUI: This class handles displaying the main menu and user prompts to the console, as well as handling user inputs.
+
+
+Business logic layer:
+The business logic layer is responsible for processing the user's requests and implementing the core logic of the application. It includes features such as processing flight bookings, managing payment transactions, and generating reservation codes. Here are some possible classes for this layer:
+
+    Flight: This class represents a flight, including its schedule, available seats, and pricing.
+    Seat: This class represents a seat on a flight, including its location and pricing.
+    Booking: This class represents a flight reservation, including the flight, seats, and customer information.
+    Payment: This class represents a payment transaction, including the amount paid and payment method used.
+    Airport: This class represents an airport, including its location and catering options.
+    ReservationSystem: This class manages the core logic of the application, including flight bookings, payment transactions, and reservation codes.
+
+Data access layer:
+The data access layer is responsible for managing the storage and retrieval of data used by the application. It includes features such as managing user accounts, storing flight schedules and availability, and recording payment transactions. Here are some possible classes for this layer:
+
+    FlightRepository: This class manages the storage and retrieval of flight data, including flight schedules, available seats, and pricing.
+    SeatRepository: This class manages the storage and retrieval of seat data, including seat locations and pricing.
+    BookingRepository: This class manages the storage and retrieval of booking data, including flight reservations and customer information.
+    PaymentRepository: This class manages the storage and retrieval of payment transaction data.
+    AirportRepository: This class manages the storage and retrieval of airport data, including airport locations and catering options.
