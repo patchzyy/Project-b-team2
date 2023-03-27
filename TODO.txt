@@ -7,4 +7,9 @@ Verbeterpunten in de code:
     te gebruiken en waardes alvast daar toe te kennen,
     bijvoorbeeld currentuser = null;.
 
-2: 
+2:  Program.cs moet geen logica bevatten. Alle if elses en
+    switch statements halen we over naar de classes.
+    In Program.Main() tonen we alleen de intro.
+
+3:  Menu.cs willen we static maken, zodat we dit direct kunnen
+    callen in de Program.
