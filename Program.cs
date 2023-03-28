@@ -5,8 +5,6 @@
     {
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        Information.GetInformation();
-        Thread.Sleep(1000);
         User currentuser = null;
         if (currentuser == null)
         {
