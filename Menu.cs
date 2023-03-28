@@ -67,7 +67,7 @@ class Menu
 
     private void HandleSelectedOption(string selectedOption)
     {
-        if (selectedOption == "Back")
+        if (selectedOption == "Back" || selectedOption == "Log Out")
         {
             _menuStack.Pop();
             _selectedOption = 0;
@@ -78,17 +78,14 @@ class Menu
         }
         else if (selectedOption == "Register")
         {
-            
+            if(User.Register())
+            {
+                AddMenu(new[]{"Check Flights", "Log Out"});
+            }
         }
         else if (selectedOption == "More Info")
         {
             
-        }
-        else if (selectedOption == "Menu 2")
-        {
-            string[] options = { "Option 1", "Option 2", "Back" };
-            _menuStack.Push(options);
-            _selectedOption = 0;
         }
     }
 
