@@ -5,47 +5,7 @@
     {
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        User currentuser = null;
-        if (currentuser == null)
-        {
-            Menu mainmenu = new Menu(new List<string>() { "Login", "Registreer", "Informatie", "Boeken" });
-            int selectedOption = mainmenu.ShowMenu();
-            // 1: Login, 2: Registreer, 3: Informatie, 4: Boeken
-            switch (selectedOption)
-            {
-                case 1:
-                    // Login code
-                    break;
-                case 2:
-                    // Registreer code
-                    break;
-                case 3:
-                    // Informatie code
-                    break;
-                case 4:
-                    // Boeken code
-                    break;
-
-
-            }
-        }
-        else
-        {
-            Menu usermenu = new Menu(new List<string>() { "Informatie", "Boeken", "Logout" });
-            int selectedOption = usermenu.ShowMenu();
-            switch (selectedOption)
-            {
-                case 1:
-                    // Informatie code
-                    break;
-                case 2:
-                    // Boeken code
-                    break;
-                case 3:
-                    // Logout code
-                    break;
-            }
-        }
+        Menu.Run();
     }
 
 
