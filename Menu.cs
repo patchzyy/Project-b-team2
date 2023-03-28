@@ -74,7 +74,8 @@ class Menu
         }
         else if (selectedOption == "Login")
         {
-            
+            Login.LoggingIn();
+            AddMenu(new[]{"Check Flights", "Log Out"});
         }
         else if (selectedOption == "Register")
         {

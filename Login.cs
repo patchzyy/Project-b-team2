@@ -5,7 +5,8 @@ class Login
     private static SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
     public static void LoggingIn()
     {
-        Console.WriteLine("SIGN IN\n\n\n");
+        Console.Clear();
+        Console.WriteLine("Sign In\n");
 
         string email = AskForEmail();
 
