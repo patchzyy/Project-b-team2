@@ -1,30 +1,74 @@
-class Menu
+static class Menu
 {
-    private List<string> optionList;
-    
-    public Menu(List<string> options)
+    private static List<string> optionList;
+
+    public static void Run()
     {
-        this.optionList = options;
+        optionList = new List<string>{"Login Menu", "Dummy Option 1", "Dummy Option 2"};
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine();
+
+            int option = GetOption();
+
+            switch (option)
+            {
+                case 0:
+                    LoginMenu();
+                    break;
+                case 1:
+                    DummyMethod1();
+                    Console.ReadLine();
+                    break;
+                case 2:
+                    DummyMethod2();
+                    break;
+            }
+        }
     }
-    
-    public int ShowMenu()
+
+    private static void LoginMenu()
+    {
+        optionList = new List<string>{"Login", "Back to Main Menu"};
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine();
+
+            int option = GetOption();
+
+            switch (option)
+            {
+                case 0:
+                    Console.WriteLine("You selected Login");
+                    Console.ReadLine();
+                    break;
+                case 1:
+                    Menu.Run();
+                    return;
+            }
+        }
+    }
+
+    private static int GetOption()
     {
         bool selected = false;
         ConsoleKeyInfo key;
         int option = 0;
 
-        string color = "->  \u001b[32m";
+        string color = "->  ";
         (int left, int top) = Console.GetCursorPosition();
 
         while (!selected)
         {
-            Console.Clear();
-            Console.WriteLine("Use up and down arrows to scroll through the menu");
             Console.SetCursorPosition(left, top);
 
             for (int i = 0; i < optionList.Count; i++)
             {
-                Console.WriteLine($"{(option == i ? color : "    ")}{optionList[i]}\u001b[0m");
+                Console.WriteLine($"{(option == i ? color : "    ")}{optionList[i]}");
             }
 
             key = Console.ReadKey(true);
@@ -44,37 +88,38 @@ class Menu
 
         return option;
     }
-// returned de string inplaats van de index
-    public string ShowMenu_ReturnString()
+
+    public static void DummyMethod1()
     {
-        int option = ShowMenu();
-        return optionList[option];
+        Console.Clear();
+        Console.WriteLine("This is Dummy Method 1");
+        optionList = new List<string>{"Main menu", "dummy 2"};
+        int option = GetOption();
+        if (option == 0)
+        {
+            Menu.Run();
+        }
+        else
+        {
+            DummyMethod2();
+        }
+
+        Console.ReadLine();
     }
-// voegt een optie toe aan de lijst 
-    public void AddOption(string option)
+
+    public static void DummyMethod2()
     {
-        optionList.Add(option);
-    }
-// verwijderd een optie uit de lijst
-    public void RemoveOption(int index)
-    {
-        optionList.RemoveAt(index);
-    }
-// returned de lengte van de lijst
-    public int GetOptionCount()
-    {
-        return optionList.Count;
+        Console.Clear();
+        Console.WriteLine("This is Dummy Method 2");
+        optionList = new List<string>{"Main menu", "dummy 1"};
+        int option = GetOption();
+        if (option == 0)
+        {
+            Menu.Run();
+        }
+        else
+        {
+            DummyMethod1();
+        }
     }
 }
-
-// TODO:
- // print het menu maar ook nog met een header, dus text boven het menu
-/// handig voor bijvoorbeeld het tonen van de logo
-//     public int ShowMenuWithHeader(string header)
-//     {
-//         Console.WriteLine(header);
-//         Console.WriteLine();
-
-//         return ShowMenu();
-//     }
-// }
