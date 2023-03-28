@@ -1,125 +1,99 @@
-static class Menu
+class Menu
 {
-    private static List<string> optionList;
 
-    public static void Run()
+// Wat is een stack?
+
+// Bovenkant stack
+// ----------------------------
+// ["Login", "Register", "More Information"] <-- String array (Begin menu)
+// ["Option 1", "Option 2", "Back"] <-- "Back" gaat terug naar de array hierboven (begin menu)
+// --------------------------
+// Onderkant stack
+
+    private Stack<string[]> _menuStack;
+    private int _selectedOption;
+
+    public Menu(string[] options)
     {
-        optionList = new List<string>{"Login Menu", "Dummy Option 1", "Dummy Option 2"};
-
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine();
-
-            int option = GetOption();
-
-            switch (option)
-            {
-                case 0:
-                    LoginMenu();
-                    break;
-                case 1:
-                    DummyMethod1();
-                    Console.ReadLine();
-                    break;
-                case 2:
-                    DummyMethod2();
-                    break;
-            }
-        }
+        _menuStack = new Stack<string[]>();
+        _menuStack.Push(options);
+        _selectedOption = 0;
     }
 
-    private static void LoginMenu()
+    public int Run()
     {
-        optionList = new List<string>{"Login", "Back to Main Menu"};
-
-        while (true)
+        bool isRunning = true;
+        while (isRunning)
         {
             Console.Clear();
-            Console.WriteLine();
-
-            int option = GetOption();
-
-            switch (option)
+            string[] currentMenu = _menuStack.Peek();
+            Console.WriteLine("Please select an option:");
+            for (int i = 0; i < currentMenu.Length; i++)
             {
-                case 0:
-                    Console.WriteLine("You selected Login");
-                    Console.ReadLine();
-                    break;
-                case 1:
-                    Menu.Run();
-                    return;
-            }
-        }
-    }
-
-    private static int GetOption()
-    {
-        bool selected = false;
-        ConsoleKeyInfo key;
-        int option = 0;
-
-        string color = "->  ";
-        (int left, int top) = Console.GetCursorPosition();
-
-        while (!selected)
-        {
-            Console.SetCursorPosition(left, top);
-
-            for (int i = 0; i < optionList.Count; i++)
-            {
-                Console.WriteLine($"{(option == i ? color : "    ")}{optionList[i]}");
+                Console.WriteLine(i == _selectedOption ? $"> {currentMenu[i]}" : $"  {currentMenu[i]}");
             }
 
-            key = Console.ReadKey(true);
-            switch (key.Key)
+            var keyInfo = Console.ReadKey(true);
+            switch (keyInfo.Key)
             {
-                case ConsoleKey.DownArrow:
-                    option = (option + 1) % optionList.Count;
-                    break;
                 case ConsoleKey.UpArrow:
-                    option = (option - 1 + optionList.Count) % optionList.Count;
+                    if (_selectedOption > 0)
+                    {
+                        _selectedOption--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (_selectedOption < currentMenu.Length - 1)
+                    {
+                        _selectedOption++;
+                    }
                     break;
                 case ConsoleKey.Enter:
-                    selected = true;
+                    string selectedOption = currentMenu[_selectedOption];
+                    HandleSelectedOption(selectedOption);
+                    break;
+                case ConsoleKey.Escape:
+                    if (_menuStack.Count > 1)
+                    {
+                        _menuStack.Pop();
+                        _selectedOption = 0;
+                    }
                     break;
             }
         }
 
-        return option;
+        return _selectedOption;
     }
 
-    public static void DummyMethod1()
+    private void HandleSelectedOption(string selectedOption)
     {
-        Console.Clear();
-        Console.WriteLine("This is Dummy Method 1");
-        optionList = new List<string>{"Main menu", "dummy 2"};
-        int option = GetOption();
-        if (option == 0)
+        if (selectedOption == "Back")
         {
-            Menu.Run();
+            _menuStack.Pop();
+            _selectedOption = 0;
         }
-        else
+        else if (selectedOption == "Login")
         {
-            DummyMethod2();
+            
         }
-
-        Console.ReadLine();
+        else if (selectedOption == "Register")
+        {
+            
+        }
+        else if (selectedOption == "More Info")
+        {
+            
+        }
+        else if (selectedOption == "Menu 2")
+        {
+            string[] options = { "Option 1", "Option 2", "Back" };
+            _menuStack.Push(options);
+            _selectedOption = 0;
+        }
     }
 
-    public static void DummyMethod2()
+    public void AddMenu(string[] options)
     {
-        Console.Clear();
-        Console.WriteLine("This is Dummy Method 2");
-        optionList = new List<string>{"Main menu", "dummy 1"};
-        int option = GetOption();
-        if (option == 0)
-        {
-            Menu.Run();
-        }
-        else
-        {
-            DummyMethod1();
-        }
+        _menuStack.Push(options);
     }
 }
