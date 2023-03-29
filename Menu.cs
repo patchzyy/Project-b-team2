@@ -27,7 +27,7 @@ class Menu
         {
             Console.Clear();
             string[] currentMenu = _menuStack.Peek();
-            Console.WriteLine("Please select an option:");
+            Console.WriteLine("Selecteer een optie:");
             for (int i = 0; i < currentMenu.Length; i++)
             {
                 Console.WriteLine(i == _selectedOption ? $"> {currentMenu[i]}" : $"  {currentMenu[i]}");

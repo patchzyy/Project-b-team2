@@ -44,13 +44,14 @@ class Login
                     Console.Clear();
                     Console.WriteLine("\n\n\n\nLogging in...");
                     Thread.Sleep(190);
-                    Console.WriteLine($"Logging succes, welcome {userName}.");
+                    Console.WriteLine($"Logging succesvol, welkom {userName}.");
+                    Thread.Sleep(1000);
                     break;
                 }
             }
             catch (FormatException)
             {
-                Console.WriteLine("Please enter the correct format.");
+                Console.WriteLine("Vul het juiste format in a.u.b.");
             }
         }
     }
@@ -66,19 +67,19 @@ class Login
                 email = Console.ReadLine();
                 if (!email.Contains("@"))
                 {
-                    Console.WriteLine("Your email must have a '@'.");
+                    Console.WriteLine("Je email moet ten minste een '@'-teken bevatten.");
                     continue;
                 }
                 if (!email.Contains("."))
                 {
-                    Console.WriteLine("Your email must declare a domain name system.");
+                    Console.WriteLine("Je email moet ten minste een domain name system bevatten.");
                     continue;
                 }
                 break;
             }
             catch (FormatException)
             {
-                Console.WriteLine("Please enter the correct format.");
+                Console.WriteLine("Vul het juiste format in a.u.b.");
             }
         }
         return email;
@@ -96,7 +97,7 @@ class Login
         }
         catch (Exception)
         {
-            Console.WriteLine("Wrong run error");
+            Console.WriteLine("Wrong run error. Gebruiker hoort dit niet te zien.");
         }
 
         // value toevoegen aan de @email
@@ -118,7 +119,7 @@ class Login
         }
         else
         {
-            Console.WriteLine("The email has not been found. Try again.");
+            Console.WriteLine("De email is niet gevonden, probeer het opnieuw.");
             // string emailtryagain = AskForEmail();
             // GetUser(emailtryagain);
             return userInfo;

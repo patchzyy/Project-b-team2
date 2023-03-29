@@ -33,7 +33,7 @@ class User{
         User currentuser = new User(fullname, email, password);
         currentuser.AddToDatabase();
         
-        Console.WriteLine($"Welcome to Rotterdam Airlines! {fullname}\n");
+        Console.WriteLine($"Welcome to Rotterdam Airlines, {fullname}!\n");
         Thread.Sleep(5000);
 
         return true;
