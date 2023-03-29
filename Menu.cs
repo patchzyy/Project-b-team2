@@ -1,14 +1,14 @@
 class Menu
 {
 
-// Wat is een stack?
+    // Wat is een stack?
 
-// Bovenkant stack
-// ----------------------------
-// ["Login", "Register", "More Information"] <-- String array (Begin menu)
-// ["Option 1", "Option 2", "Back"] <-- "Back" gaat terug naar de array hierboven (begin menu)
-// --------------------------
-// Onderkant stack
+    // Bovenkant stack
+    // ----------------------------
+    // ["Login", "Register", "More Information"] <-- String array (Begin menu)
+    // ["Option 1", "Option 2", "Back"] <-- "Back" gaat terug naar de array hierboven (begin menu)
+    // --------------------------
+    // Onderkant stack
 
     private Stack<string[]> _menuStack;
     private int _selectedOption;
@@ -75,18 +75,18 @@ class Menu
         else if (selectedOption == "Login")
         {
             Login.LoggingIn();
-            AddMenu(new[]{"Check Flights", "Log Out"});
+            AddMenu(new[] { "Check Flights", "Log Out" });
         }
         else if (selectedOption == "Register")
         {
-            if(User.Register())
+            if (User.Register())
             {
-                AddMenu(new[]{"Check Flights", "Log Out"});
+                AddMenu(new[] { "Check Flights", "Log Out" });
             }
         }
-        else if (selectedOption == "More Info")
+        else if (selectedOption == "More Information")
         {
-            
+            Information.GetInformation();
         }
     }
 
