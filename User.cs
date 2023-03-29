@@ -23,8 +23,8 @@ class User{
     public static bool Register()
     {
         Console.Clear();
-        Console.WriteLine("Let's get to know each other!");
-        Console.WriteLine("Please specify your details.");
+        Console.WriteLine("Laten we elkaar leren kennen!");
+        Console.WriteLine("Vul je details in.");
 
         string fullname = FullNameSequence();
         string email = EmailSequence();
@@ -33,7 +33,7 @@ class User{
         User currentuser = new User(fullname, email, password);
         currentuser.AddToDatabase();
         
-        Console.WriteLine($"Welcome to Rotterdam Airlines, {fullname}!\n");
+        Console.WriteLine($"Welkom in Rotterdam Airlines, {fullname}!\n");
         Thread.Sleep(5000);
 
         return true;
@@ -66,11 +66,11 @@ class User{
         string fullname = string.Empty;
         while(!fullname.Contains(" ") && (fullname.Length < 6))
         {
-            Console.Write("\nPlease enter your full name: ");
+            Console.Write("\nVul je volledige naam in: ");
             fullname = Console.ReadLine()!;
 
-            if(!fullname.Contains(" ")) Console.WriteLine("Your name does not contain a space indicating it is not your full name.");
-            if(fullname.Length < 6) Console.WriteLine("Your name is too short to be seen as a valid full name.");
+            if(!fullname.Contains(" ")) Console.WriteLine("Je volledige naam bevat geen spatie. Vul je volledige naam in.");
+            if(fullname.Length < 6) Console.WriteLine("Je volledige naam is te kort om als naam te kunnen worden gezien.");
         }
         return fullname;
     }
@@ -80,11 +80,11 @@ class User{
         string email = string.Empty;
         while(!email.Contains("@") && !email.Contains("."))
         {
-            Console.Write("\nPlease enter your email adress: ");
+            Console.Write("\nVul je emailadres in: ");
             email = Console.ReadLine()!;
 
-            if(!email.Contains("@")) Console.WriteLine("Your email does not seem to contain a @ making it invalid.");
-            if(!email.Contains(".")) Console.WriteLine("Your email does not contain a . indicating it is an invalid email adress.");
+            if(!email.Contains("@")) Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
+            if(!email.Contains(".")) Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
         }
         return email;
     }
@@ -97,26 +97,26 @@ class User{
         while(true)
         {
             Console.WriteLine(@"
-Please enter a password of 8 or more characters that contains:
-    -A digit (0-9)
-    -A special character
+Vul een wachtwoord in van 8 of meer tekens met:
+    - Ten minste 1 numerieke waarde (0-9)
+    - Ten minste 1 speciale teken
     ");
-            Console.Write("Enter a password: ");
+            Console.Write("Vul een wachtwoord in: ");
             password = Console.ReadLine()!;
 
             if(password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
-                Console.WriteLine("Password meets criteria!");
-                Console.Write("Confirm password: ");
+                Console.WriteLine("Wachtwoord voldoet aan de eisen!");
+                Console.Write("Bevestig je wachtwoord: ");
                 confirmpassword = Console.ReadLine();
                 
                 if(password != confirmpassword)
                 {
-                    Console.WriteLine("Passwords do not match, please try again.");
+                    Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.");
                 }
                 else
                 {
-                    Console.WriteLine("Passwords accepted!");
+                    Console.WriteLine("Wachtwoorden correct.");
                     break;
                 }
             }
