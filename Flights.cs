@@ -17,7 +17,7 @@ public static class Flights
 {
     public static void SetDailyFlightSchedule()
     {
-        SqliteConnection connection = new("Data Source=airline_data.db");
+        SqliteConnection connection = new("Data Source=ailine_data.db");
         connection.Open();
 
         List<string> sqlQueries = new List<string>()
@@ -40,11 +40,11 @@ public static class Flights
     {
         List<Flight> departingFlights = GetDepartingFlights();
         Console.WriteLine("Vertrekken\n");
-        Console.WriteLine("Tijd     Bestemming      Toestel     Status     Gate");
-        Console.WriteLine("----------------------------------------------------------------------");
+        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
+        Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in departingFlights)
         {
-            Console.WriteLine($"{flight.Time}       {flight.Destination}        {flight.Aircraft}       {flight.State}      {flight.Gate}");
+            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", flight.Time, flight.Destination, flight.Aircraft, flight.State, flight.Gate);
         }
     }
 
@@ -52,18 +52,18 @@ public static class Flights
     {
         List<Flight> arrivingFlights = GetArrivingFlights();
         Console.WriteLine("Aankomsten\n");
-        Console.WriteLine("Tijd     Afkomst      Toestel     Status     Gate");
-        Console.WriteLine("----------------------------------------------------------------------");
+        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
+        Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in arrivingFlights)
         {
-            Console.WriteLine($"{flight.Time}       {flight.Origin}        {flight.Aircraft}       {flight.State}      {flight.Gate}");
+            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", flight.Time, flight.Origin, flight.Aircraft, flight.State, flight.Gate);
         }
     }
 
     private static List<Flight> GetDepartingFlights()
     {
         List<Flight> departingFlights = new();
-        SqliteConnection connection = new("Data Source=airline_data.db");
+        SqliteConnection connection = new("Data Source=ailine_data.db");
         connection.Open();
 
         SqliteCommand command = new SqliteCommand("SELECT * FROM Flights WHERE origin = 'Rotterdam'", connection);
@@ -80,7 +80,7 @@ public static class Flights
     private static List<Flight> GetArrivingFlights()
     {
         List<Flight> arrivingFlights = new();
-        SqliteConnection connection = new("Data Source=airline_data.db");
+        SqliteConnection connection = new("Data Source=ailine_data.db");
         connection.Open();
 
         SqliteCommand command = new SqliteCommand("SELECT * FROM Flights WHERE destination = 'Rotterdam'", connection);
