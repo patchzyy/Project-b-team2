@@ -63,16 +63,50 @@ class User{
     // Hieronder staat alles dat te maken heeft met register... 
     private static string FullNameSequence()
     {
-        string fullname = string.Empty;
-        while(!fullname.Contains(" ") && (fullname.Length < 6))
-        {
-            Console.Write("\nVul je volledige naam in: ");
-            fullname = Console.ReadLine()!;
+    string firstname, lastname;
 
-            if(!fullname.Contains(" ")) Console.WriteLine("Je volledige naam bevat geen spatie. Vul je volledige naam in.");
-            if(fullname.Length < 6) Console.WriteLine("Je volledige naam is te kort om als naam te kunnen worden gezien.");
+    //first name
+    while(true)
+    {
+        Console.Write("\nVul je voornaam in: ");
+        firstname = Console.ReadLine()!;
+
+        if (string.IsNullOrWhiteSpace(firstname))
+        {
+            Console.WriteLine("Je voornaam mag niet niks zijn.");
+            continue;
         }
-        return fullname;
+        // dit ga ik op terugkomen, want de isSymbol wilt niet helemaal goed mee werken.
+        if (firstname.Any(char.IsDigit) || firstname.Any(char.IsSymbol) || firstname.Contains(" "))
+        {
+            Console.WriteLine("Je voornaam mag alleen letters bevatten.");
+            continue;
+        }
+
+        break;
+    } 
+
+    //last name
+    while (true)
+    {
+        Console.WriteLine("Vul je achternaam in: ");
+        lastname = Console.ReadLine()!;
+
+        if (string.IsNullOrWhiteSpace(lastname))
+        {
+            Console.WriteLine("Je achternaam mag niet leeg zijn.");
+            continue;
+        }
+
+        else if (lastname.Any(char.IsDigit))
+        {
+            Console.WriteLine("Je achternaam mag alleen letters bevatten.");
+            continue;
+        }
+
+        break;
+    }
+    return $"{firstname} {lastname}";
     }
 
     private static string EmailSequence()
