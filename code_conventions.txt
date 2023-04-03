@@ -21,3 +21,17 @@ public ClassName(string name)
 {
     Name = name;
 }
+
+--------
+
+Properties maak je als volgt:
+
+string Name { get; set; }
+
+of,
+
+string Name 
+{
+    get =>....
+    set =>....
+}

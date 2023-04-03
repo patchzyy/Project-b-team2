@@ -1,5 +1,5 @@
 using Microsoft.Data.Sqlite;
-
+// to go back to a menu, give HandleSelectedOption("Back");
 class Login
 {
     private static SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
@@ -10,7 +10,6 @@ class Login
 
         string email = AskForEmail();
 
-        // string userInfo = GetUser(email);
         string userInfo;
         while (true)
         {
@@ -120,8 +119,6 @@ class Login
         else
         {
             Console.WriteLine("De email is niet gevonden, probeer het opnieuw.");
-            // string emailtryagain = AskForEmail();
-            // GetUser(emailtryagain);
             return userInfo;
         }
         return userInfo;
