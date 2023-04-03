@@ -26,6 +26,7 @@ class Menu
         while (isRunning)
         {
             Console.Clear();
+            Information.DisplayLogo();
             string[] currentMenu = _menuStack.Peek();
             Console.WriteLine("Selecteer een optie:");
             for (int i = 0; i < currentMenu.Length; i++)
@@ -67,6 +68,7 @@ class Menu
 
     private void HandleSelectedOption(string selectedOption)
     {
+        Information.DisplayLogo();
         if (selectedOption == "Back" || selectedOption == "Log Out")
         {
             _menuStack.Pop();

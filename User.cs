@@ -23,6 +23,7 @@ class User{
     public static bool Register()
     {
         Console.Clear();
+        Information.DisplayLogo();
         Console.WriteLine("Laten we elkaar leren kennen!");
         Console.WriteLine("Vul je details in.");
 

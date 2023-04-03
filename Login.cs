@@ -6,6 +6,7 @@ class Login
     public static void LoggingIn()
     {
         Console.Clear();
+        Information.DisplayLogo();
         Console.WriteLine("Sign In\n");
 
         string email = AskForEmail();
@@ -43,8 +44,10 @@ class Login
                     Console.Clear();
                     Console.WriteLine("\n\n\n\nLogging in...");
                     Thread.Sleep(190);
+                    Console.Clear();
+                    Information.DisplayLogo();
                     Console.WriteLine($"Logging succesvol, welkom {userName}.");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     break;
                 }
             }
