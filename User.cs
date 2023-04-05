@@ -3,7 +3,9 @@ using Microsoft.Data.Sqlite;
 // Admin is geinherrit van User class.
 class User{
     public int id {get; set; }
-    public string Name {get; set; }
+    public string First_Name {get; set; }
+
+    public string Last_Name {get; set; }
     public string Email {get; set; }
     public string Password {get; set; }
     public bool has_Admin {get; set; }
@@ -11,9 +13,10 @@ class User{
 
     // Even een constructor om te testen.. Deze test helaas niet of de data wel goed is
     // daarom is het de bedoeling dat de static method "Register" gebruikt wordt.
-    public User(string name, string email, string password, bool has_admin = false)
+    public User(string first_name, string last_name, string email, string password, bool has_admin = false)
     {
-        Name = name;
+        First_Name = first_name;
+        Last_Name = last_name;
         Email = email;
         Password = password;
         has_Admin = has_admin;
@@ -27,14 +30,15 @@ class User{
         Console.WriteLine("Laten we elkaar leren kennen!");
         Console.WriteLine("Vul je details in.");
 
-        string fullname = FullNameSequence();
+        string first_name = FirstNameSequence();
+        string last_name = LastNameSequence();
         string email = EmailSequence();
         string password = PasswordSequence();
 
-        User currentuser = new User(fullname, email, password);
+        User currentuser = new User(first_name, last_name, email, password);
         currentuser.AddToDatabase();
         
-        Console.WriteLine($"Welkom in Rotterdam Airlines, {fullname}!\n");
+        Console.WriteLine($"Welkom in Rotterdam Airlines, {first_name} {last_name}!\n");
         Thread.Sleep(5000);
 
         return true;
@@ -48,9 +52,10 @@ class User{
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
-        string sql = "INSERT INTO users (name, email, password, has_admin) VALUES (@name, @email, @password, @has_admin)";
+        string sql = "INSERT INTO users (first_name, last_name, email, password, has_admin) VALUES (@first_name, @last_name, @email, @password, @has_admin)";
         using  (SqliteCommand command = new SqliteCommand(sql, connection)) {
-            command.Parameters.AddWithValue("@name", this.Name);
+            command.Parameters.AddWithValue("@first_name", this.First_Name);
+            command.Parameters.AddWithValue("@last_name", this.Last_Name);
             command.Parameters.AddWithValue("@email", this.Email);
             command.Parameters.AddWithValue("@password", this.Password);
             command.Parameters.AddWithValue("@has_admin", this.has_Admin ? 1 : 0);
@@ -62,64 +67,88 @@ class User{
 
 
     // Hieronder staat alles dat te maken heeft met register... 
-    private static string FullNameSequence()
+    private static string FirstNameSequence()
     {
-    string firstname, lastname;
-
-    //first name
+    string firstname;
     while(true)
-    {
-        Console.Write("\nVul je voornaam in: ");
-        firstname = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(firstname))
         {
-            Console.WriteLine("Je voornaam mag niet niks zijn.");
-            continue;
-        }
-        // dit ga ik op terugkomen, want de isSymbol wilt niet helemaal goed mee werken.
-        if (firstname.Any(char.IsDigit) || firstname.Any(char.IsSymbol) || firstname.Contains(" "))
-        {
-            Console.WriteLine("Je voornaam mag alleen letters bevatten.");
-            continue;
-        }
+            Console.WriteLine("\nVul je voornaam in: ");
+            firstname = Console.ReadLine()!;
 
-        break;
-    } 
+            if (string.IsNullOrWhiteSpace(firstname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.WriteLine("Je voornaam mag niet niks zijn.");
+                continue;
+            }
+            if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.WriteLine("Je voornaam mag alleen letters bevatten.");
+                continue;
+            }
+
+            return firstname;
+        } 
+    }
+
 
     //last name
+    private static string LastNameSequence()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
     while (true)
     {
         Console.WriteLine("Vul je achternaam in: ");
-        lastname = Console.ReadLine()!;
+        string lastname = Console.ReadLine()!;
 
         if (string.IsNullOrWhiteSpace(lastname))
         {
+            Console.Clear();
+            Information.DisplayLogo();
             Console.WriteLine("Je achternaam mag niet leeg zijn.");
             continue;
         }
 
-        else if (lastname.Any(char.IsDigit))
+        else if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
         {
+            Console.Clear();
+            Information.DisplayLogo();
             Console.WriteLine("Je achternaam mag alleen letters bevatten.");
             continue;
         }
 
-        break;
+        return lastname;
     }
-    return $"{firstname} {lastname}";
+    
     }
+
 
     private static string EmailSequence()
     {
+        Console.Clear();
+        Information.DisplayLogo();
         string email = string.Empty;
         while(!email.Contains("@") && !email.Contains("."))
         {
             Console.Write("\nVul je emailadres in: ");
             email = Console.ReadLine()!;
 
-            if(!email.Contains("@")) Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
-            if(!email.Contains(".")) Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
+            if(!email.Contains("@")) {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
+            }
+
+            if(!email.Contains("."))
+            { 
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
+            }
         }
         return email;
     }

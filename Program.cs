@@ -8,6 +8,8 @@ class Program
         Thread.Sleep(2000);
         Menu menu = new Menu(new[]{"Login","Register","More Information"});
         menu.Run();
+
+
     }
 
 
