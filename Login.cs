@@ -50,7 +50,9 @@ class Login
             }
             catch (FormatException)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Vul het juiste format in a.u.b.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -68,19 +70,32 @@ class Login
                 email = Console.ReadLine();
                 if (!email.Contains("@"))
                 {
-                    Console.WriteLine("Je email moet ten minste een '@'-teken bevatten.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je email moet ten minste een '@'-teken bevatten.\n");
+                    Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 if (!email.Contains("."))
                 {
-                    Console.WriteLine("Je email moet ten minste een domain name system bevatten.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je email moet ten minste een domain name system bevatten.\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                if (email.Length < 8)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je email mag niet korter dan 8 tekens zijn.\n");
+                    Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 break;
             }
             catch (FormatException)
             {
-                Console.WriteLine("Vul het juiste format in a.u.b.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Vul het juiste format in a.u.b.\n");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
         return email;
@@ -121,8 +136,10 @@ class Login
         }
         else
         {
-            Console.WriteLine("De email is niet gevonden, probeer het opnieuw.");
-            return null;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("De email is niet gevonden, probeer het opnieuw.\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            return userInfo;
         }
         return founduser;
     }
