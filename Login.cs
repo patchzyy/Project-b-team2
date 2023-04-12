@@ -139,7 +139,7 @@ class Login
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("De email is niet gevonden, probeer het opnieuw.\n");
             Console.ForegroundColor = ConsoleColor.White;
-            return userInfo;
+            return null;
         }
         return founduser;
     }
