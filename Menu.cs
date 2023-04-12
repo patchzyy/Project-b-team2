@@ -12,12 +12,14 @@ class Menu
 
     private Stack<string[]> _menuStack;
     private int _selectedOption;
+    private User _currentUser;
 
     public Menu(string[] options)
     {
         _menuStack = new Stack<string[]>();
         _menuStack.Push(options);
         _selectedOption = 0;
+        _currentUser = null;
     }
 
     public int Run()
@@ -71,20 +73,20 @@ class Menu
         Information.DisplayLogo();
         if (selectedOption == "Back" || selectedOption == "Log Out")
         {
+            if(selectedOption == "Log Out") _currentUser = null;
+
             _menuStack.Pop();
             _selectedOption = 0;
         }
         else if (selectedOption == "Login")
         {
-            Login.LoggingIn();
+            _currentUser = Login.LoggingIn();
             AddMenu(new[] { "Check Flights", "Log Out" });
         }
         else if (selectedOption == "Register")
         {
-            if (User.Register())
-            {
-                AddMenu(new[] { "Check Flights", "Log Out" });
-            }
+            _currentUser = User.Register();
+            AddMenu(new[] { "Check Flights", "Log Out" });
         }
         else if (selectedOption == "More Information")
         {

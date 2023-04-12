@@ -23,7 +23,7 @@ class User{
     }
 
 
-    public static bool Register()
+    public static User Register()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -41,7 +41,7 @@ class User{
         Console.WriteLine($"Welkom in Rotterdam Airlines, {first_name} {last_name}!\n");
         Thread.Sleep(5000);
 
-        return true;
+        return currentuser;
     }
 
 

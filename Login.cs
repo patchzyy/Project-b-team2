@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 class Login
 {
     private static SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
-    public static void LoggingIn()
+    public static User LoggingIn()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -11,19 +11,16 @@ class Login
 
         string email = AskForEmail();
 
-        string userInfo;
+        User userInfo;
         while (true)
         {
             userInfo = GetUser(email);
-            if (userInfo != "")
+            if (userInfo != null)
             {
                 break;
             }
             email = AskForEmail();
         }
-
-        string userName = userInfo.Split(",")[0];
-        string correctPassword = userInfo.Split(",")[2];
 
         while (true)
         {
@@ -31,7 +28,7 @@ class Login
             {
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
-                if (correctPassword == password)
+                if (userInfo.Password == password)
                 {
                     // wat je ook doet, laat deze stukje aan niemand zien aub
                     // HIGH SECRET
@@ -46,7 +43,7 @@ class Login
                     Thread.Sleep(190);
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.WriteLine($"Logging succesvol, welkom {userName}.");
+                    Console.WriteLine($"Logging succesvol, welkom {userInfo.First_Name}.");
                     Thread.Sleep(2000);
                     break;
                 }
@@ -56,6 +53,8 @@ class Login
                 Console.WriteLine("Vul het juiste format in a.u.b.");
             }
         }
+
+        return userInfo;
     }
 
     private static string AskForEmail()
@@ -87,7 +86,7 @@ class Login
         return email;
     }
 
-    private static string GetUser(string email)
+    private static User GetUser(string email)
     {
         connection.Open();
 
@@ -107,23 +106,24 @@ class Login
 
         // om sql queries te kunnen lezen gebruik je Reader
         SqliteDataReader reader = command.ExecuteReader();
-        string userInfo = "";
+        User founduser = null;
 
         if (reader.HasRows)
         {
             while (reader.Read())
             {
-                string nameValue = reader.GetString(1);
+                string fnameValue = reader.GetString(0);
+                string lnameValue = reader.GetString(1);
                 string emailValue = reader.GetString(2);
                 string passwordValue = reader.GetString(3);
-                userInfo = $"{nameValue},{emailValue},{passwordValue}";
+                founduser = new(fnameValue, lnameValue, emailValue, passwordValue);
             }
         }
         else
         {
             Console.WriteLine("De email is niet gevonden, probeer het opnieuw.");
-            return userInfo;
+            return null;
         }
-        return userInfo;
+        return founduser;
     }
 }
