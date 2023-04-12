@@ -47,6 +47,12 @@ class Login
                     Thread.Sleep(2000);
                     break;
                 }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
             catch (FormatException)
             {
@@ -68,6 +74,7 @@ class Login
             {
                 Console.WriteLine("Email: ");
                 email = Console.ReadLine();
+                Console.WriteLine();
                 if (!email.Contains("@"))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;

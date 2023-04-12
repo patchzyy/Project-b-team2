@@ -38,7 +38,9 @@ class User{
         User currentuser = new User(first_name, last_name, email, password);
         currentuser.AddToDatabase();
         
-        Console.WriteLine($"Welkom in Rotterdam Airlines, {first_name} {last_name}!\n");
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
         Thread.Sleep(5000);
 
         return currentuser;
@@ -69,29 +71,33 @@ class User{
     // Hieronder staat alles dat te maken heeft met register... 
     private static string FirstNameSequence()
     {
-    string firstname;
-    while(true)
-        {
-            Console.WriteLine("\nVul je voornaam in: ");
-            firstname = Console.ReadLine()!;
-
-            if (string.IsNullOrWhiteSpace(firstname))
+        string firstname;
+        while(true)
             {
-                Console.Clear();
-                Information.DisplayLogo();
-                Console.WriteLine("Je voornaam mag niet niks zijn.");
-                continue;
-            }
-            if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
-            {
-                Console.Clear();
-                Information.DisplayLogo();
-                Console.WriteLine("Je voornaam mag alleen letters bevatten.");
-                continue;
-            }
+                Console.WriteLine("\nVul je voornaam in: ");
+                firstname = Console.ReadLine()!;
 
-            return firstname;
-        } 
+                if (string.IsNullOrWhiteSpace(firstname))
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je voornaam mag niet niks zijn.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je voornaam mag alleen letters bevatten.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+
+                return firstname;
+            }
     }
 
 
@@ -109,7 +115,9 @@ class User{
         {
             Console.Clear();
             Information.DisplayLogo();
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Je achternaam mag niet leeg zijn.");
+            Console.ForegroundColor = ConsoleColor.White;
             continue;
         }
 
@@ -117,7 +125,9 @@ class User{
         {
             Console.Clear();
             Information.DisplayLogo();
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Je achternaam mag alleen letters bevatten.");
+            Console.ForegroundColor = ConsoleColor.White;
             continue;
         }
 
@@ -140,14 +150,18 @@ class User{
             if(!email.Contains("@")) {
                 Console.Clear();
                 Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             if(!email.Contains("."))
             { 
                 Console.Clear();
                 Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
         return email;
@@ -176,14 +190,18 @@ Vul een wachtwoord in van 8 of meer tekens met:
                 
                 if(password != confirmpassword)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
                     Console.WriteLine("Wachtwoorden correct.");
+                    Thread.Sleep(750);
                     break;
                 }
             }
+            // hier missen we nog specifiek laten zien waar user verkeerde input geeft
 
         }
 
