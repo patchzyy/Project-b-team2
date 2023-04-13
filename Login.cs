@@ -138,7 +138,9 @@ class Login
                 string lnameValue = reader.GetString(1);
                 string emailValue = reader.GetString(2);
                 string passwordValue = reader.GetString(3);
-                founduser = new(fnameValue, lnameValue, emailValue, passwordValue);
+                string has_admin = reader.GetString(4);
+                bool roleValue = has_admin == "1" ? true : false;
+                founduser = new(fnameValue, lnameValue, emailValue, passwordValue, roleValue);
             }
         }
         else
