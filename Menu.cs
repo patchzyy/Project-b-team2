@@ -125,7 +125,7 @@ class Menu
 
         else if (selectedOption == "Add Flight")
         {
-            Flight.AddFlight();
+            AdminTool.AddFlight();
         }
 
 
