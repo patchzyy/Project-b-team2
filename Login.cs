@@ -67,14 +67,17 @@ class Login
 
     private static string AskForEmail()
     {
-        string? email;
+        string? email = "";
         while (true)
         {
             try
             {
-                Console.WriteLine("Email: ");
-                email = Console.ReadLine();
-                Console.WriteLine();
+                Console.Write("Email: ");
+                // email = Console.ReadLine();
+                // Console.WriteLine();
+
+                email = CheckEmail();
+
                 if (!email.Contains("@"))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -104,6 +107,52 @@ class Login
                 Console.WriteLine("Vul het juiste format in a.u.b.\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+        return email;
+    }
+
+    // idee: oranje toevoegen als 1 eis goed is maar niet alle
+    private static bool IsValidEmail(string email)
+    {
+        if (email.Contains("@") && email.Contains(".") && email.Length > 8)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static string CheckEmail()
+    {
+        string? email = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (email.Length > 0) {
+                    email = email.Remove(email.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(7, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                email += c;
+            }
+
+            if (IsValidEmail(email)) {
+                Console.ForegroundColor = ConsoleColor.Green;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            Console.Write(email);
         }
         return email;
     }
@@ -138,7 +187,9 @@ class Login
                 string lnameValue = reader.GetString(1);
                 string emailValue = reader.GetString(2);
                 string passwordValue = reader.GetString(3);
-                founduser = new(fnameValue, lnameValue, emailValue, passwordValue);
+                string has_admin = reader.GetString(4);
+                bool roleValue = has_admin == "1" ? true : false;
+                founduser = new(fnameValue, lnameValue, emailValue, passwordValue, roleValue);
             }
         }
         else

@@ -81,7 +81,12 @@ class Menu
         else if (selectedOption == "Login")
         {
             _currentUser = Login.LoggingIn();
-            AddMenu(new[] { "Check Flights", "Log Out" });
+            if (_currentUser.has_Admin){
+                AddMenu(new[] { "Check Flights", "Admin Menu", "Log Out" });
+            }
+            else{
+                AddMenu(new[] { "Check Flights", "Log Out" });
+            }
         }
         else if (selectedOption == "Register")
         {
@@ -92,6 +97,38 @@ class Menu
         {
             Information.GetInformation();
         }
+        else if (selectedOption == "Check Flights")
+        {
+            Thread.Sleep(1000);
+            Information.DisplayLogo();
+            Flights.DisplayArrivingFlights();
+            Console.WriteLine("");
+            Flights.DisplayDepartingFlights();
+            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
+            Console.ReadLine();
+        }
+
+
+        // Admin menu options
+        else if (selectedOption == "Admin Menu")
+        {
+            AddMenu(new[] { "Manage Flights", "Manage Users", "Back" });
+        }
+        else if (selectedOption == "Manage Flights")
+        {
+            AddMenu(new[] { "Add Flight", "Remove Flight", "Back" });
+        }
+        else if (selectedOption == "Manage Users")
+        {
+            AddMenu(new[] { "Add User", "Remove User", "Back" });
+        }
+
+        else if (selectedOption == "Add Flight")
+        {
+            AdminTool.AddFlight();
+        }
+
+
     }
 
     public void AddMenu(string[] options)

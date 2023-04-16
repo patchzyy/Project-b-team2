@@ -1,4 +1,6 @@
 using Microsoft.Data.Sqlite;
+using System.Globalization;
+
 
 // Columns van de Flights table inde database op volgorde
 
@@ -17,7 +19,7 @@ public static class Flights
 {
     public static void SetDailyFlightSchedule()
     {
-        SqliteConnection connection = new("Data Source=ailine_data.db");
+        SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
         List<string> sqlQueries = new List<string>()
@@ -40,11 +42,28 @@ public static class Flights
     {
         List<Flight> departingFlights = GetDepartingFlights();
         Console.WriteLine("Vertrekken\n");
-        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
+        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in departingFlights)
         {
-            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", flight.Time, flight.Destination, flight.Aircraft, flight.State, flight.Gate);
+            string state;
+            string dateString = flight.Time;
+            DateTime currentTime = DateTime.Now;
+            DateTime time = DateTime.ParseExact(dateString, "HH:mm", CultureInfo.InvariantCulture);
+            TimeSpan timeDifference = time - currentTime;
+            if (currentTime > time)
+            {
+                state = "Vertrokken";
+            }
+            else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 30)
+            {
+                state = "Boarding";
+            }
+            else
+            {
+                state = "Inactief";
+            }
+            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", flight.Time, flight.Destination, flight.Aircraft, state, flight.Gate);
         }
     }
 
@@ -52,18 +71,37 @@ public static class Flights
     {
         List<Flight> arrivingFlights = GetArrivingFlights();
         Console.WriteLine("Aankomsten\n");
-        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
+        Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in arrivingFlights)
         {
-            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-10} {4}", flight.Time, flight.Origin, flight.Aircraft, flight.State, flight.Gate);
+            string state;
+            string dateString = flight.Time;
+            DateTime currentTime = DateTime.Now;
+            DateTime time = DateTime.ParseExact(dateString, "HH:mm", CultureInfo.InvariantCulture);
+            TimeSpan timeDifference = time - currentTime;
+            if (currentTime > time)
+            {
+                state = "Geland";
+            }
+            else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 120)
+            {
+                state = "Onderweg";
+            }
+            else
+            {
+                state = "Inactief";
+            }
+
+            Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", flight.Time, flight.Origin, flight.Aircraft, state, flight.Gate);
+            Console.ResetColor();
         }
     }
 
     private static List<Flight> GetDepartingFlights()
     {
         List<Flight> departingFlights = new();
-        SqliteConnection connection = new("Data Source=ailine_data.db");
+        SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
         SqliteCommand command = new SqliteCommand("SELECT * FROM Flights WHERE origin = 'Rotterdam'", connection);
@@ -80,7 +118,7 @@ public static class Flights
     private static List<Flight> GetArrivingFlights()
     {
         List<Flight> arrivingFlights = new();
-        SqliteConnection connection = new("Data Source=ailine_data.db");
+        SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
         SqliteCommand command = new SqliteCommand("SELECT * FROM Flights WHERE destination = 'Rotterdam'", connection);
