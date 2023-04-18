@@ -84,6 +84,10 @@ public static class PlaneUI
         bool rowHasSeats = true;
         while (rowHasSeats)
         {
+            if (rowNr == 4)
+            {
+                Console.WriteLine("|                                                            |");
+            }
             if (rowNr == 7)
             {
                 rowNr = 16;
@@ -168,5 +172,10 @@ public static class PlaneUI
                 return;
             }
         }
+    }
+
+    public static void DrawAirbus330(Airbus330 plane)
+    {
+
     }
 }
