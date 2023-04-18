@@ -26,7 +26,7 @@ class Login
         {
             try
             {
-                Console.WriteLine("Password: ");
+                Console.Write("Password: ");
                 string password = Console.ReadLine();
                 if (userInfo.Password == password)
                 {
@@ -154,6 +154,8 @@ class Login
 
             Console.Write(email);
         }
+        Console.WriteLine();
+        Console.ResetColor();
         return email;
     }
 
