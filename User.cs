@@ -69,13 +69,17 @@ class User{
 
 
     // Hieronder staat alles dat te maken heeft met register... 
+    // TODO:    -checken op hoofdletter
+    //          -password zo doen dat ipv chars bolletjes komen ter bescherming?
     private static string FirstNameSequence()
     {
         string firstname;
         while(true)
             {
-                Console.WriteLine("\nVul je voornaam in: ");
-                firstname = Console.ReadLine()!;
+                Console.Write("\nVul je voornaam in: ");
+                firstname = CheckFirstName();
+                // firstname = Console.ReadLine()!;
+
 
                 if (string.IsNullOrWhiteSpace(firstname))
                 {
@@ -100,59 +104,163 @@ class User{
             }
     }
 
+    private static bool IsValidFirstName(string firstname)
+    {
+        if (string.IsNullOrWhiteSpace(firstname))
+        {
+            
+            return false;
+        }
+        if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private static string CheckFirstName()
+    {
+        string? firstname = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (firstname.Length > 0) {
+                    firstname = firstname.Remove(firstname.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(20, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                firstname += c;
+            }
+
+            if (IsValidFirstName(firstname)) {
+                Console.ForegroundColor = ConsoleColor.Green;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            Console.Write(firstname);
+        }
+        Console.WriteLine();
+        Console.ResetColor();
+        return firstname;
+    }
+
 
     //last name
     private static string LastNameSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
-    while (true)
-    {
-        Console.WriteLine("Vul je achternaam in: ");
-        string lastname = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(lastname))
+        while (true)
         {
-            Console.Clear();
-            Information.DisplayLogo();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Je achternaam mag niet leeg zijn.");
-            Console.ForegroundColor = ConsoleColor.White;
-            continue;
-        }
+            Console.Write("Vul je achternaam in: ");
+            string lastname = CheckLastName();
 
-        else if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
-        {
-            Console.Clear();
-            Information.DisplayLogo();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Je achternaam mag alleen letters bevatten.");
-            Console.ForegroundColor = ConsoleColor.White;
-            continue;
-        }
+            if (string.IsNullOrWhiteSpace(lastname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je achternaam mag niet leeg zijn.");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
 
-        return lastname;
-    }
+            else if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je achternaam mag alleen letters bevatten.");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
+
+            return lastname;
+        }
     
     }
 
+    private static bool IsValidLastName(string lastname)
+    {
+        if (string.IsNullOrWhiteSpace(lastname))
+        {
+            return false;
+        }
+        if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private static string CheckLastName()
+    {
+        string? lastname = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (lastname.Length > 0) {
+                    lastname = lastname.Remove(lastname.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(22, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                lastname += c;
+            }
+
+            if (IsValidFirstName(lastname)) {
+                Console.ForegroundColor = ConsoleColor.Green;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            Console.Write(lastname);
+        }
+        Console.WriteLine();
+        Console.ResetColor();
+        return lastname;
+    }
 
     private static string EmailSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
-        string email = string.Empty;
-        while(!email.Contains("@") && !email.Contains("."))
+        string email = "";
+        while(true)
         {
             Console.Write("\nVul je emailadres in: ");
-            email = Console.ReadLine()!;
+            email = CheckEmail();
 
-            if(!email.Contains("@")) {
+            if(!email.Contains("@"))
+            {
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
+                continue;
             }
 
             if(!email.Contains("."))
@@ -162,15 +270,76 @@ class User{
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
+                continue;
             }
+            if (email.Length < 8)
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je email mag niet korter dan 8 tekens zijn.\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
+            break;
         }
+        return email;
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        if (email.Contains("@") && email.Contains(".") && email.Length > 8)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static string CheckEmail()
+    {
+        string? email = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (email.Length > 0) {
+                    email = email.Remove(email.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(22, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                email += c;
+            }
+
+            if (IsValidEmail(email)) {
+                Console.ForegroundColor = ConsoleColor.Green;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            Console.Write(email);
+        }
+        Console.WriteLine();
+        Console.ResetColor();
         return email;
     }
 
     private static string PasswordSequence()
     {
-        string password = string.Empty;
-        string? confirmpassword = string.Empty;
+        Console.Clear();
+        Information.DisplayLogo();
+        
+        string password = "";
+        string? confirmpassword = "";
 
         while(true)
         {
@@ -180,25 +349,29 @@ Vul een wachtwoord in van 8 of meer tekens met:
     - Ten minste 1 speciale teken
     ");
             Console.Write("Vul een wachtwoord in: ");
-            password = Console.ReadLine()!;
+            password = CheckPassword();
 
             if(password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
-                Console.WriteLine("Wachtwoord voldoet aan de eisen!");
-                Console.Write("Bevestig je wachtwoord: ");
-                confirmpassword = Console.ReadLine();
-                
-                if(password != confirmpassword)
+                Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
+                while (true)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine("Wachtwoorden correct.");
-                    Thread.Sleep(750);
-                    break;
+                    Console.Write("Bevestig je wachtwoord: ");
+                    confirmpassword = Console.ReadLine();
+                    
+                    // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
+                    if(password != confirmpassword)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Je wachtwoord is correct. Een moment alstublieft.");
+                        Thread.Sleep(750);
+                        break;
+                    }
                 }
             }
             // hier missen we nog specifiek laten zien waar user verkeerde input geeft
@@ -208,6 +381,52 @@ Vul een wachtwoord in van 8 of meer tekens met:
         return password;
     }
 
+    private static bool IsValidPassword(string password)
+    {
+        if (password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static string CheckPassword()
+    {
+        string? password = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (password.Length > 0) {
+                    password = password.Remove(password.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(23, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                password += c;
+            }
+
+            if (IsValidPassword(password)) {
+                Console.ForegroundColor = ConsoleColor.Green;
+            } else {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            Console.Write(password);
+        }
+        Console.WriteLine();
+        Console.ResetColor();
+        return password;
+    }
 
     private static bool ContainsSpecialChar(string password) {
         foreach (char c in password) {
