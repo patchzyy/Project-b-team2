@@ -22,4 +22,22 @@ public class Flight
         connection.Close();
 
     }
+    public void RemoveFromDatabase(){
+        string query = $"DELETE FROM Flights WHERE time = '{Time}' AND origin = '{Origin}' AND destination = '{Destination}' AND aircraft = '{Aircraft}' AND state = '{State}' AND gate = '{Gate}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        DatabaseConnection.ExecuteNonQuery();
+        connection.Close();
+    }
+
+    public override string ToString()
+    {
+        return @$"Time: {Time} - "
+            + @$"Origin: {Origin} - "
+            + @$"Destination: {Destination} - "
+            + @$"Aircraft: {Aircraft} - "
+            + @$"State: {State} - "
+            + @$"Gate: {Gate}" ;
+    }
 }

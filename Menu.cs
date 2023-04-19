@@ -127,6 +127,11 @@ class Menu
         {
             AdminTool.AddFlight();
         }
+        else if (selectedOption == "Remove Flight")
+        {
+            AdminTool.RemoveFlight();
+        }
+
 
 
     }

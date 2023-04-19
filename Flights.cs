@@ -98,7 +98,7 @@ public static class Flights
         }
     }
 
-    private static List<Flight> GetDepartingFlights()
+    public static List<Flight> GetDepartingFlights()
     {
         List<Flight> departingFlights = new();
         SqliteConnection connection = new("Data Source=airline_data.db");
@@ -115,7 +115,7 @@ public static class Flights
         return departingFlights;
     }
 
-    private static List<Flight> GetArrivingFlights()
+    public static List<Flight> GetArrivingFlights()
     {
         List<Flight> arrivingFlights = new();
         SqliteConnection connection = new("Data Source=airline_data.db");

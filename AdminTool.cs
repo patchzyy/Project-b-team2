@@ -17,13 +17,15 @@ public static class AdminTool{
             if (string.IsNullOrEmpty(input) || input.Length < minLength)
             {
                 Console.WriteLine("Ongeldig formaat.");
+                Console.ReadKey();
                 continue;
             }
             return input;
         }
     }
 
-    public static string AskMultipleOptions(string prompt, List<string> options)
+    //thanks dirk voor dit, hij returned nu de index van de list, en je kunt in princiepe elke soort list gebruiken (bij <t>)
+    public static int AskMultipleOptions<T>(string prompt, List<T> options)
     {
         Console.CursorVisible = false;
 
@@ -64,7 +66,7 @@ public static class AdminTool{
                 case ConsoleKey.Enter:
                     Console.CursorVisible = true;
                     Console.Clear();
-                    return options[selectedIndex];
+                    return selectedIndex;
             }
         }
     }
@@ -91,33 +93,54 @@ public static class AdminTool{
         Console.WriteLine($"\n\nDe vlucht is toegevoegd!\n");
         Thread.Sleep(5000);
     }
+    public static void RemoveFlight(){
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Verwijder een vlucht.");
+        List <Flight> flights = new List<Flight>();
+        foreach (Flight flight in Flights.GetDepartingFlights())
+        {
+            flights.Add(flight);
+        }
+        foreach (Flight flight in Flights.GetArrivingFlights())
+        {
+            flights.Add(flight);
+        }
+        Flight FlightToRemove = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om te verwijderen", flights)];
+        FlightToRemove.RemoveFromDatabase();
+    }
 
     public static string TimeSequence()
     {
+        bool isValid = true;
         while (true)
         {
-            Console.Clear();
-            Information.DisplayLogo();
-            Console.WriteLine("Format: 00:00");
-            Console.Write("Tijd: ");
-            string time = Console.ReadLine();
-
-            bool isValid = true;
-
-            if (time == null)
-            {
-                isValid = false;
-            }
-            else if (time.Length != 5 || time[2] != ':')
-            {
-                isValid = false;
-            }
-
             if (!isValid)
             {
                 Console.WriteLine("Ongeldig formaat.");
                 Console.ReadKey(true); 
+                isValid = true;
             }
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine("Format: 00:00");
+            Console.Write("Tijd: ");
+
+            string time = Console.ReadLine();
+            if (time == null)
+            {
+                isValid = false;
+            }
+            // dit is echt verschrikkelijk, maar ik kijk handmatig naar de lengte, waar de : is en elke andere char moet een nummer zijn.
+            if (time == null || time.Length != 5 || time[2] != ':' ||
+            !char.IsDigit(time[0]) ||
+            !char.IsDigit(time[1]) ||
+            !char.IsDigit(time[3]) ||
+            !char.IsDigit(time[4]))
+            {
+                isValid = false;
+            }
+
             else
             {
                 return time;
@@ -140,7 +163,7 @@ public static class AdminTool{
     public static string AircraftSequence()
     {
         List<string> options = new List<string>{"Airbus 330", "Boeing 737", "Boeing 787"};
-        return AskMultipleOptions("Vliegtuig", options);
+        return options[AskMultipleOptions<string>("Vliegtuig", options)];
     }
 
 
