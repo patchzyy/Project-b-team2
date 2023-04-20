@@ -78,6 +78,14 @@ class Login
 
                 email = CheckEmail();
 
+                string leftover = "";
+                if (email.Contains("."))
+                {
+                    email = InvertString(email);
+                    string[] splitEmail = email.Split('.');
+                    leftover = splitEmail[0];
+                }
+
                 if (!email.Contains("@"))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -99,6 +107,15 @@ class Login
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
+                if (leftover.Length < 2)
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je email moet een domein bevatten (.com, .nl).\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
                 break;
             }
             catch (FormatException)
@@ -111,14 +128,43 @@ class Login
         return email;
     }
 
+    private static string InvertString(string text)
+    {
+        string originalString = text;
+        char[] charArray = originalString.ToCharArray();
+        Array.Reverse(charArray);
+        string invertedString = new string(charArray);
+        return invertedString;
+
+    }
     // idee: oranje toevoegen als 1 eis goed is maar niet alle
     private static bool IsValidEmail(string email)
     {
-        if (email.Contains("@") && email.Contains(".") && email.Length > 8)
+        string leftover = "";
+        if (email.Contains("."))
         {
-            return true;
+            email = InvertString(email);
+            string[] splitEmail = email.Split('.');
+            leftover = splitEmail[0];
         }
-        return false;
+
+        if (email.Length < 8)
+        {
+            return false;
+        }
+        if (!email.Contains("@"))
+        {
+            return false;
+        }
+        if (!email.Contains("."))
+        {
+            return false;
+        }
+        if (leftover.Length < 2)
+        {
+            return false;
+        }
+        return true;
     }
 
     private static string CheckEmail()
