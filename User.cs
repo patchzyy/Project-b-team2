@@ -31,9 +31,25 @@ class User{
         Console.WriteLine("Vul je details in.");
 
         string first_name = FirstNameSequence();
+        if (first_name == null)
+        {
+            return null;   
+        }
         string last_name = LastNameSequence();
+        if (last_name == null)
+        {
+            return null;   
+        }
         string email = EmailSequence();
+        if (email == null)
+        {
+            return null;   
+        }
         string password = PasswordSequence();
+        if (password == null)
+        {
+            return null;   
+        }
 
         User currentuser = new User(first_name, last_name, email, password);
         currentuser.AddToDatabase();
@@ -78,6 +94,10 @@ class User{
             {
                 Console.Write("\nVul je voornaam in: ");
                 firstname = CheckFirstName();
+                if (firstname == null)
+                {
+                    return null;
+                }
                 // firstname = Console.ReadLine()!;
 
 
@@ -120,40 +140,7 @@ class User{
 
     private static string CheckFirstName()
     {
-        string? firstname = "";
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            char c = keyInfo.KeyChar;
-
-            if (c == '\r') { // user has pressed the enter key
-                Console.WriteLine(); // move to the next line
-                break;
-            }
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                if (firstname.Length > 0) {
-                    firstname = firstname.Remove(firstname.Length - 1);
-                    Console.Write("\b \b"); // erase the character from the console
-                }
-            }
-            Console.SetCursorPosition(20, Console.CursorTop);
-            if (keyInfo.Key != ConsoleKey.Backspace)
-            {
-                firstname += c;
-            }
-
-            if (IsValidFirstName(firstname)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write(firstname);
-        }
-        Console.WriteLine();
-        Console.ResetColor();
-        return firstname;
+        return Input.GetInput(IsValidFirstName, 20);
     }
 
 
@@ -166,6 +153,10 @@ class User{
         {
             Console.Write("Vul je achternaam in: ");
             string lastname = CheckLastName();
+            if (lastname == null)
+            {
+                return null;
+            }
 
             if (string.IsNullOrWhiteSpace(lastname))
             {
@@ -207,40 +198,7 @@ class User{
 
     private static string CheckLastName()
     {
-        string? lastname = "";
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            char c = keyInfo.KeyChar;
-
-            if (c == '\r') { // user has pressed the enter key
-                Console.WriteLine(); // move to the next line
-                break;
-            }
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                if (lastname.Length > 0) {
-                    lastname = lastname.Remove(lastname.Length - 1);
-                    Console.Write("\b \b"); // erase the character from the console
-                }
-            }
-            Console.SetCursorPosition(22, Console.CursorTop);
-            if (keyInfo.Key != ConsoleKey.Backspace)
-            {
-                lastname += c;
-            }
-
-            if (IsValidFirstName(lastname)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write(lastname);
-        }
-        Console.WriteLine();
-        Console.ResetColor();
-        return lastname;
+        return Input.GetInput(IsValidLastName, 22);
     }
 
     private static string EmailSequence()
@@ -252,6 +210,11 @@ class User{
         {
             Console.Write("\nVul je emailadres in: ");
             email = CheckEmail();
+            if (email == null)
+            {
+                return null;
+            }
+
             string leftover = "";
             if (email.Contains("."))
             {
@@ -343,40 +306,7 @@ class User{
 
     private static string CheckEmail()
     {
-        string? email = "";
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            char c = keyInfo.KeyChar;
-
-            if (c == '\r') { // user has pressed the enter key
-                Console.WriteLine(); // move to the next line
-                break;
-            }
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                if (email.Length > 0) {
-                    email = email.Remove(email.Length - 1);
-                    Console.Write("\b \b"); // erase the character from the console
-                }
-            }
-            Console.SetCursorPosition(22, Console.CursorTop);
-            if (keyInfo.Key != ConsoleKey.Backspace)
-            {
-                email += c;
-            }
-
-            if (IsValidEmail(email)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write(email);
-        }
-        Console.WriteLine();
-        Console.ResetColor();
-        return email;
+        return Input.GetInput(IsValidEmail, 22);
     }
 
     private static string PasswordSequence()
@@ -396,6 +326,10 @@ Vul een wachtwoord in van 8 of meer tekens met:
     ");
             Console.Write("Vul een wachtwoord in: ");
             password = CheckPassword();
+            if (password == null)
+            {
+                return null;
+            }
 
             if(password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
@@ -438,40 +372,7 @@ Vul een wachtwoord in van 8 of meer tekens met:
 
     private static string CheckPassword()
     {
-        string? password = "";
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            char c = keyInfo.KeyChar;
-
-            if (c == '\r') { // user has pressed the enter key
-                Console.WriteLine(); // move to the next line
-                break;
-            }
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                if (password.Length > 0) {
-                    password = password.Remove(password.Length - 1);
-                    Console.Write("\b \b"); // erase the character from the console
-                }
-            }
-            Console.SetCursorPosition(23, Console.CursorTop);
-            if (keyInfo.Key != ConsoleKey.Backspace)
-            {
-                password += c;
-            }
-
-            if (IsValidPassword(password)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write(password);
-        }
-        Console.WriteLine();
-        Console.ResetColor();
-        return password;
+        return Input.GetInput(IsValidPassword, 23);
     }
 
     private static bool ContainsSpecialChar(string password) {

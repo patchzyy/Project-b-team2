@@ -3,13 +3,18 @@ using Microsoft.Data.Sqlite;
 class Login
 {
     private static SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
-    public static User LoggingIn()
+    public static User? LoggingIn()
     {
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Sign In\n");
 
         string email = AskForEmail();
+        if (email == null)
+        {
+            Console.ResetColor();
+            return null;
+        }
 
         User userInfo;
         while (true)
@@ -65,7 +70,7 @@ class Login
         return userInfo;
     }
 
-    private static string AskForEmail()
+    private static string? AskForEmail()
     {
         string? email = "";
         while (true)
@@ -77,6 +82,10 @@ class Login
                 // Console.WriteLine();
 
                 email = CheckEmail();
+                if (email == null)
+                {
+                    return email;
+                }
 
                 string leftover = "";
                 if (email.Contains("."))
@@ -167,42 +176,9 @@ class Login
         return true;
     }
 
-    private static string CheckEmail()
+    private static string? CheckEmail()
     {
-        string? email = "";
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            char c = keyInfo.KeyChar;
-
-            if (c == '\r') { // user has pressed the enter key
-                Console.WriteLine(); // move to the next line
-                break;
-            }
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-                if (email.Length > 0) {
-                    email = email.Remove(email.Length - 1);
-                    Console.Write("\b \b"); // erase the character from the console
-                }
-            }
-            Console.SetCursorPosition(7, Console.CursorTop);
-            if (keyInfo.Key != ConsoleKey.Backspace)
-            {
-                email += c;
-            }
-
-            if (IsValidEmail(email)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-
-            Console.Write(email);
-        }
-        Console.WriteLine();
-        Console.ResetColor();
-        return email;
+        return Input.GetInput(IsValidEmail, 7);
     }
 
     private static User GetUser(string email)
