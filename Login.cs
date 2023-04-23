@@ -88,9 +88,10 @@ class Login
                 }
 
                 string leftover = "";
+                string invertedEmail;
                 if (email.Contains("."))
                 {
-                    email = InvertString(email);
+                    invertedEmail = InvertString(email);
                     string[] splitEmail = email.Split('.');
                     leftover = splitEmail[0];
                 }
