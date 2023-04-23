@@ -175,6 +175,10 @@ class Login
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             char c = keyInfo.KeyChar;
 
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                
+            }
             if (c == '\r') { // user has pressed the enter key
                 Console.WriteLine(); // move to the next line
                 break;
