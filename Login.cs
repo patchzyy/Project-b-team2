@@ -31,8 +31,12 @@ class Login
         {
             try
             {
-                Console.Write("Password: ");
-                string password = Console.ReadLine();
+                Console.Write("Wachtwoord: ");
+                string password = CheckPassword();
+                if (password == null)
+                {
+                    return null;
+                }
                 if (userInfo.Password == password)
                 {
                     // wat je ook doet, laat deze stukje aan niemand zien aub
@@ -225,5 +229,37 @@ class Login
             return null;
         }
         return founduser;
+    }
+
+    private static bool IsValidPassword(string password)
+    {
+        if (password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static string CheckPassword()
+    {
+        return Input.GetInput(IsValidPassword, 13);
+    }
+
+    private static bool ContainsSpecialChar(string password) {
+        foreach (char c in password) {
+            if (!Char.IsLetterOrDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+        private static bool ContainsDigit(string password) {
+        foreach (char c in password) {
+            if (Char.IsDigit(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
