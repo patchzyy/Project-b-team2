@@ -81,6 +81,11 @@ class Menu
         else if (selectedOption == "Login")
         {
             _currentUser = Login.LoggingIn();
+            if (_currentUser == null)
+            {
+                AddMenu(new[] { "Login", "Register", "More Information" });
+                return;
+            }
             if (_currentUser.has_Admin){
                 AddMenu(new[] { "Check Flights", "Admin Menu", "Log Out" });
             }
@@ -91,6 +96,12 @@ class Menu
         else if (selectedOption == "Register")
         {
             _currentUser = User.Register();
+            if (_currentUser == null)
+            {
+                Console.ResetColor();
+                AddMenu(new[] { "Login", "Register", "More Information" });
+                return;
+            }
             AddMenu(new[] { "Check Flights", "Log Out" });
         }
         else if (selectedOption == "More Information")
