@@ -112,7 +112,7 @@ public static class Flights
             departingFlights.Add(new Flight(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
         }
 
-        return departingFlights;
+        return departingFlights.OrderBy(f => f.Time).ToList();
     }
 
     public static List<Flight> GetArrivingFlights()
@@ -129,7 +129,7 @@ public static class Flights
             arrivingFlights.Add(new Flight(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
         }
 
-        return arrivingFlights;
+        return arrivingFlights.OrderBy(f => f.Time).ToList();
     } 
 
 }
