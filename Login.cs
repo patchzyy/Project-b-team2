@@ -7,7 +7,7 @@ class Login
     {
         Console.Clear();
         Information.DisplayLogo();
-        Console.WriteLine("Sign In\n");
+        Console.WriteLine("Aanmelden\n");
 
         string email = AskForEmail();
         if (email == null)
@@ -26,12 +26,38 @@ class Login
             }
             email = AskForEmail();
         }
-
+        bool falsePassword = false;
         while (true)
         {
             try
             {
-                Console.Write("Wachtwoord: ");
+                if (!falsePassword)
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.WriteLine("Aanmelden\n");
+                    Console.Write("Email: ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(email);
+                    Console.ResetColor();
+                    Console.WriteLine();
+                    Console.Write("Wachtwoord: ");
+                }
+                else
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.WriteLine("Aanmelden\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
+                    Console.ResetColor();
+                    Console.Write("Email: ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(email);
+                    Console.ResetColor();
+                    Console.WriteLine();
+                    Console.Write("Wachtwoord: ");
+                }
                 string password = CheckPassword();
                 if (password == null)
                 {
@@ -58,9 +84,7 @@ class Login
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    falsePassword = true;
                 }
             }
             catch (FormatException)
@@ -77,13 +101,25 @@ class Login
     private static string? AskForEmail()
     {
         string? email = "";
+        bool falseEmail = false;
         while (true)
         {
             try
             {
-                Console.Write("Email: ");
-                // email = Console.ReadLine();
-                // Console.WriteLine();
+                if (!falseEmail)
+                {
+                    Console.Write("Email: ");
+                }
+                else
+                {
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.WriteLine("Aanmelden\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Verkeerde email, probeer opnieuw.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Email: ");
+                }
 
                 email = CheckEmail();
                 if (email == null)
@@ -99,35 +135,34 @@ class Login
                     string[] splitEmail = email.Split('.');
                     leftover = splitEmail[0];
                 }
-
+                if (email.Contains("@."))
+                {
+                    EmailError("Je email moet een domein bevatten.\n");
+                    falseEmail = true;
+                    continue;
+                }
                 if (!email.Contains("@"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je email moet ten minste een '@'-teken bevatten.\n");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    EmailError("Je email moet ten minste een '@'-teken bevatten.\n");
+                    falseEmail = true;
                     continue;
                 }
                 if (!email.Contains("."))
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je email moet ten minste een domain name system bevatten.\n");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    EmailError("Je email moet ten minste een extension bevatten (.com, .nl).\n");
+                    falseEmail = true;
                     continue;
                 }
                 if (email.Length < 8)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je email mag niet korter dan 8 tekens zijn.\n");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    EmailError("Je email mag niet korter dan 8 tekens zijn.\n");
+                    falseEmail = true;
                     continue;
                 }
                 if (leftover.Length < 2)
                 {
-                    Console.Clear();
-                    Information.DisplayLogo();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je email moet een domein bevatten (.com, .nl).\n");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    EmailError("Je email moet een extension bevatten (.com, .nl).\n");
+                    falseEmail = true;
                     continue;
                 }
                 break;
@@ -142,6 +177,17 @@ class Login
         return email;
     }
 
+private static void EmailError(string errorText)
+{
+    Console.Clear();
+    Information.DisplayLogo();
+    Console.WriteLine("Aanmelden\n");
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.Write(errorText);
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.Write("Email: ");
+    Thread.Sleep(1250);
+}
     private static string InvertString(string text)
     {
         string originalString = text;
@@ -155,10 +201,11 @@ class Login
     private static bool IsValidEmail(string email)
     {
         string leftover = "";
+        string invertedEmail = "";
         if (email.Contains("."))
         {
-            email = InvertString(email);
-            string[] splitEmail = email.Split('.');
+            invertedEmail = InvertString(email);
+            string[] splitEmail = invertedEmail.Split('.');
             leftover = splitEmail[0];
         }
 
@@ -175,6 +222,10 @@ class Login
             return false;
         }
         if (leftover.Length < 2)
+        {
+            return false;
+        }
+        if (email.Contains("@."))
         {
             return false;
         }
@@ -242,7 +293,7 @@ class Login
 
     private static string CheckPassword()
     {
-        return Input.GetInput(IsValidPassword, 13);
+        return Input.GetInput(IsValidPassword, 12);
     }
 
     private static bool ContainsSpecialChar(string password) {
