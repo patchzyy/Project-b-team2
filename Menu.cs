@@ -110,13 +110,7 @@ class Menu
         }
         else if (selectedOption == "Check Flights")
         {
-            Thread.Sleep(1000);
-            Information.DisplayLogo();
-            Flights.DisplayArrivingFlights();
-            Console.WriteLine("");
-            Flights.DisplayDepartingFlights();
-            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
-            Console.ReadLine();
+            Flights.CheckFlights();
         }
 
 

@@ -38,6 +38,17 @@ public static class Flights
         connection.Close();
     }
 
+    public static void CheckFlights()
+    {
+            Thread.Sleep(1000);
+            Information.DisplayLogo();
+            Flights.DisplayArrivingFlights();
+            Console.WriteLine("");
+            Flights.DisplayDepartingFlights();
+            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
+            Console.ReadLine();
+    }
+
     public static void DisplayDepartingFlights()
     {
         List<Flight> departingFlights = GetDepartingFlights();
