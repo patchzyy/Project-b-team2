@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
 
 // Admin is geinherrit van User class.
-class User{
+public class User{
     public int id {get; set; }
     public string First_Name {get; set; }
 
@@ -20,6 +20,11 @@ class User{
         Email = email;
         Password = password;
         has_Admin = has_admin;
+    }
+
+    override public string ToString()
+    {
+        return $"Voornaam: {First_Name}  Achternaam: {Last_Name}  Email: {Email}";
     }
 
 
@@ -66,7 +71,7 @@ class User{
     //Voegt toe nieuwe User toe aan de database..
     // datbase wrapper die de verbinding instand houdt.
     // last rowid, bij user inserrt en dan ID ophalen.
-    private void AddToDatabase(){
+    public void AddToDatabase(){
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
@@ -391,6 +396,8 @@ Vul een wachtwoord in van 8 of meer tekens met:
             }
         }
         return false;
+
+
     }
 
 }

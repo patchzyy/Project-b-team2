@@ -6,7 +6,7 @@ class Menu
     // Bovenkant stack
     // ----------------------------
     // ["Login", "Register", "More Information"] <-- String array (Begin menu)
-    // ["Option 1", "Option 2", "Back"] <-- "Back" gaat terug naar de array hierboven (begin menu)
+    // ["Option 1", "Option 2", "Terug"] <-- "Terug" gaat terug naar de array hierboven (begin menu)
     // --------------------------
     // Onderkant stack
 
@@ -71,9 +71,9 @@ class Menu
     private void HandleSelectedOption(string selectedOption)
     {
         Information.DisplayLogo();
-        if (selectedOption == "Back" || selectedOption == "Log Out")
+        if (selectedOption == "Terug" || selectedOption == "Afmelden")
         {
-            if(selectedOption == "Log Out") _currentUser = null;
+            if(selectedOption == "Uitloggen") _currentUser = null;
 
             _menuStack.Pop();
             _selectedOption = 0;
@@ -87,10 +87,10 @@ class Menu
                 return;
             }
             if (_currentUser.has_Admin){
-                AddMenu(new[] { "Check Flights", "Admin Menu", "Log Out" });
+                AddMenu(new[] { "Check Flights", "Admin Menu", "Uitloggen" });
             }
             else{
-                AddMenu(new[] { "Check Flights", "Log Out" });
+                AddMenu(new[] { "Check Flights", "Uitloggen" });
             }
         }
         else if (selectedOption == "Register")
@@ -102,7 +102,7 @@ class Menu
                 AddMenu(new[] { "Login", "Register", "More Information" });
                 return;
             }
-            AddMenu(new[] { "Check Flights", "Log Out" });
+            AddMenu(new[] { "Check Flights", "Uitloggen" });
         }
         else if (selectedOption == "More Information")
         {
@@ -110,31 +110,43 @@ class Menu
         }
         else if (selectedOption == "Check Flights")
         {
-            Flights.CheckFlights();
+            Thread.Sleep(1000);
+            Information.DisplayLogo();
+            Flights.DisplayArrivingFlights();
+            Console.WriteLine("");
+            Flights.DisplayDepartingFlights();
+            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
+            Console.ReadLine();
         }
 
 
         // Admin menu options
         else if (selectedOption == "Admin Menu")
         {
-            AddMenu(new[] { "Manage Flights", "Manage Users", "Back" });
+            AddMenu(new[] { "Beheer Vluchten", "Beheer Gebruikers", "Terug" });
         }
-        else if (selectedOption == "Manage Flights")
+        else if (selectedOption == "Beheer Vluchten")
         {
-            AddMenu(new[] { "Add Flight", "Remove Flight", "Back" });
+            AddMenu(new[] { "Vlucht Toevoegen", "Vlucht verwijderen", "Terug" });
         }
-        else if (selectedOption == "Manage Users")
+        else if (selectedOption == "Beheer Gebruikers")
         {
-            AddMenu(new[] { "Add User", "Remove User", "Back" });
+            AddMenu(new[] { "Gebruiker Toevoegen", "Gebruiker Verwijderen", "Terug" });
         }
 
-        else if (selectedOption == "Add Flight")
+        else if (selectedOption == "Vlucht Toevoegen")
         {
             AdminTool.AddFlight();
         }
-        else if (selectedOption == "Remove Flight")
+        else if (selectedOption == "Vlucht verwijderen")
         {
             AdminTool.RemoveFlight();
+        }
+        else if (selectedOption == "Gebruiker Toevoegen"){
+            AdminTool.AddUser();
+        }
+        else if (selectedOption == "Gebruiker Verwijderen"){
+            AdminTool.RemoveUser();
         }
 
 

@@ -1,3 +1,4 @@
+using Microsoft.Data.Sqlite;
 public static class AdminTool{
 
     public static string AskStringInformation(string prompt, int minLength, string example = "")
@@ -31,7 +32,7 @@ public static class AdminTool{
 
         int selectedIndex = 0;
 
-        while (true)
+        while (true) 
         {
             Console.Clear();
             Information.DisplayLogo();
@@ -170,5 +171,66 @@ public static class AdminTool{
     public static string GateSequence()
     {
         return AskStringInformation("Gate", 2, "G6");
+    }
+
+    public static void AddUser(){
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Voeg een gebruiker toe.");
+        Console.WriteLine("dit is een tijdelijke implementatie, er word nog niks gechecked!");
+        Console.WriteLine("Vul de details in.");
+        string email = AskStringInformation("Email", 3);
+        string password = AskStringInformation("Wachtwoord", 3);
+        string first_name = AskStringInformation("Voornaam", 3);
+        string last_name = AskStringInformation("Achternaam", 3);
+        List<string> options = new List<string>{"true", "false"};
+        bool role = Convert.ToBoolean(options[AskMultipleOptions("admin?", options)]);
+        User user = new User(first_name, last_name, email, password, role);
+        user.AddToDatabase();
+    }
+    public static List<User> GetAllUsers(){
+        // cconnect to database
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+
+        // create command
+        SqliteCommand command = new SqliteCommand("SELECT * FROM users", connection);
+        // execute command
+        SqliteDataReader reader = command.ExecuteReader();
+        // read data and return a list of users
+        List<User> users = new List<User>();
+        while (reader.Read())
+        {
+            users.Add(new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetBoolean(4)));
+        }
+        return users;
+
+
+
+
+
+
+    }
+
+    public static void RemoveUser(){
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Verwijder een gebruiker.");
+        List <User> users = new List<User>();
+        foreach (User user in GetAllUsers())
+        {
+            users.Add(user);
+        }
+        User UserToRemove = users[AskMultipleOptions<User>("Selecteer een gebruiker om te verwijderen", users)];
+        string email = UserToRemove.Email;
+
+        // look thought the database and remove the matching email
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+        string query = $"DELETE FROM users WHERE email = '{email}'";
+        SqliteCommand command = new SqliteCommand(query, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+        
     }
 }
