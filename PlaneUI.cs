@@ -1,10 +1,28 @@
 public static class PlaneUI
 {
-    public static void DrawBoeing737(Boeing737 plane)
+
+    /*
+    README
+
+    Vliegtuig menu van selecteren enz is niet meer met PlaneUI.DrawBoeing737(new boeing727())
+    Vervang DrawBoeing met SelectBoeing
+    dus: PlaneUI.SelectBoeing737(new boeing727())
+
+    Seats moet ik nog fixen (eigenschappen van stoelen voor het berekenen van prijs enz.)
+    en vervolgens nog aangeven met de juiste kleuren in de vliegtuigen.
+
+    -Henk
+
+    Tot nu toe zijn de volgende dingen af:
+    Boeing737 select systeem (stoelen moeten nog gecorrigeeerd worden)
+    */
+    static string[] NederlandsBool = new string[2] { "Nee", "Ja" };
+
+    public static void DrawBoeing737(Boeing737 plane, Seat currentSeat)
     {
         Console.WriteLine("             _________________");
-        Console.WriteLine("            /                 \\");
-        Console.WriteLine("           /                   \\");
+        Console.WriteLine("            /                 \\                  Huidige stoel: " + currentSeat.SeatId);
+        Console.WriteLine("           /                   \\                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.IsFirstRowSeat)]);
         Console.WriteLine("         _/                     \\_");
         Console.WriteLine("        /                         \\");
         Console.WriteLine("      _/                           \\_");
@@ -24,6 +42,10 @@ public static class PlaneUI
             {
                 rowNr++;
             }
+            if (rowNr == 16 || rowNr == 17)
+            {
+                Console.WriteLine("|                                         |");
+            }
             rowHasSeats = false;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("|  ");
@@ -40,13 +62,19 @@ public static class PlaneUI
                     {
                         Console.Write("   ");
                     }
+                    if (seat.IsFirstRowSeat)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
 
                     if (seat.IsReserved)
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    else
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Red;
 
-                    Console.Write(seat.SeatId + "  ");
+                    if (seat == currentSeat)
+                        Console.BackgroundColor = ConsoleColor.Blue;
+
+                    Console.Write(seat.SeatId);
+                    Console.ResetColor();
+                    Console.Write("  ");
+
                     rowHasSeats = true;
                     rowSeatCount++;
                 }
@@ -74,6 +102,50 @@ public static class PlaneUI
                 return;
             }
         }
+    }
+
+    // returned seatID van geselecteerde stoel
+    public static string? SelectBoeing737(Boeing737 plane)
+    {
+        var hasSelection = false;
+        var seatIndex = 0;
+        while (!hasSelection)
+        {
+            Console.Clear();
+            DrawBoeing737(plane, plane.Seats[seatIndex]);
+            var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Enter)
+            {
+                if (!plane.Seats[seatIndex].IsReserved)
+                    hasSelection = true;
+            }
+            if (key.Key == ConsoleKey.Escape)
+                return null;
+            if ((key.Key == ConsoleKey.LeftArrow) && (seatIndex > 0))
+                seatIndex--;
+            if ((key.Key == ConsoleKey.RightArrow) && (seatIndex < (plane.Seats.Count - 1)))
+                seatIndex++;
+            if ((key.Key == ConsoleKey.UpArrow) && (seatIndex > 2))
+            {
+                seatIndex -= 3;
+                if (seatIndex > 2)
+                    seatIndex -= 3;
+            }
+            if ((key.Key == ConsoleKey.DownArrow) && (seatIndex < (plane.Seats.Count - 6)))
+            {
+                if (seatIndex < 3)
+                    seatIndex += 3;
+                else
+                    seatIndex += 6;
+            }
+        }
+        if (hasSelection)
+        {
+            Console.WriteLine("Selected seat: " + plane.Seats[seatIndex].SeatId);
+            return plane.Seats[seatIndex].SeatId;
+        }
+        else
+            return null;
     }
 
     public static void DrawBoeing787(Boeing787 plane)
