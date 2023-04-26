@@ -45,9 +45,9 @@ public class Seat
 
         factor kan trouwens ook nog gewoon een vaste prijs zijn die erbij komt dat is misschien makkelijker
         */
-        if (ExtraBeenRuimte == true)
+        if (ExtraBeenRuimte)
         {
-            if (IsFrontSeat == true)
+            if (IsFrontSeat)
             {
                 Price = BasePrice * beenruimte * frontseat;
                 return Price;
@@ -58,32 +58,32 @@ public class Seat
                 return Price;
             }
         }
-        if (IsClubClass == true)
+        if (IsClubClass)
         {
             Price = BasePrice * clubclass;
             return Price;
         }
-        if (IsDoubleSeat == true)
+        if (IsDoubleSeat)
         {
             Price = BasePrice * doubleseat;
             return Price;
         }
-        if (IsFrontSeat == true)
+        if (IsFrontSeat)
         {
             Price = BasePrice * frontseat;
             return Price;
         }
-        if (IsBusinessClass == true)
+        if (IsBusinessClass)
         {
             Price = BasePrice * businessclass;
             return Price;
         }
-        if (IsEconomyPlus == true)
+        if (IsEconomyPlus)
         {
             Price = BasePrice * economyplus;
             return Price;
         }
-        if (IsEconomy == true)
+        if (IsEconomy)
         {
             Price = BasePrice * economy;
             return Price;
