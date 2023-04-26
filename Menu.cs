@@ -5,7 +5,7 @@ class Menu
 
     // Bovenkant stack
     // ----------------------------
-    // ["Login", "Register", "More Information"] <-- String array (Begin menu)
+    // ["Login", "Register", "Meer Informatie"] <-- String array (Begin menu)
     // ["Option 1", "Option 2", "Terug"] <-- "Terug" gaat terug naar de array hierboven (begin menu)
     // --------------------------
     // Onderkant stack
@@ -83,14 +83,14 @@ class Menu
             _currentUser = Login.LoggingIn();
             if (_currentUser == null)
             {
-                AddMenu(new[] { "Login", "Register", "More Information" });
+                AddMenu(new[] { "Login", "Register", "Meer Informatie" });
                 return;
             }
             if (_currentUser.has_Admin){
-                AddMenu(new[] { "Check Flights", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
             }
             else{
-                AddMenu(new[] { "Check Flights", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Uitloggen" });
             }
         }
         else if (selectedOption == "Register")
@@ -99,24 +99,18 @@ class Menu
             if (_currentUser == null)
             {
                 Console.ResetColor();
-                AddMenu(new[] { "Login", "Register", "More Information" });
+                AddMenu(new[] { "Login", "Register", "Meer Informatie" });
                 return;
             }
-            AddMenu(new[] { "Check Flights", "Uitloggen" });
+            AddMenu(new[] { "Vluchten bekijken", "Uitloggen" });
         }
-        else if (selectedOption == "More Information")
+        else if (selectedOption == "Meer Informatie")
         {
             Information.GetInformation();
         }
-        else if (selectedOption == "Check Flights")
+        else if (selectedOption == "Vluchten bekijken")
         {
-            Thread.Sleep(1000);
-            Information.DisplayLogo();
-            Flights.DisplayArrivingFlights();
-            Console.WriteLine("");
-            Flights.DisplayDepartingFlights();
-            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
-            Console.ReadLine();
+            Flights.CheckFlights();
         }
 
 

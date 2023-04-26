@@ -4,11 +4,12 @@ using System.Globalization;
 
 // Columns van de Flights table inde database op volgorde
 
-// time: Tijd wanneer het vliegtuig aankomt/vertrekt	[int]
+// id: Het unieke id van de vlucht [int]
+// duration: De duur van de vlucht in minuten [int]
+// time: Tijd wanneer het vliegtuig aankomt/vertrekt	[string]
 // origin: Plek vanaf waar het vliegtuig vertrekt		[string]
 // destination: Plek waar het vliegtuig naartoe gaat	[string]
 // aircraft: Het type vliegtuig (Boeing 737, Airbus 330 of Boeing 787)	[string]
-// state: De status van het vliegtuig (boarding, geland, inactief of vertrokken)	[string]
 // gate: De plek waar de passangiers moet in/uitstappen	[string]
 
 // Code voor de connectie naar de database
@@ -52,7 +53,7 @@ public static class Flights
     public static void DisplayDepartingFlights()
     {
         List<Flight> departingFlights = GetDepartingFlights();
-        Console.WriteLine("Vertrekken\n");
+        Console.WriteLine("Vertrek\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in departingFlights)
@@ -81,7 +82,7 @@ public static class Flights
     public static void DisplayArrivingFlights()
     {
         List<Flight> arrivingFlights = GetArrivingFlights();
-        Console.WriteLine("Aankomsten\n");
+        Console.WriteLine("Aankomst\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
         foreach (Flight flight in arrivingFlights)
