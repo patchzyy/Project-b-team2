@@ -1,13 +1,94 @@
 public class Seat
 {
     public string SeatId { get; set; }
-    public bool IsWindowSeat { get; set; }
-    public bool IsFirstRowSeat { get; set; }
+    public bool ExtraBeenRuimte { get; set; }
     public bool IsReserved { get; set; }
-    public Seat(string seatId, bool isWindowSeat, bool isFirstRowSeat)
+    public bool IsClubClass { get; set; }
+    public bool IsDoubleSeat { get; set; }
+    public bool IsFrontSeat { get; set; }
+    public bool IsBusinessClass { get; set; }
+    public bool IsEconomyPlus { get; set; }
+    public bool IsEconomy { get; set; }
+    public int BasePrice { get; set; }
+    public Seat(string seatId, bool extraBeenRuimte, bool isClubClass, bool isDoubleSeat, bool isFrontSeat, bool isBusinessClass, bool isEconomyPlus, bool isEconomy)
     {
         this.SeatId = seatId;
-        this.IsWindowSeat = isWindowSeat;
-        this.IsFirstRowSeat = isFirstRowSeat;
+        this.ExtraBeenRuimte = extraBeenRuimte;
+        this.IsClubClass = isClubClass;
+        this.IsDoubleSeat = isDoubleSeat;
+        this.IsFrontSeat = isFrontSeat;
+        this.IsBusinessClass = isBusinessClass;
+        this.IsEconomyPlus = isEconomyPlus;
+        this.IsEconomy = isEconomy;
+        this.BasePrice = 100;
+    }
+
+    public double SeatPrice()
+    {
+        double beenruimte = 1.2;
+        double clubclass = 2;
+        double doubleseat = 1.3;
+        double frontseat = 1.25;
+        double businessclass = 2;
+        double economyplus = 1.5;
+        double economy = 1;
+
+        double Price = BasePrice;
+        /* 
+        als ik de FlightDuration weet kan ik iet doen van Price (Basisprijs + factor van eventuele bijzonderheden)
+        en dan daar de DuurPrijs daar bij vermenigvuldigen met het aantal uren (bijvoorbeeld 50 euro per uur erbij bij)
+        
+        *voorbeeld*
+        dan krijg je de (basisprijs + extra beenruimte) + Duurprijs * aantal uren
+        dus (100 * 1.2) + (50 * 6)
+        dat is dan een vlucht van 6 uur waarbij een stoel met extra beenruimte is gereserveerd
+
+        factor kan trouwens ook nog gewoon een vaste prijs zijn die erbij komt dat is misschien makkelijker
+        */
+        if (ExtraBeenRuimte == true)
+        {
+            if (IsFrontSeat == true)
+            {
+                Price = BasePrice * beenruimte * frontseat;
+                return Price;
+            }
+            else
+            {
+                Price = BasePrice * beenruimte;
+                return Price;
+            }
+        }
+        if (IsClubClass == true)
+        {
+            Price = BasePrice * clubclass;
+            return Price;
+        }
+        if (IsDoubleSeat == true)
+        {
+            Price = BasePrice * doubleseat;
+            return Price;
+        }
+        if (IsFrontSeat == true)
+        {
+            Price = BasePrice * frontseat;
+            return Price;
+        }
+        if (IsBusinessClass == true)
+        {
+            Price = BasePrice * businessclass;
+            return Price;
+        }
+        if (IsEconomyPlus == true)
+        {
+            Price = BasePrice * economyplus;
+            return Price;
+        }
+        if (IsEconomy == true)
+        {
+            Price = BasePrice * economy;
+            return Price;
+        }
+        else
+            return Price;
     }
 }

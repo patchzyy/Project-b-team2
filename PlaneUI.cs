@@ -22,13 +22,23 @@ public static class PlaneUI
     {
         Console.WriteLine("             _________________");
         Console.WriteLine("            /                 \\                  Huidige stoel: " + currentSeat.SeatId);
-        Console.WriteLine("           /                   \\                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.IsFirstRowSeat)]);
-        Console.WriteLine("         _/                     \\_");
+        Console.WriteLine("           /                   \\                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.ExtraBeenRuimte)]);
+        Console.WriteLine("         _/                     \\_               Prijs: " + currentSeat.SeatPrice());
         Console.WriteLine("        /                         \\");
         Console.WriteLine("      _/                           \\_");
-        Console.WriteLine("     /                               \\");
+        Console.Write("     /                               \\");
+        Console.Write("           Stoelen met extra beenruimte staan");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write(" geel ");
+        Console.ResetColor();
+        Console.Write("aangegeven. \n");
         Console.WriteLine("   _/                                 \\_");
-        Console.WriteLine("  /                                     \\");
+        Console.Write("  /                                     \\");
+        Console.Write("        Stoelen die gereserveerd zijn staan ");
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.Write("rood");
+        Console.ResetColor();
+        Console.Write(" aangegeven. \n");
         Console.WriteLine(" /                                       \\");
         Console.WriteLine("|                                         |");
         Console.WriteLine("|                                         |");
@@ -62,7 +72,7 @@ public static class PlaneUI
                     {
                         Console.Write("   ");
                     }
-                    if (seat.IsFirstRowSeat)
+                    if (seat.ExtraBeenRuimte)
                         Console.ForegroundColor = ConsoleColor.Yellow;
 
                     if (seat.IsReserved)
