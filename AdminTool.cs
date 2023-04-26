@@ -224,6 +224,14 @@ public static class AdminTool{
         User UserToRemove = users[AskMultipleOptions<User>("Selecteer een gebruiker om te verwijderen", users)];
         string email = UserToRemove.Email;
 
+        // ask the user if they are sure
+        Console.Clear();
+        Information.DisplayLogo();
+        List<string> options = new List<string>{"Ja", "Nee"};
+        if (options[AskMultipleOptions($"Weet je zeker dat je {email} wilt verwijderen?", options)] == "Nee")
+        {
+            return;
+        }
         // look thought the database and remove the matching email
         SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
         connection.Open();

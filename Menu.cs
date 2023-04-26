@@ -87,7 +87,7 @@ class Menu
                 return;
             }
             if (_currentUser.has_Admin){
-                AddMenu(new[] { "Check Flights", "Admin Menu", "Uitloggen" });
+                AddMenu(new[] { "Check Flights", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
             }
             else{
                 AddMenu(new[] { "Check Flights", "Uitloggen" });
@@ -147,6 +147,11 @@ class Menu
         }
         else if (selectedOption == "Gebruiker Verwijderen"){
             AdminTool.RemoveUser();
+        }
+        else if (selectedOption == "Test vliegtuig selectie"){
+            string seat = PlaneUI.SelectBoeing737(new Boeing737());
+            Console.WriteLine("druk op enter om terug te gaan.");
+            Console.ReadLine();
         }
 
 

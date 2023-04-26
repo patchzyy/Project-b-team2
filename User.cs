@@ -24,7 +24,10 @@ public class User{
 
     override public string ToString()
     {
-        return $"Voornaam: {First_Name}  Achternaam: {Last_Name}  Email: {Email}";
+        // gebruik deze methode om de user te printen.
+        //Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
+        return $"email: {Email, -20}\t name: {First_Name} {Last_Name}";
+        
     }
 
 
