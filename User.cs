@@ -224,10 +224,11 @@ public class User{
             }
 
             string leftover = "";
+            string invertedEmail = "";
             if (email.Contains("."))
             {
-                email = InvertString(email);
-                string[] splitEmail = email.Split('.');
+                invertedEmail = InvertString(email);
+                string[] splitEmail = invertedEmail.Split('.');
                 leftover = splitEmail[0];
             }
 
@@ -342,24 +343,21 @@ Vul een wachtwoord in van 8 of meer tekens met:
             if(password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
                 Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
-                while (true)
+                Console.Write("Bevestig je wachtwoord: ");
+                confirmpassword = Console.ReadLine();
+                
+                // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
+                if(password != confirmpassword)
                 {
-                    Console.Write("Bevestig je wachtwoord: ");
-                    confirmpassword = Console.ReadLine();
-                    
-                    // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
-                    if(password != confirmpassword)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Je wachtwoord is correct. Een moment alstublieft.");
-                        Thread.Sleep(750);
-                        break;
-                    }
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.WriteLine("Je wachtwoord is correct. Een moment alstublieft.");
+                    Thread.Sleep(750);
+                    break;
                 }
             }
             // hier missen we nog specifiek laten zien waar user verkeerde input geeft

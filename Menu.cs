@@ -71,7 +71,7 @@ class Menu
     private void HandleSelectedOption(string selectedOption)
     {
         Information.DisplayLogo();
-        if (selectedOption == "Terug" || selectedOption == "Afmelden")
+        if (selectedOption == "Terug" || selectedOption == "Afmelden" || selectedOption == "Uitloggen")
         {
             if(selectedOption == "Uitloggen") _currentUser = null;
 
