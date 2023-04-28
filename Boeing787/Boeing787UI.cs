@@ -2,6 +2,8 @@ public class DrawBoeing787UI
 {
     public static void DrawBoeing787(Boeing787 plane)
     {
+        Console.WriteLine("        /                                            \\");
+        Console.WriteLine("       /                                              \\");
         Console.WriteLine("     _/                                                \\_");
         Console.WriteLine("    /                                                    \\");
         Console.WriteLine("   /                                                      \\");
