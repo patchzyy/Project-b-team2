@@ -73,7 +73,7 @@ class Menu
         Information.DisplayLogo();
         if (selectedOption == "Terug" || selectedOption == "Afmelden" || selectedOption == "Uitloggen")
         {
-            if(selectedOption == "Uitloggen") _currentUser = null;
+            if (selectedOption == "Uitloggen") _currentUser = null;
 
             _menuStack.Pop();
             _selectedOption = 0;
@@ -86,10 +86,12 @@ class Menu
                 AddMenu(new[] { "Login", "Register", "Meer Informatie" });
                 return;
             }
-            if (_currentUser.has_Admin){
+            if (_currentUser.has_Admin)
+            {
                 AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
             }
-            else{
+            else
+            {
                 AddMenu(new[] { "Vluchten bekijken", "Uitloggen" });
             }
         }
@@ -136,14 +138,17 @@ class Menu
         {
             AdminTool.RemoveFlight();
         }
-        else if (selectedOption == "Gebruiker Toevoegen"){
+        else if (selectedOption == "Gebruiker Toevoegen")
+        {
             AdminTool.AddUser();
         }
-        else if (selectedOption == "Gebruiker Verwijderen"){
+        else if (selectedOption == "Gebruiker Verwijderen")
+        {
             AdminTool.RemoveUser();
         }
-        else if (selectedOption == "Test vliegtuig selectie"){
-            string seat = PlaneUI.SelectBoeing737(new Boeing737());
+        else if (selectedOption == "Test vliegtuig selectie")
+        {
+            string seat = DrawBoeing737UI.SelectBoeing737(new Boeing737());
             Console.WriteLine("druk op enter om terug te gaan.");
             Console.ReadLine();
         }
