@@ -3,21 +3,18 @@ public class DrawBoeing737UI
     public static void DrawBoeing737(Boeing737 plane, Seat currentSeat)
     {
         string[] NederlandsBool = new string[2] { "Nee", "Ja" };
-        Console.WriteLine("             _________________");
-        Console.WriteLine("            /                 \\                  Huidige stoel: " + currentSeat.SeatId);
-        Console.WriteLine("           /                   \\                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.ExtraBeenRuimte)]);
-        Console.WriteLine("         _/                     \\_               Prijs: " + currentSeat.SeatPrice());
+        Console.WriteLine("         _/                     \\_");
         Console.WriteLine("        /                         \\");
         Console.WriteLine("      _/                           \\_");
         Console.Write("     /                               \\");
-        Console.Write("           Stoelen met extra beenruimte staan");
+        Console.Write("                      Stoelen met extra beenruimte staan");
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write(" geel ");
         Console.ResetColor();
         Console.Write("aangegeven. \n");
         Console.WriteLine("   _/                                 \\_");
         Console.Write("  /                                     \\");
-        Console.Write("        Stoelen die gereserveerd zijn staan ");
+        Console.Write("                   Stoelen die gereserveerd zijn staan ");
         Console.BackgroundColor = ConsoleColor.Red;
         Console.Write("rood");
         Console.ResetColor();
@@ -35,10 +32,15 @@ public class DrawBoeing737UI
             {
                 rowNr++;
             }
-            if (rowNr == 16 || rowNr == 17)
+            if (rowNr == 16)
             {
                 Console.WriteLine("|                                         |");
             }
+            if (rowNr == 17)
+            {
+                Console.WriteLine("|                                         |" + "                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.ExtraBeenRuimte)]);
+            }
+
             rowHasSeats = false;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("|  ");
@@ -81,8 +83,18 @@ public class DrawBoeing737UI
             }
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("|" + $"  {rowNr}");
-
+            if (rowNr == 16)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "             Huidige stoel: " + currentSeat.SeatId);
+            }
+            if (rowNr == 17)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "             Prijs: " + currentSeat.SeatPrice());
+            }
+            else if (rowNr != 16 && rowNr != 17)
+            {
+                Console.WriteLine("|" + $"  {rowNr}");
+            }
             rowNr++;
             if (rowNr == 34)
             {

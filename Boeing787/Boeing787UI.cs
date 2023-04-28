@@ -2,6 +2,12 @@ public class DrawBoeing787UI
 {
     public static void DrawBoeing787(Boeing787 plane)
     {
+        Console.WriteLine("     _/                                                \\_");
+        Console.WriteLine("    /                                                    \\");
+        Console.WriteLine("   /                                                      \\");
+        Console.WriteLine("  /                                                        \\");
+        Console.WriteLine(" /                                                          \\");
+        Console.WriteLine("/                                                            \\");
         Console.WriteLine("|                                                            |");
         Console.WriteLine("|                                                            |");
         int rowNr = 1;
@@ -93,6 +99,11 @@ public class DrawBoeing787UI
             {
                 Console.WriteLine("|                                                            |");
                 Console.WriteLine("|                                                            |");
+                Console.WriteLine("\\                                                            /");
+                Console.WriteLine(" \\                                                          /");
+                Console.WriteLine("  \\_                                                      _/");
+                Console.WriteLine("    \\                                                    /");
+                Console.WriteLine("     \\_                                                _/");
                 return;
             }
         }

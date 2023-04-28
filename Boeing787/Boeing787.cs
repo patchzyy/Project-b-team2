@@ -51,15 +51,15 @@ public class Boeing787 : Plane
             Seats.Add(new Seat($"{rowNr}-L", false, false, false, false, false, true, false));
         }
         //row 23
-        Seats.Add(new Seat("17-A", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("17-B", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("17-C", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("17-D", false, false, false, false, false, true, false));
-        Seats.Add(new Seat("17-E", false, false, false, false, false, true, false));
-        Seats.Add(new Seat("17-F", false, false, false, false, false, true, false));
-        Seats.Add(new Seat("17-J", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("17-K", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("17-L", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-A", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-B", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-C", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-D", false, false, false, false, false, true, false));
+        Seats.Add(new Seat("23-E", false, false, false, false, false, true, false));
+        Seats.Add(new Seat("23-F", false, false, false, false, false, true, false));
+        Seats.Add(new Seat("23-J", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-K", false, false, false, false, false, false, true));
+        Seats.Add(new Seat("23-L", false, false, false, false, false, false, true));
         //row 24 & 25
         for (int rowNr = 24; rowNr <= 25; rowNr++)
         {
