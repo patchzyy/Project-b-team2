@@ -357,7 +357,7 @@ Vul een wachtwoord in van 8 of meer tekens met:
                 {
                     Console.WriteLine("Je wachtwoord is correct. Een moment alstublieft.");
                     Thread.Sleep(750);
-                    break;
+                    return password;
                 }
             }
             // hier missen we nog specifiek laten zien waar user verkeerde input geeft
