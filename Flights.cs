@@ -6,6 +6,7 @@ using System.Globalization;
 
 // id: Het unieke id van de vlucht [int]
 // duration: De duur van de vlucht in minuten [int]
+// date: De datum van de vlucht [string]
 // time: Tijd wanneer het vliegtuig aankomt/vertrekt	[string]
 // origin: Plek vanaf waar het vliegtuig vertrekt		[string]
 // destination: Plek waar het vliegtuig naartoe gaat	[string]
@@ -41,13 +42,13 @@ public static class Flights
 
     public static void CheckFlights()
     {
-            Thread.Sleep(1000);
-            Information.DisplayLogo();
-            Flights.DisplayArrivingFlights();
-            Console.WriteLine("");
-            Flights.DisplayDepartingFlights();
-            Console.WriteLine("\n\nDruk op enter om terug te gaan.");
-            Console.ReadLine();
+        Thread.Sleep(1000);
+        Information.DisplayLogo();
+        Flights.DisplayArrivingFlights();
+        Console.WriteLine("");
+        Flights.DisplayDepartingFlights();
+        Console.WriteLine("\n\nDruk op enter om terug te gaan.");
+        Console.ReadLine();
     }
 
     public static void DisplayDepartingFlights()
@@ -121,7 +122,7 @@ public static class Flights
 
         while (reader.Read())
         {
-            departingFlights.Add(new Flight(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
+            departingFlights.Add(new Flight(reader.GetInt16(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
         }
 
         return departingFlights.OrderBy(f => f.Time).ToList();
@@ -138,10 +139,10 @@ public static class Flights
 
         while (reader.Read())
         {
-            arrivingFlights.Add(new Flight(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
+            arrivingFlights.Add(new Flight(reader.GetInt16(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
         }
 
         return arrivingFlights.OrderBy(f => f.Time).ToList();
-    } 
+    }
 
 }

@@ -79,14 +79,15 @@ public static class AdminTool{
         Console.WriteLine("Voeg een vlucht toe.");
         Console.WriteLine("Vul de details in.");
 
+        int duration = DurationSequence();
+        string date = DateSequence();
         string time = TimeSequence();
         string origin = OriginSequence();
         string destination = DestinationSequence();
         string aircraft = AircraftSequence();
-        string state = "word berekend";
         string gate = GateSequence();
 
-        Flight currentflight = new Flight(time, origin, destination, aircraft, state, gate);
+        Flight currentflight = new Flight(duration, date, time, origin, destination, aircraft, gate);
         currentflight.AddToDatabase();
 
         Console.Clear();
@@ -109,6 +110,16 @@ public static class AdminTool{
         }
         Flight FlightToRemove = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om te verwijderen", flights)];
         FlightToRemove.RemoveFromDatabase();
+    }
+
+    public static int DurationSequence()
+    {
+        return Convert.ToInt32(AskStringInformation("De duur van de vlucht (IN MINUTEN!)", 1, "120"));
+    }
+    
+    public static string DateSequence()
+    {
+        return AskStringInformation("De datum van de vlucht (DD:MM:YY format. Dag, Maand, Jaar)", 9, "1");
     }
 
     public static string TimeSequence()
