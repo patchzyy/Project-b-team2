@@ -91,4 +91,16 @@ public class Seat
         else
             return Price;
     }
+
+    public double GetTotalPrice(Flight flight)
+    {
+        return SeatPrice() + DurationPrice(flight);
+    }
+
+    public double DurationPrice(Flight flight)
+    {
+        double PricePerHour = 50;
+        double DurationPrice = 0.0;
+        return DurationPrice + flight.Duration * PricePerHour;
+    }
 }
