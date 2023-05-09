@@ -30,6 +30,8 @@ class Menu
             Console.Clear();
             Information.DisplayLogo();
             string[] currentMenu = _menuStack.Peek();
+            ExtraMenuText(currentMenu);
+
             Console.WriteLine("Selecteer een optie:");
             for (int i = 0; i < currentMenu.Length; i++)
             {
@@ -68,6 +70,25 @@ class Menu
         return _selectedOption;
     }
 
+    private void ExtraMenuText(string[] currentMenu){
+
+        //Bagage menu
+        if(currentMenu.Contains("15kg ruimbagage €22,00")){
+            Information.DisplayLugageInfo();
+        }
+        //Vip-service menu
+        else if(currentMenu.Contains("VIP-Pas Toevoegen voor €40,00 PP")){
+            Information.DisplayVipInfo();
+        }
+        else if(currentMenu.Contains("Entertainment toevoegen voor €10,00 PP")){
+            Information.DisplayEntertainmentInfo();
+        }
+        else if(currentMenu.Contains("Lounge toegang toevoegen €35,00 PP")){
+            Information.DisplayLoungeInfo();
+        }
+
+    }
+
     private void HandleSelectedOption(string selectedOption)
     {
         Information.DisplayLogo();
@@ -92,7 +113,7 @@ class Menu
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
             }
         }
         else if (selectedOption == "Register")
@@ -104,7 +125,7 @@ class Menu
                 AddMenu(new[] { "Login", "Register", "Meer Informatie" });
                 return;
             }
-            AddMenu(new[] { "Vluchten bekijken", "Uitloggen" });
+            AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
         }
         else if (selectedOption == "Meer Informatie")
         {
@@ -114,6 +135,35 @@ class Menu
         {
             Flights.CheckFlights();
         }
+
+        // Extra opties / features bijboeken.
+        else if(selectedOption == "Vlucht ervaring uitbreiden"){
+            AddMenu(new[] {"Bagage-upgrades", "Eten pre-orderen", "Lounge-Toegang", "In-flight entertainment", "VIP-Services", "Vlucht-verzekering", "Terug"});
+        }
+        else if(selectedOption == "Bagage-upgrades"){
+            AddMenu(new[] {"15kg ruimbagage €22,00", "20kg ruimbagage €24,00", "25kg ruimbagage €29,00","30kg ruimbagage €46,00","Terug"});
+        }
+        else if(selectedOption == "Eten pre-orderen"){
+            AddMenu(new[] {"Menu bekijken","Bestellen","Terug"});
+        }
+        else if(selectedOption == "Lounge-Toegang"){
+            AddMenu(new[] {"Lounge toegang toevoegen €35,00 PP","Terug"});
+        }
+        else if(selectedOption == "In-flight entertainment"){
+            AddMenu(new[] {"Entertainment toevoegen voor €10,00 PP","Terug"});
+        }
+        // snelle check-ins, beveiligingscontroles, bagageafhandeling en instappen
+        else if(selectedOption == "VIP-Services"){
+            AddMenu(new[] {"VIP-Pas Toevoegen voor €40,00 PP","Terug"});
+        }
+        else if(selectedOption == "Vlucht-verzekering"){
+            AddMenu(new[] {"Toevoegen €15,00 PP","Terug"});
+        }
+        else if(selectedOption == "Menu bekijken"){
+            Information.DisplayMenuInfo();
+        }
+
+
 
 
         // Admin menu options

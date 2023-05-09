@@ -40,4 +40,113 @@ public class Information
         Druk op de ENTER toets om een optie te kiezen
         -----------------------------------------------------------------------------------------------------------------------");
     }
+
+    public static void DisplayLugageInfo(){
+        Console.WriteLine(@"
+Wat zijn de tarieven voor ruimbagage?
+-----------------------------------------------------------------------------------------------------------------------
+Kom je op de luchthaven met ruimbagage die niet vooraf geboekt en betaald is, dan kun je ter plekke ruimbagage bijkopen.
+Er is 10 kg handbagage PP en 0 kg ruimbagage PP inbegrepen. 
+-----------------------------------------------------------------------------------------------------------------------
+
+De tarieven voor ruimbagage zijn:
+        ");
+    }
+
+    public static void DisplayMenuInfo(){
+    Console.WriteLine(@"
+Menu aan boord
+-----------------------------------------------------------------------------------------------------------------------
+Welkom aan boord bij Rotterdam Airlines. Hieronder vindt u onze selectie van heerlijke gerechten en drankjes die u kunt bestellen.
+-----------------------------------------------------------------------------------------------------------------------
+
+Maaltijden:
+- Kippenpasta met romige tomatensaus: €12
+- Beef stroganoff met rijst: €14
+- Vegetarische lasagne: €10
+- Salade met gegrilde kip: €8
+- Sandwich met gerookte zalm: €9
+
+Snacks:
+- Gemengde noten: €4
+- Chips: €3
+- Olijven: €4
+
+Desserts:
+- Brownie: €5
+- Vers fruit: €4
+
+Dranken:
+- Frisdranken: €2
+- Koffie en thee: €3
+- Bier: €5
+- Wijn: €6
+
+-----------------------------------------------------------------------------------------------------------------------
+Laat ons weten als u speciale dieetwensen heeft. Wij hopen dat u geniet van uw vlucht!"
+        );
+
+        Console.WriteLine("Druk op enter om terug te gaan.");
+        Console.ReadLine();
+    }
+
+    public static void DisplayVipInfo(){
+        Console.WriteLine(@"
+VIP services Rotterdam Airlines
+-----------------------------------------------------------------------------------------------------------------------
+Geen gedoe op de airport? 
+Onze Vip Services zorgen voor meer confort.
+
+VIP-services:
+- Snelle check-ins
+- Priority acces bij Beveiligingscontroles
+- In-Person Bagageafhandeling
+- Voorrang bij het instappen
+
+Upgrade naar VIP-services voor slechts €40 per persoon.
+
+----------------------------------------------------------------------------------------------------------------------- 
+        ");
+    }
+
+    public static void DisplayEntertainmentInfo(){
+        Console.WriteLine(@"
+On-Flight Entertainment
+-----------------------------------------------------------------------------------------------------------------------
+Maak je vlieg ervaring leuker via On-Flight Entertainment
+
+Bevat:
+- Film-Arrangement
+    200 films met IMDB rating boven 6,5! 
+- Games
+    20 Games + een controller.
+- Muziek
+    On-Flight radio
+- 1 frisdrank naar keuze
+
+Breidt uit met de Entertainment bundel voor slechts €10 per persoon.
+
+----------------------------------------------------------------------------------------------------------------------- 
+        ");
+    }
+
+
+    public static void DisplayLoungeInfo(){
+    Console.WriteLine(@"
+Lounge Acces
+-----------------------------------------------------------------------------------------------------------------------
+Rust nodig? Dat kan.
+
+Met Lounge-Acces kan je genieten van een afgesloten omgeving op het vliegveld
+(Deze lounge is alleen beschikbaar voor zij die betaald hebben)
+
+De lounge bevat:
+    - Zitplaatsen
+    - Sleeppods
+    - Verschillende automaten
+
+Beschikbaar voor €35,00 PP
+----------------------------------------------------------------------------------------------------------------------- 
+        ");
+    }
 }
