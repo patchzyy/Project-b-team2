@@ -132,7 +132,7 @@ Breidt uit met de Entertainment bundel voor slechts €10 per persoon.
 
 
     public static void DisplayLoungeInfo(){
-    Console.WriteLine(@"
+        Console.WriteLine(@"
 Lounge Acces
 -----------------------------------------------------------------------------------------------------------------------
 Rust nodig? Dat kan.
@@ -148,5 +148,24 @@ De lounge bevat:
 Beschikbaar voor €35,00 PP
 ----------------------------------------------------------------------------------------------------------------------- 
         ");
+    }
+
+    public static void DiplayInsuranceInfo(){
+        Console.WriteLine(@"
+Vlieg Verzekering
+-----------------------------------------------------------------------------------------------------------------------
+Reizen met meer vertrouwen?
+
+Kies voor onze Vluchtverzekering:
+    Dekking bij Reisannulering en Onderbreking
+    Medische Noodgevallen gedekt
+    Verlies of Vertraging van Bagage opgelost
+    Vluchtvertraging of Annulering vergoed
+    24/7 Assistentie beschikbaar
+
+Reis met mentale rust. Sluit vandaag nog uw Vluchtverzekering af!
+
+----------------------------------------------------------------------------------------------------------------------- 
+        ");  
     }
 }

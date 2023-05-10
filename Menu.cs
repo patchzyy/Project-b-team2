@@ -86,6 +86,9 @@ class Menu
         else if(currentMenu.Contains("Lounge toegang toevoegen €35,00 PP")){
             Information.DisplayLoungeInfo();
         }
+        else if(currentMenu.Contains("Vlucht-verzekering toevoegen €15,00 PP")){
+            Information.DiplayInsuranceInfo();
+        }
 
     }
 
@@ -157,7 +160,7 @@ class Menu
             AddMenu(new[] {"VIP-Pas Toevoegen voor €40,00 PP","Terug"});
         }
         else if(selectedOption == "Vlucht-verzekering"){
-            AddMenu(new[] {"Toevoegen €15,00 PP","Terug"});
+            AddMenu(new[] {"Vlucht-verzekering toevoegen €15,00 PP","Terug"});
         }
         else if(selectedOption == "Menu bekijken"){
             Information.DisplayMenuInfo();
