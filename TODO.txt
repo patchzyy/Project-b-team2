@@ -69,3 +69,7 @@ The data access layer is responsible for managing the storage and retrieval of d
     BookingRepository: This class manages the storage and retrieval of booking data, including flight reservations and customer information.
     PaymentRepository: This class manages the storage and retrieval of payment transaction data.
     AirportRepository: This class manages the storage and retrieval of airport data, including airport locations and catering options.
+
+
+    int[][] airplaneseats = new int[3][]
+    airplaneseats[0] = new char[3, 7];
