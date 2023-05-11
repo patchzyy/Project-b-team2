@@ -19,7 +19,12 @@ public class DrawBoeing737UI
         Console.Write("rood");
         Console.ResetColor();
         Console.Write(" aangegeven. \n");
-        Console.WriteLine(" /                                       \\");
+        Console.Write(" /                                       \\");
+        Console.Write("                  De stoel die U aan het bekijken bent staat ");
+        Console.BackgroundColor = ConsoleColor.Blue;
+        Console.Write("Blauw");
+        Console.ResetColor();
+        Console.Write(" aangegeven. \n");
         Console.WriteLine("|                                         |");
         Console.WriteLine("|                                         |");
 
