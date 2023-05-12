@@ -3,7 +3,7 @@ public class DrawAirbus330UI
     public static string? SelectAirbus330(Airbus330 plane, int amountToSelect)
     {
         int seatIndex = 0;
-        int seatsChosen = 0;
+        List<int> amountOfSeatsChosen = new();
         while (true)
         {
             Console.Clear();
@@ -11,9 +11,22 @@ public class DrawAirbus330UI
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
-                if (!plane.Seats[seatIndex].IsReserved)
+                if (amountOfSeatsChosen.Count == amountToSelect)
                 {
-                    break;
+                    Console.WriteLine("Je hebt al maximum aantal stoelen gekozen.");
+                }
+                else
+                {
+                    if (!plane.Seats[seatIndex].IsReserved)
+                    {
+                        amountOfSeatsChosen.Add(seatIndex);
+                        plane.Seats[seatIndex].IsReserved = true;
+                    }
+                    else
+                    {
+                        amountOfSeatsChosen.Remove(seatIndex);
+                        plane.Seats[seatIndex].IsReserved = false;
+                    }
                 }
             }
             if (key.Key == ConsoleKey.Escape)
@@ -215,6 +228,16 @@ public class DrawAirbus330UI
                     seatIndex -= 6;
                     continue;
                 }
+                if (seatIndex == 18 || seatIndex == 19 || seatIndex == 20)
+                {
+                    seatIndex -= 6;
+                    continue;
+                }
+                if (seatIndex == 24 || seatIndex == 25 || seatIndex == 26)
+                {
+                    seatIndex -= 9;
+                    continue;
+                }
                 if (seatIndex == 21 || seatIndex == 22)
                 {
                     seatIndex -= 13;
@@ -240,7 +263,7 @@ public class DrawAirbus330UI
                     seatIndex -= 3;
                     continue;
                 }
-                
+
                 // middle row 
                 if (seatIndex == 54 || seatIndex == 55 || seatIndex == 56)
                 {
@@ -250,6 +273,11 @@ public class DrawAirbus330UI
                 if (seatIndex == 60 || seatIndex == 61 || seatIndex == 62)
                 {
                     seatIndex -= 18;
+                    continue;
+                }
+                if (seatIndex == 57 || seatIndex == 58 || seatIndex == 59)
+                {
+                    seatIndex -= 6;
                     continue;
                 }
                 if (seatIndex > 53 && seatIndex < 225)
@@ -311,13 +339,53 @@ public class DrawAirbus330UI
                     continue;
                 }
             }
+            Console.WriteLine(seatIndex);
+            if (amountOfSeatsChosen.Count == amountToSelect)
+            {
+                Console.WriteLine("Wil je doorgaan met het boeken?");
+                if (ChooseTheSeats())
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
         }
-        Console.WriteLine(seatIndex);
         return "placeholder";
     }
-    
+
     public static void DrawAirbus330(Airbus330 plane, Seat currentSeat)
     {
+        Console.WriteLine("         _/                                         \\_");
+        Console.WriteLine("        /                                             \\");
+        Console.Write("      _/                                               \\_");
+        Console.Write("             LEGENDA \n");
+        Console.Write("     /                                                   \\");
+        Console.Write("            Stoelen met extra beenruimte staan");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write(" geel ");
+        Console.ResetColor();
+        Console.Write("aangegeven. \n");
+        Console.Write("   _/                                                     \\_");
+        Console.Write("          Stoelen die Club Class zijn staan ");
+        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.Write("lichtblauw");
+        Console.ResetColor();
+        Console.Write(" aangegeven. \n");
+        Console.Write("  /                                                         \\");
+        Console.Write("         Stoelen die gereserveerd zijn staan ");
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.Write("rood");
+        Console.ResetColor();
+        Console.Write(" aangegeven. \n");
+        Console.Write(" /                                                           \\");
+        Console.Write("        De stoel die U aan het bekijken bent staat ");
+        Console.BackgroundColor = ConsoleColor.Blue;
+        Console.Write("blauw");
+        Console.ResetColor();
+        Console.Write(" aangegeven. \n");
         Console.WriteLine("|                                                            |");
         Console.WriteLine("|                                                            |");
         int rowNr = 1;
@@ -434,32 +502,22 @@ public class DrawAirbus330UI
                             Console.Write("    ");
                         }
                     }
-                    if (seat.ExtraBeenRuimte)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                    }
                     if (seat.IsClubClass)
                     {
                         Console.BackgroundColor = ConsoleColor.Cyan;
                     }
-                    if (seat.IsReserved)
+                    if (seat.ExtraBeenRuimte)
                     {
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
-
                     if (seat == currentSeat)
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                     }
                     if (seat.IsReserved)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Red;
                     }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                    }
-
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
                     Console.Write("  ");
@@ -496,6 +554,63 @@ public class DrawAirbus330UI
                 Console.WriteLine("|                                                            |");
                 Console.WriteLine("|                                                            |");
                 return;
+            }
+        }
+    }
+
+    private static bool ChooseTheSeats()
+    {
+        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.Write("Ja");
+        Console.ResetColor();
+        Console.Write("   ");
+        Console.Write("Nee");
+        List<string> choices = new() { "Ja", "Nee" };
+        int selectedOption = 0;
+        while (true)
+        {
+            var key = Console.ReadKey(true);
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (selectedOption > 0)
+                    {
+                        selectedOption--;
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (selectedOption < choices.Count -1)
+                    {
+                        selectedOption++;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (selectedOption == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+            Console.SetCursorPosition(0, 64);
+            if (selectedOption == 0)
+            {
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write("Ja");
+                Console.ResetColor();
+                Console.Write("   ");
+                Console.Write("Nee");
+            }
+            else if (selectedOption == 1)
+            {
+                Console.Write("Ja");
+                Console.Write("   ");
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write("Nee");
+                Console.ResetColor();
             }
         }
     }

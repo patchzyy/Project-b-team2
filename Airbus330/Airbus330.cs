@@ -9,12 +9,12 @@ public class Airbus330 : Plane
     {
         for (int rowNr = 1; rowNr <= 2; rowNr++)
         {
-            Seats.Add(new Seat($"{rowNr}-A", false, true, false, false, false, false, false));
-            Seats.Add(new Seat($"{rowNr}-C", false, true, false, false, false, false, false));
-            Seats.Add(new Seat($"{rowNr}-D", false, true, false, false, false, false, false));
-            Seats.Add(new Seat($"{rowNr}-G", false, true, false, false, false, false, false));
-            Seats.Add(new Seat($"{rowNr}-H", false, true, false, false, false, false, false));
-            Seats.Add(new Seat($"{rowNr}-K", false, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-A", true, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-C", true, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-D", true, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-G", true, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-H", true, true, false, false, false, false, false));
+            Seats.Add(new Seat($"{rowNr}-K", true, true, false, false, false, false, false));
         }
 
         //skip row 3 
