@@ -143,6 +143,8 @@ class Menu
             AddMenu(new[] {"Vlucht boeken","Terug"});
         }
         else if (selectedOption == "Vluchten lijst bekijken"){
+        }
+        else if (selectedOption == "Vlucht boeken"){
             
         }
 

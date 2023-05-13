@@ -7,6 +7,8 @@ public class Booking
 
     public readonly Seat seat;
 
+    public readonly int phonenumber;
+
     public bool HasBaggage, HasVIP, HasEntertainment, HasLounge, HasInsurance;
 
     public Booking(User user, Flight flight, Seat seat)
