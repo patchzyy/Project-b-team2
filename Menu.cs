@@ -145,7 +145,7 @@ class Menu
         else if (selectedOption == "Vluchten lijst bekijken"){
         }
         else if (selectedOption == "Vlucht boeken"){
-            
+            Bookings.BookingSequence(_currentUser);
         }
 
         // Extra opties / features bijboeken.

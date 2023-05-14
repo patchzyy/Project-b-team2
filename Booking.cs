@@ -43,16 +43,6 @@ public class Booking
         HasInsurance = true;
     }
 
-    public void MakeDatabaseTables()
-    {
-        // dit is een method om de tabellen aan te maken, zodat als we ooit iets veranderen aan de database, we niet de hele database opnieuw hoeven te maken vanaf niks.
-        string query = $"CREATE TABLE IF NOT EXISTS Bookings (bookingID INTEGER PRIMARY KEY, userEmail STRING, flight INTEGER, seatID INTEGER, baggage BOOLEAN, vip BOOLEAN, entertainment BOOLEAN, lounge BOOLEAN, insurance BOOLEAN)";
-        SqliteConnection connection = new("Data Source=airline_data.db");
-        connection.Open();
-        SqliteCommand DatabaseConnection = new(query, connection);
-        DatabaseConnection.ExecuteNonQuery();
-        connection.Close();
-    }
 
     public void AddToDatabase(){
         string query = $"SELECT flightID FROM Flights WHERE duration = '{Flight.Duration}' AND date = '{Flight.Date}' AND time = '{Flight.Time}' AND origin = '{Flight.Origin}' AND destination = '{Flight.Destination}' AND aircraft = '{Flight.Aircraft}' AND gate = '{Flight.Gate}'";
@@ -67,4 +57,6 @@ public class Booking
         }
         query = $"INSERT INTO Bookings (userEmail, flight, seatID, baggage, vip, entertainment, lounge, insurance) VALUES ('{User.Email}', '{flightID}', '{seat.SeatId}', '{HasBaggage}', '{HasVIP}', '{HasEntertainment}', '{HasLounge}', '{HasInsurance}')";
     }
+
+
 }
