@@ -9,7 +9,7 @@ class Login
         Information.DisplayLogo();
         Console.WriteLine("Aanmelden\n");
 
-        string email = AskForEmail();
+        string email = AskForEmail(null);
         if (email == null)
         {
             Console.ResetColor();
@@ -24,7 +24,7 @@ class Login
             {
                 break;
             }
-            email = AskForEmail();
+            email = AskForEmail(null);
         }
         bool falsePassword = false;
         while (true)
@@ -98,7 +98,7 @@ class Login
         return userInfo;
     }
 
-    private static string? AskForEmail()
+    private static string? AskForEmail(string errortext)
     {
         string? email = "";
         bool falseEmail = false;
@@ -116,7 +116,7 @@ class Login
                     Information.DisplayLogo();
                     Console.WriteLine("Aanmelden\n");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Verkeerde email, probeer opnieuw.");
+                    Console.Write(errortext);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Email: ");
                 }
@@ -137,31 +137,31 @@ class Login
                 }
                 if (email.Contains("@."))
                 {
-                    EmailError("Je email moet een domein bevatten.\n");
+                    errortext = ("Je email moet een domein bevatten.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (!email.Contains("@"))
                 {
-                    EmailError("Je email moet ten minste een '@'-teken bevatten.\n");
+                    errortext = ("Je email moet ten minste een '@'-teken bevatten.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (!email.Contains("."))
                 {
-                    EmailError("Je email moet ten minste een extension bevatten (.com, .nl).\n");
+                    errortext = ("Je email moet ten minste een extension bevatten (.com, .nl).\n");
                     falseEmail = true;
                     continue;
                 }
                 if (email.Length < 8)
                 {
-                    EmailError("Je email mag niet korter dan 8 tekens zijn.\n");
+                    errortext = ("Je email mag niet korter dan 8 tekens zijn.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (leftover.Length < 2)
                 {
-                    EmailError("Je email moet een extension bevatten (.com, .nl).\n");
+                    errortext = ("Je email moet een extension bevatten (.com, .nl).\n");
                     falseEmail = true;
                     continue;
                 }
@@ -177,17 +177,7 @@ class Login
         return email;
     }
 
-private static void EmailError(string errorText)
-{
-    Console.Clear();
-    Information.DisplayLogo();
-    Console.WriteLine("Aanmelden\n");
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.Write(errorText);
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.Write("Email: ");
-    Thread.Sleep(1250);
-}
+
     private static string InvertString(string text)
     {
         string originalString = text;
