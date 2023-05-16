@@ -72,6 +72,23 @@ public static class AdminTool{
         }
     }
 
+
+    public static void AddBooking(Flight flight, User user, Seat seat){
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Details aan het ophalen...");
+        Thread.Sleep(1000);
+        string First_Name = user.First_Name;
+        Seat Seat = seat;
+
+        Booking currentbooking = new Booking(user, flight, Seat);
+        Console.Clear();
+        Information.DisplayLogo();
+        // hier vragen we voor alle extra informatie die nodig is voor een booking
+        currentbooking.AddToDatabase();
+        Menu menu = new Menu(new string[] {""});
+        Thread.Sleep(5000);
+    }
     public static void AddFlight()
     {
         Console.Clear();
