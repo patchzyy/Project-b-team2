@@ -6,12 +6,14 @@ class Program
     {
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        Menu menu = new Menu(new[]{"Login","Register","More Information"});
+        Menu menu = new Menu(new[]{"Login","Register","More Information", "Fast"});
         menu.Run();
 
 
-    }
 
+        
+
+    }
 
     /*
     BELANGRIJK:

@@ -119,6 +119,18 @@ class Menu
                 AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
             }
         }
+        else if (selectedOption == "Fast")
+        {
+            _currentUser = new("Issam", "benmassoud","issam@gmail.com","Wachtwoord123!");
+            if (_currentUser.has_Admin)
+            {
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+            }
+            else
+            {
+                AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
+            }
+        }
         else if (selectedOption == "Register")
         {
             _currentUser = User.Register();
