@@ -44,6 +44,7 @@ public static class Flights
     {
         Console.Clear();
         Thread.Sleep(1000);
+        Console.Clear();
         Information.DisplayLogo();
         Flights.DisplayArrivingFlights();
         Console.WriteLine("");

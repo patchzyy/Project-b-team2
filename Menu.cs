@@ -116,7 +116,7 @@ class Menu
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Boeken","Boekingen bekijken","Uitloggen" });
             }
         }
         else if (selectedOption == "Fast")
@@ -149,6 +149,15 @@ class Menu
         else if (selectedOption == "Vluchten bekijken")
         {
             Flights.CheckFlights();
+        }
+        else if (selectedOption == "Boeken")
+        {
+            AddMenu(new[] {"Vlucht boeken","Terug"});
+        }
+        else if (selectedOption == "Vluchten lijst bekijken"){
+        }
+        else if (selectedOption == "Vlucht boeken"){
+            Bookings.BookingSequence(_currentUser);
         }
 
         // Extra opties / features bijboeken.
