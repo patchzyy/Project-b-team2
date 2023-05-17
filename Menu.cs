@@ -128,7 +128,7 @@ class Menu
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken","Vlucht ervaring uitbreiden", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Boeken","Boekingen bekijken","Uitloggen" });
             }
         }
         else if (selectedOption == "Register")
