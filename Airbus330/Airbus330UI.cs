@@ -1,9 +1,10 @@
 public class DrawAirbus330UI
 {
-    public static string? SelectAirbus330(Airbus330 plane, int amountToSelect)
+    public static List<Seat> SelectAirbus330(Airbus330 plane, int amountToSelect)
     {
         int seatIndex = 0;
-        List<int> amountOfSeatsChosen = new();
+        List<string> SeatsChosen = new();
+        List<Seat> returnSeats = new();
         while (true)
         {
             Console.Clear();
@@ -11,23 +12,21 @@ public class DrawAirbus330UI
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
-                if (amountOfSeatsChosen.Count == amountToSelect)
+                if (!plane.Seats[seatIndex].IsReserved)
                 {
-                    Console.WriteLine("Je hebt al maximum aantal stoelen gekozen.");
+                    SeatsChosen.Add(plane.Seats[seatIndex].SeatId);
+                    returnSeats.Add(plane.Seats[seatIndex]);
+                    plane.Seats[seatIndex].IsReserved = true;
+                    Console.Clear();
+                    DrawAirbus330(plane, plane.Seats[seatIndex]);
                 }
                 else
                 {
-                    if (!plane.Seats[seatIndex].IsReserved)
-                    {
-                        amountOfSeatsChosen.Add(seatIndex);
-                        plane.Seats[seatIndex].IsReserved = true;
-                    }
-                    else
-                    {
-                        amountOfSeatsChosen.Remove(seatIndex);
-                        plane.Seats[seatIndex].IsReserved = false;
-                    }
+                    SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
+                    returnSeats.Remove(plane.Seats[seatIndex]);
+                    plane.Seats[seatIndex].IsReserved = false;
                 }
+                // }
             }
             if (key.Key == ConsoleKey.Escape)
             {
@@ -39,6 +38,7 @@ public class DrawAirbus330UI
                 {
                     seatIndex++;
                 }
+                continue;
             }
             if (key.Key == ConsoleKey.LeftArrow)
             {
@@ -46,6 +46,7 @@ public class DrawAirbus330UI
                 {
                     seatIndex--;
                 }
+                continue;
             }
 
             if (key.Key == ConsoleKey.DownArrow)
@@ -339,10 +340,23 @@ public class DrawAirbus330UI
                     continue;
                 }
             }
-            Console.WriteLine(seatIndex);
-            if (amountOfSeatsChosen.Count == amountToSelect)
+            if (SeatsChosen.Count == amountToSelect)
             {
-                Console.WriteLine("Wil je doorgaan met het boeken?");
+                Console.Clear();
+                DrawAirbus330(plane, plane.Seats[seatIndex]);
+                Console.Write("\nJe gekozen stoelen zijn: ");
+                foreach (string seat in SeatsChosen)
+                {
+                    bool isLastSeat = seat.Equals(SeatsChosen.Last());
+                    Console.Write($"{seat}");
+
+                    if (!isLastSeat)
+                    {
+                        Console.Write(", ");
+                    }
+                }
+                Console.Write(".");
+                Console.WriteLine("\nWil je doorgaan met het boeken?");
                 if (ChooseTheSeats())
                 {
                     break;
@@ -352,8 +366,19 @@ public class DrawAirbus330UI
                     continue;
                 }
             }
+            else if (SeatsChosen.Count > amountToSelect)
+            {
+                MovingOn(amountToSelect);
+                continue;
+            }
         }
-        return "placeholder";
+
+        foreach (Seat seat in returnSeats)
+        {
+            Seat addSeat = new Seat(seat.SeatId, seat.ExtraBeenRuimte, seat.IsClubClass, seat.IsDoubleSeat, seat.IsFrontSeat, seat.IsBusinessClass, seat.IsEconomyPlus, seat.IsEconomy);
+            returnSeats.Append(addSeat);
+        }
+        return returnSeats;
     }
 
     public static void DrawAirbus330(Airbus330 plane, Seat currentSeat)
@@ -558,43 +583,26 @@ public class DrawAirbus330UI
         }
     }
 
+    
+    private static void MovingOn(int amountToSelect)
+    {
+        Console.WriteLine($"Selecteer a.u.b. alleen {amountToSelect} stoelen.");
+        Console.WriteLine("Druk op enter om door te gaan met stoelen selecteren.");
+        var keyForMenu = Console.ReadKey(true);
+        while (true)
+        {
+            if (keyForMenu.Key == ConsoleKey.Enter)
+            {
+                break;
+            }
+        }
+    }
     private static bool ChooseTheSeats()
     {
-        Console.BackgroundColor = ConsoleColor.Cyan;
-        Console.Write("Ja");
-        Console.ResetColor();
-        Console.Write("   ");
-        Console.Write("Nee");
         List<string> choices = new() { "Ja", "Nee" };
         int selectedOption = 0;
         while (true)
         {
-            var key = Console.ReadKey(true);
-            switch (key.Key)
-            {
-                case ConsoleKey.LeftArrow:
-                    if (selectedOption > 0)
-                    {
-                        selectedOption--;
-                    }
-                    break;
-
-                case ConsoleKey.RightArrow:
-                    if (selectedOption < choices.Count -1)
-                    {
-                        selectedOption++;
-                    }
-                    break;
-                case ConsoleKey.Enter:
-                    if (selectedOption == 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-            }
             Console.SetCursorPosition(0, 64);
             if (selectedOption == 0)
             {
@@ -612,6 +620,33 @@ public class DrawAirbus330UI
                 Console.Write("Nee");
                 Console.ResetColor();
             }
+            var key = Console.ReadKey(true);
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (selectedOption > 0)
+                    {
+                        selectedOption--;
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (selectedOption < choices.Count - 1)
+                    {
+                        selectedOption++;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (selectedOption == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+
         }
     }
 }
