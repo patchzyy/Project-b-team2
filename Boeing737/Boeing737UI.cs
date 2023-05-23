@@ -6,25 +6,22 @@ public class DrawBoeing737UI
         Console.WriteLine("         _/                     \\_");
         Console.WriteLine("        /                         \\");
         Console.WriteLine("      _/                           \\_");
-        Console.Write("     /                               \\");
-        Console.Write("                      Stoelen met extra beenruimte staan");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write(" geel ");
+        Console.Write("     /                               \\                      LEGENDA\n");
+        Console.Write("   _/                                 \\_                    ");
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write("aangegeven. \n");
-        Console.WriteLine("   _/                                 \\_");
-        Console.Write("  /                                     \\");
-        Console.Write("                   Stoelen die gereserveerd zijn staan ");
+        Console.Write(" = Extra Beenruimte\n");
+        Console.Write("  /                                     \\                   ");
         Console.BackgroundColor = ConsoleColor.Red;
-        Console.Write("rood");
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
-        Console.Write(" /                                       \\");
-        Console.Write("                  De stoel die U aan het bekijken bent staat ");
-        Console.BackgroundColor = ConsoleColor.Blue;
-        Console.Write("Blauw");
+        Console.Write(" = Gereserveerde stoel\n");
+        Console.Write(" /                                       \\                  ");
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
+        Console.Write(" = Huidige stoel\n");
         Console.WriteLine("|                                         |");
         Console.WriteLine("|                                         |");
 
@@ -112,8 +109,8 @@ public class DrawBoeing737UI
                 return;
             }
         }
-    }
 
+    }
 
     public static string? SelectBoeing737(Boeing737 plane)
     {
