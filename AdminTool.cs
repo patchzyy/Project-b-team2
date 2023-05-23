@@ -132,6 +132,64 @@ public static class AdminTool
         FlightToRemove.RemoveFromDatabase();
     }
 
+    public static void ChangeFlight()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Pas een vlucht aan.");
+        List<Flight> flights = new List<Flight>();
+        foreach (Flight flight in Flights.GetDepartingFlights())
+        {
+            flights.Add(flight);
+        }
+        foreach (Flight flight in Flights.GetArrivingFlights())
+        {
+            flights.Add(flight);
+        }
+        Flight selectedFlight = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om aan te passen", flights)];
+        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate" };
+        string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+        Console.WriteLine("Voer de nieuwe waarde in");
+        if (selectedOption == "Duur")
+        {
+            int duration = DurationSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, Convert.ToString(duration));
+        }
+        else if (selectedOption == "Datum")
+        {
+            string date = DateSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, date);
+        }
+        else if (selectedOption == "Tijd")
+        {
+            string time = TimeSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, time);
+        }
+        else if (selectedOption == "Afkomst")
+        {
+            string origin = OriginSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, origin);
+        }
+        else if (selectedOption == "Bestemming")
+        {
+            string destination = DestinationSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, destination);
+        }
+        else if (selectedOption == "Vliegtuig")
+        {
+            string aircraft = AircraftSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, aircraft);
+        }
+        else if (selectedOption == "Gate")
+        {
+            string gate = GateSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, gate);
+        }
+
+        Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
+        Thread.Sleep(3000);
+    }
+
     public static int DurationSequence()
     {
         return Convert.ToInt32(AskStringInformation("De duur van de vlucht (IN MINUTEN!)", 1, "120"));
@@ -227,6 +285,41 @@ public static class AdminTool
         return AskStringInformation("Gate", 2, "G6");
     }
 
+    public static int? HasAdminSequence(bool currentlyHasAdmin)
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+
+        if (currentlyHasAdmin)
+        {
+            List<string> options = new List<string> { "Ja", "Nee" };
+            string selectedOption = options[AskMultipleOptions<string>("Deze gebruiker heeft op dit moment admin. Wilt u de admin rechten van deze gebruiker ontzeggen?", options)];
+            if (selectedOption == "Ja")
+            {
+                return 0;
+            }
+            else if (selectedOption == "Nee")
+            {
+                return null;
+            }
+        }
+
+        if (!currentlyHasAdmin)
+        {
+            List<string> options = new List<string> { "Ja", "Nee" };
+            string selectedOption = options[AskMultipleOptions<string>("Deze gebruiker heeft op dit moment geen admin. Wilt u deze gebruiker admin rechten geven?", options)];
+            if (selectedOption == "Ja")
+            {
+                return 1;
+            }
+            else if (selectedOption == "Nee")
+            {
+                return null;
+            }
+        }
+        return null;
+    }
+
     public static void AddUser()
     {
         Console.Clear();
@@ -260,12 +353,6 @@ public static class AdminTool
             users.Add(new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetBoolean(4)));
         }
         return users;
-
-
-
-
-
-
     }
 
     public static void RemoveUser()
@@ -297,5 +384,44 @@ public static class AdminTool
         command.ExecuteNonQuery();
         connection.Close();
 
+    }
+
+    public static void ChangeUser()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Pas een gebruiker aan.");
+        List<User> users = new List<User>();
+        foreach (User user in GetAllUsers())
+        {
+            users.Add(user);
+        }
+        User selectedUser = users[AskMultipleOptions<User>("Selecteer een vlucht om aan te passen", users)];
+        List<string> optionList = new List<string>() { "Voornaam", "Achternaam", "Email", "Wachtwoord", "Admin rechten" };
+        string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+        Console.WriteLine("Voer de nieuwe waarde in");
+        if (selectedOption == "Voornaam")
+        {
+            string first_name = User.FirstNameSequence();
+        }
+        else if (selectedOption == "Achternaam")
+        {
+            string first_name = User.LastNameSequence();
+        }
+        else if (selectedOption == "Email")
+        {
+            string first_name = User.EmailSequence();
+        }
+        else if (selectedOption == "Wachtwoord")
+        {
+            string first_name = User.PasswordSequence();
+        }
+        else if (selectedOption == "Admin rechten")
+        {
+            string first_name = User.FirstNameSequence();
+        }
+
+        Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
+        Thread.Sleep(3000);
     }
 }
