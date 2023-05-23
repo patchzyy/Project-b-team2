@@ -8,7 +8,12 @@ public class User{
     public string Last_Name {get; set; }
     public string Email {get; set; }
     public string Password {get; set; }
+    public string? Phonenumber {get; set;}
+    public DateOnly Date_of_Birth {get; set; }
     public bool has_Admin {get; set; }
+
+    public bool can_Book {get; set; }
+
 
 
     // Even een constructor om te testen.. Deze test helaas niet of de data wel goed is
@@ -39,28 +44,22 @@ public class User{
         Console.WriteLine("Vul je details in.");
 
         string first_name = FirstNameSequence();
-        if (first_name == null)
-        {
-            return null;   
-        }
         string last_name = LastNameSequence();
-        if (last_name == null)
-        {
-            return null;   
-        }
         string email = EmailSequence();
-        if (email == null)
-        {
-            return null;   
-        }
         string password = PasswordSequence();
-        if (password == null)
-        {
-            return null;   
-        }
+        string phonenumber = PhonenumberSequence();
+        DateOnly date_of_birth = DateOfBirthSequence();
+
+
+
 
         User currentuser = new User(first_name, last_name, email, password);
+        currentuser.Phonenumber = phonenumber;
+        currentuser.Date_of_Birth = date_of_birth;
         currentuser.AddToDatabase();
+
+        int age = DateOnly.FromDateTime(DateTime.Now).Year - currentuser.Date_of_Birth.Year;
+        if(age < 18) currentuser.can_Book = false;
         
         Console.Clear();
         Information.DisplayLogo();
@@ -70,10 +69,75 @@ public class User{
         return currentuser;
     }
 
+    private static string PhonenumberSequence()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+
+        bool isValidInput = false;
+        string phonenumber;
+
+        do{
+            Console.Write("Wat is uw telefoon nummer? \n+");
+            phonenumber = Console.ReadLine();
+            phonenumber = phonenumber.Replace(" ","");
+
+            if(ContainsDigit(phonenumber) && phonenumber.Length > 8 && phonenumber.Length <= 15){
+                isValidInput = true;
+            }
+            else{
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Zorg ervoor dat het telefoon nummer correct is ingevoerd\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+        }
+        while(!isValidInput);
+
+        return phonenumber;
+
+    }
+    
+
+    private static DateOnly DateOfBirthSequence()
+    {
+        Information.DisplayLogo();
+        Console.Clear();
+        Console.WriteLine("Wat is uw geboorte datum?\n");
+        int day, month, year;
+        bool isValidInput = false;
+
+        do
+        {
+            Console.Write("Dag van geboorte: ");
+            isValidInput = int.TryParse(Console.ReadLine(), out day) && day >= 1 && day <= 31;
+
+            Console.Write("Maand van geboorte: ");
+            isValidInput &= int.TryParse(Console.ReadLine(), out month) && month >= 1 && month <= 12;
+
+            Console.Write("Jaar van geboorte: ");
+            isValidInput &= int.TryParse(Console.ReadLine(), out year) && year >= 1;
+
+            if (!isValidInput)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Datum verkeerd ingevoerd probeer het opniew (DD, MM, JJJJ)\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+        while (!isValidInput);
+
+
+        return new DateOnly(year, month, day);
+    }
+
+
+
+
 
     //Voegt toe nieuwe User toe aan de database..
     // datbase wrapper die de verbinding instand houdt.
-    // last rowid, bij user inserrt en dan ID ophalen.
+    // last rowid, bij user insert en dan ID ophalen.
     public void AddToDatabase(){
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
@@ -127,6 +191,14 @@ public class User{
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
+                if (firstname.Length < 3){
+                    Console.Clear();
+                    Information.DisplayLogo();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Je ingevoerde voornaam is te kort om gezien te worden als echt.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
 
                 return firstname;
             }
@@ -152,7 +224,6 @@ public class User{
     }
 
 
-    //last name
     private static string LastNameSequence()
     {
         Console.Clear();
@@ -185,6 +256,14 @@ public class User{
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
+            if (lastname.Length < 3){
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je ingevoerde achternaam is te kort om gezien te worden als echt.");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+                }
 
             return lastname;
         }
@@ -209,6 +288,7 @@ public class User{
         return Input.GetInput(IsValidLastName, 22);
     }
 
+
     private static string EmailSequence()
     {
         Console.Clear();
@@ -216,7 +296,7 @@ public class User{
         string email = "";
         while(true)
         {
-            Console.Write("\nVul je emailadres in: ");
+            Console.Write("Vul je emailadres in: ");
             email = CheckEmail();
             if (email == null)
             {
@@ -328,8 +408,7 @@ public class User{
 
         while(true)
         {
-            Console.WriteLine(@"
-Vul een wachtwoord in van 8 of meer tekens met:
+            Console.WriteLine(@"Vul een wachtwoord in van 8 of meer tekens met:
     - Ten minste 1 numerieke waarde (0-9)
     - Ten minste 1 speciale teken
     ");
