@@ -99,7 +99,7 @@ public class User{
     }
     
 
-    private static DateOnly DateOfBirthSequence()
+    public static DateOnly DateOfBirthSequence()
     {
         Information.DisplayLogo();
         Console.Clear();
@@ -159,7 +159,7 @@ public class User{
     // Hieronder staat alles dat te maken heeft met register... 
     // TODO:    -checken op hoofdletter
     //          -password zo doen dat ipv chars bolletjes komen ter bescherming?
-    private static string FirstNameSequence()
+    public static string FirstNameSequence()
     {
         string firstname;
         while(true)
@@ -204,7 +204,7 @@ public class User{
             }
     }
 
-    private static bool IsValidFirstName(string firstname)
+    public static bool IsValidFirstName(string firstname)
     {
         if (string.IsNullOrWhiteSpace(firstname))
         {
@@ -218,13 +218,13 @@ public class User{
         return true;
     }
 
-    private static string CheckFirstName()
+    public static string CheckFirstName()
     {
         return Input.GetInput(IsValidFirstName, 20);
     }
 
 
-    private static string LastNameSequence()
+    public static string LastNameSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -270,7 +270,7 @@ public class User{
     
     }
 
-    private static bool IsValidLastName(string lastname)
+    public static bool IsValidLastName(string lastname)
     {
         if (string.IsNullOrWhiteSpace(lastname))
         {
@@ -283,13 +283,13 @@ public class User{
         return true;
     }
 
-    private static string CheckLastName()
+    public static string CheckLastName()
     {
         return Input.GetInput(IsValidLastName, 22);
     }
 
 
-    private static string EmailSequence()
+    public static string EmailSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -354,7 +354,7 @@ public class User{
         return email;
     }
 
-    private static string InvertString(string text)
+    public static string InvertString(string text)
     {
         string originalString = text;
         char[] charArray = originalString.ToCharArray();
@@ -363,7 +363,7 @@ public class User{
         return invertedString;
     }
 
-    private static bool IsValidEmail(string email)
+    public static bool IsValidEmail(string email)
     {
         string leftover = "";
         if (email.Contains("."))
@@ -398,7 +398,7 @@ public class User{
         return Input.GetInput(IsValidEmail, 22);
     }
 
-    private static string PasswordSequence()
+    public static string PasswordSequence()
     {
         Console.Clear();
         Information.DisplayLogo();

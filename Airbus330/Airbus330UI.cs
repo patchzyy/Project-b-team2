@@ -583,7 +583,7 @@ public class DrawAirbus330UI
         }
     }
 
-    
+
     private static void MovingOn(int amountToSelect)
     {
         Console.WriteLine($"Selecteer a.u.b. alleen {amountToSelect} stoelen.");
@@ -603,7 +603,8 @@ public class DrawAirbus330UI
         int selectedOption = 0;
         while (true)
         {
-            Console.SetCursorPosition(0, 64);
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
             if (selectedOption == 0)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
