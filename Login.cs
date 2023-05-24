@@ -280,7 +280,7 @@ class Login
         Console.ResetColor();
         Console.WriteLine(" om door te gaan.\n");
 
-        var key = Console.ReadKey();
+
         while (true)
         {
             Console.Clear();
@@ -291,7 +291,7 @@ class Login
             Console.Write("enter");
             Console.ResetColor();
             Console.WriteLine(" om door te gaan.\n");
-            key = Console.ReadKey();
+            var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
                 break;
