@@ -4,11 +4,6 @@ class Program
 
     public static void Main()
     {
-        // DrawAirbus330UI.SelectAirbus330(new Airbus330(), 2);
-
-        ExtraUser.RemoveDatabase();
-        Booking.MakeDatabaseTables();
-        Booking.MakeDataBaseExtraUsers();
         Information.DisplayLogo();
         Thread.Sleep(2000);
         Menu menu = new Menu(new[] { "Login", "Register", "More Information", "Fast" });
