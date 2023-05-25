@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
-public static class AdminTool{
+public static class AdminTool
+{
 
     public static string AskStringInformation(string prompt, int minLength, string example = "")
     {
@@ -32,7 +33,7 @@ public static class AdminTool{
 
         int selectedIndex = 0;
 
-        while (true) 
+        while (true)
         {
             Console.Clear();
             Information.DisplayLogo();
@@ -73,7 +74,8 @@ public static class AdminTool{
     }
 
 
-    public static void AddBooking(Flight flight, User user, Seat seat){
+    public static void AddBooking(Flight flight, User user, Seat seat)
+    {
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Details aan het ophalen...");
@@ -86,7 +88,7 @@ public static class AdminTool{
         Information.DisplayLogo();
         // hier vragen we voor alle extra informatie die nodig is voor een booking
         currentbooking.AddToDatabase();
-        Menu menu = new Menu(new string[] {""});
+        Menu menu = new Menu(new string[] { "" });
         Thread.Sleep(5000);
     }
     public static void AddFlight()
@@ -112,11 +114,12 @@ public static class AdminTool{
         Console.WriteLine($"\n\nDe vlucht is toegevoegd!\n");
         Thread.Sleep(5000);
     }
-    public static void RemoveFlight(){
+    public static void RemoveFlight()
+    {
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Verwijder een vlucht.");
-        List <Flight> flights = new List<Flight>();
+        List<Flight> flights = new List<Flight>();
         foreach (Flight flight in Flights.GetDepartingFlights())
         {
             flights.Add(flight);
@@ -129,11 +132,69 @@ public static class AdminTool{
         FlightToRemove.RemoveFromDatabase();
     }
 
+    public static void ChangeFlight()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Pas een vlucht aan.");
+        List<Flight> flights = new List<Flight>();
+        foreach (Flight flight in Flights.GetDepartingFlights())
+        {
+            flights.Add(flight);
+        }
+        foreach (Flight flight in Flights.GetArrivingFlights())
+        {
+            flights.Add(flight);
+        }
+        Flight selectedFlight = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om aan te passen", flights)];
+        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate" };
+        string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+        Console.WriteLine("Voer de nieuwe waarde in");
+        if (selectedOption == "Duur")
+        {
+            int duration = DurationSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, Convert.ToString(duration));
+        }
+        else if (selectedOption == "Datum")
+        {
+            string date = DateSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, date);
+        }
+        else if (selectedOption == "Tijd")
+        {
+            string time = TimeSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, time);
+        }
+        else if (selectedOption == "Afkomst")
+        {
+            string origin = OriginSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, origin);
+        }
+        else if (selectedOption == "Bestemming")
+        {
+            string destination = DestinationSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, destination);
+        }
+        else if (selectedOption == "Vliegtuig")
+        {
+            string aircraft = AircraftSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, aircraft);
+        }
+        else if (selectedOption == "Gate")
+        {
+            string gate = GateSequence();
+            selectedFlight.UpdateFlightInDatabase(selectedOption, gate);
+        }
+
+        Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
+        Thread.Sleep(3000);
+    }
+
     public static int DurationSequence()
     {
         return Convert.ToInt32(AskStringInformation("De duur van de vlucht (IN MINUTEN!)", 1, "120"));
     }
-    
+
     public static string DateSequence()
     {
         return AskStringInformation("De datum van de vlucht (DD:MM:YY format. Dag, Maand, Jaar)", 9, "1");
@@ -147,7 +208,7 @@ public static class AdminTool{
             if (!isValid)
             {
                 Console.WriteLine("Ongeldig formaat.");
-                Console.ReadKey(true); 
+                Console.ReadKey(true);
                 isValid = true;
             }
             Console.Clear();
@@ -178,6 +239,29 @@ public static class AdminTool{
     }
 
 
+    public static int AskForInt(int min, int max, string prompt)
+    {
+        while (true)
+        {
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine(prompt);
+            Console.Write($"Geef een getal op tussen {min} en {max}:");
+            string input = Console.ReadLine();
+            int number;
+            try
+            {
+                number = Convert.ToInt32(input);
+                return number;
+            }
+            catch
+            {
+                Console.WriteLine("Ongeldige invoer.");
+                Console.ReadKey(true);
+                continue;
+            }
+        }
+    }
 
     public static string OriginSequence()
     {
@@ -191,7 +275,7 @@ public static class AdminTool{
 
     public static string AircraftSequence()
     {
-        List<string> options = new List<string>{"Airbus 330", "Boeing 737", "Boeing 787"};
+        List<string> options = new List<string> { "Airbus 330", "Boeing 737", "Boeing 787" };
         return options[AskMultipleOptions<string>("Vliegtuig", options)];
     }
 
@@ -201,7 +285,43 @@ public static class AdminTool{
         return AskStringInformation("Gate", 2, "G6");
     }
 
-    public static void AddUser(){
+    public static int? HasAdminSequence(bool currentlyHasAdmin)
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+
+        if (currentlyHasAdmin)
+        {
+            List<string> options = new List<string> { "Ja", "Nee" };
+            string selectedOption = options[AskMultipleOptions<string>("Deze gebruiker heeft op dit moment admin. Wilt u de admin rechten van deze gebruiker ontzeggen?", options)];
+            if (selectedOption == "Ja")
+            {
+                return 0;
+            }
+            else if (selectedOption == "Nee")
+            {
+                return null;
+            }
+        }
+
+        if (!currentlyHasAdmin)
+        {
+            List<string> options = new List<string> { "Ja", "Nee" };
+            string selectedOption = options[AskMultipleOptions<string>("Deze gebruiker heeft op dit moment geen admin. Wilt u deze gebruiker admin rechten geven?", options)];
+            if (selectedOption == "Ja")
+            {
+                return 1;
+            }
+            else if (selectedOption == "Nee")
+            {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public static void AddUser()
+    {
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Voeg een gebruiker toe.");
@@ -211,12 +331,13 @@ public static class AdminTool{
         string password = AskStringInformation("Wachtwoord", 3);
         string first_name = AskStringInformation("Voornaam", 3);
         string last_name = AskStringInformation("Achternaam", 3);
-        List<string> options = new List<string>{"true", "false"};
+        List<string> options = new List<string> { "true", "false" };
         bool role = Convert.ToBoolean(options[AskMultipleOptions("admin?", options)]);
         User user = new User(first_name, last_name, email, password, role);
         user.AddToDatabase();
     }
-    public static List<User> GetAllUsers(){
+    public static List<User> GetAllUsers()
+    {
         // cconnect to database
         SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
         connection.Open();
@@ -232,19 +353,14 @@ public static class AdminTool{
             users.Add(new User(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetBoolean(4)));
         }
         return users;
-
-
-
-
-
-
     }
 
-    public static void RemoveUser(){
+    public static void RemoveUser()
+    {
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Verwijder een gebruiker.");
-        List <User> users = new List<User>();
+        List<User> users = new List<User>();
         foreach (User user in GetAllUsers())
         {
             users.Add(user);
@@ -255,7 +371,7 @@ public static class AdminTool{
         // ask the user if they are sure
         Console.Clear();
         Information.DisplayLogo();
-        List<string> options = new List<string>{"Ja", "Nee"};
+        List<string> options = new List<string> { "Ja", "Nee" };
         if (options[AskMultipleOptions($"Weet je zeker dat je {email} wilt verwijderen?", options)] == "Nee")
         {
             return;
@@ -267,6 +383,45 @@ public static class AdminTool{
         SqliteCommand command = new SqliteCommand(query, connection);
         command.ExecuteNonQuery();
         connection.Close();
-        
+
+    }
+
+    public static void ChangeUser()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Pas een gebruiker aan.");
+        List<User> users = new List<User>();
+        foreach (User user in GetAllUsers())
+        {
+            users.Add(user);
+        }
+        User selectedUser = users[AskMultipleOptions<User>("Selecteer een vlucht om aan te passen", users)];
+        List<string> optionList = new List<string>() { "Voornaam", "Achternaam", "Email", "Wachtwoord", "Admin rechten" };
+        string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+        Console.WriteLine("Voer de nieuwe waarde in");
+        if (selectedOption == "Voornaam")
+        {
+            string first_name = User.FirstNameSequence();
+        }
+        else if (selectedOption == "Achternaam")
+        {
+            string first_name = User.LastNameSequence();
+        }
+        else if (selectedOption == "Email")
+        {
+            string first_name = User.EmailSequence();
+        }
+        else if (selectedOption == "Wachtwoord")
+        {
+            string first_name = User.PasswordSequence();
+        }
+        else if (selectedOption == "Admin rechten")
+        {
+            string first_name = User.FirstNameSequence();
+        }
+
+        Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
+        Thread.Sleep(3000);
     }
 }

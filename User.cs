@@ -1,15 +1,14 @@
 using Microsoft.Data.Sqlite;
 
 // Admin is geinherrit van User class.
-public class User{
-    public int id {get; set; }
-    public string First_Name {get; set; }
+public class User
+{
+    public int id { get; set; }
+    public string First_Name { get; set; }
 
     public string Last_Name {get; set; }
     public string Email {get; set; }
     public string Password {get; set; }
-    public string? Phonenumber {get; set;}
-    public DateOnly Date_of_Birth {get; set; }
     public bool has_Admin {get; set; }
 
     public bool can_Book {get; set; }
@@ -31,8 +30,8 @@ public class User{
     {
         // gebruik deze methode om de user te printen.
         //Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
-        return $"email: {Email, -20}\t name: {First_Name} {Last_Name}";
-        
+        return $"email: {Email,-20}\t name: {First_Name} {Last_Name}";
+
     }
 
 
@@ -70,9 +69,6 @@ public class User{
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
         currentuser.AddToDatabase();
-
-        int age = DateOnly.FromDateTime(DateTime.Now).Year - currentuser.Date_of_Birth.Year;
-        if(age < 18) currentuser.can_Book = false;
         
         Console.Clear();
         Information.DisplayLogo();
@@ -112,7 +108,7 @@ public class User{
     }
     
 
-    private static DateOnly DateOfBirthSequence()
+    public static DateOnly DateOfBirthSequence()
     {
         Information.DisplayLogo();
         Console.Clear();
@@ -150,13 +146,14 @@ public class User{
 
     //Voegt toe nieuwe User toe aan de database..
     // datbase wrapper die de verbinding instand houdt.
-    // last rowid, bij user insert en dan ID ophalen.
+    // last rowid, bij user inserrt en dan ID ophalen.
     public void AddToDatabase(){
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
         string sql = "INSERT INTO users (first_name, last_name, email, password, has_admin) VALUES (@first_name, @last_name, @email, @password, @has_admin)";
-        using  (SqliteCommand command = new SqliteCommand(sql, connection)) {
+        using (SqliteCommand command = new SqliteCommand(sql, connection))
+        {
             command.Parameters.AddWithValue("@first_name", this.First_Name);
             command.Parameters.AddWithValue("@last_name", this.Last_Name);
             command.Parameters.AddWithValue("@email", this.Email);
@@ -164,7 +161,7 @@ public class User{
             command.Parameters.AddWithValue("@has_admin", this.has_Admin ? 1 : 0);
             command.ExecuteNonQuery();
         }
-        
+
         connection.Close();
     }
 
@@ -172,18 +169,18 @@ public class User{
     // Hieronder staat alles dat te maken heeft met register... 
     // TODO:    -checken op hoofdletter
     //          -password zo doen dat ipv chars bolletjes komen ter bescherming?
-    private static string FirstNameSequence()
+    public static string FirstNameSequence()
     {
         string firstname;
-        while(true)
+        while (true)
+        {
+            Console.Write("\nVul je voornaam in: ");
+            firstname = CheckFirstName();
+            if (firstname == null)
             {
-                Console.Write("\nVul je voornaam in: ");
-                firstname = CheckFirstName();
-                if (firstname == null)
-                {
-                    return null;
-                }
-                // firstname = Console.ReadLine()!;
+                return null;
+            }
+            // firstname = Console.ReadLine()!;
 
 
                 if (string.IsNullOrWhiteSpace(firstname))
@@ -204,24 +201,16 @@ public class User{
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
-                if (firstname.Length < 3){
-                    Console.Clear();
-                    Information.DisplayLogo();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je ingevoerde voornaam is te kort om gezien te worden als echt.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
 
-                return firstname;
-            }
+            return firstname;
+        }
     }
 
-    private static bool IsValidFirstName(string firstname)
+    public static bool IsValidFirstName(string firstname)
     {
         if (string.IsNullOrWhiteSpace(firstname))
         {
-            
+
             return false;
         }
         if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
@@ -231,12 +220,13 @@ public class User{
         return true;
     }
 
-    private static string CheckFirstName()
+    public static string CheckFirstName()
     {
         return Input.GetInput(IsValidFirstName, 20);
     }
 
 
+    //last name
     private static string LastNameSequence()
     {
         Console.Clear();
@@ -280,10 +270,10 @@ public class User{
 
             return lastname;
         }
-    
+
     }
 
-    private static bool IsValidLastName(string lastname)
+    public static bool IsValidLastName(string lastname)
     {
         if (string.IsNullOrWhiteSpace(lastname))
         {
@@ -296,18 +286,17 @@ public class User{
         return true;
     }
 
-    private static string CheckLastName()
+    public static string CheckLastName()
     {
         return Input.GetInput(IsValidLastName, 22);
     }
-
 
     private static string EmailSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
         string email = "";
-        while(true)
+        while (true)
         {
             Console.Write("Vul je emailadres in: ");
             email = CheckEmail();
@@ -325,7 +314,7 @@ public class User{
                 leftover = splitEmail[0];
             }
 
-            if(!email.Contains("@"))
+            if (!email.Contains("@"))
             {
                 Console.Clear();
                 Information.DisplayLogo();
@@ -335,8 +324,8 @@ public class User{
                 continue;
             }
 
-            if(!email.Contains("."))
-            { 
+            if (!email.Contains("."))
+            {
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -367,7 +356,7 @@ public class User{
         return email;
     }
 
-    private static string InvertString(string text)
+    public static string InvertString(string text)
     {
         string originalString = text;
         char[] charArray = originalString.ToCharArray();
@@ -376,7 +365,7 @@ public class User{
         return invertedString;
     }
 
-    private static bool IsValidEmail(string email)
+    public static bool IsValidEmail(string email)
     {
         string leftover = "";
         if (email.Contains("."))
@@ -411,15 +400,15 @@ public class User{
         return Input.GetInput(IsValidEmail, 22);
     }
 
-    private static string PasswordSequence()
+    public static string PasswordSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
-        
+
         string password = "";
         string? confirmpassword = "";
 
-        while(true)
+        while (true)
         {
             Console.WriteLine(@"Vul een wachtwoord in van 8 of meer tekens met:
     - Ten minste 1 numerieke waarde (0-9)
@@ -432,14 +421,14 @@ public class User{
                 return null;
             }
 
-            if(password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
+            if (password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
                 Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
                 Console.Write("Bevestig je wachtwoord: ");
                 confirmpassword = Console.ReadLine();
-                
+
                 // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
-                if(password != confirmpassword)
+                if (password != confirmpassword)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.\n");
@@ -473,18 +462,24 @@ public class User{
         return Input.GetInput(IsValidPassword, 23);
     }
 
-    private static bool ContainsSpecialChar(string password) {
-        foreach (char c in password) {
-            if (!Char.IsLetterOrDigit(c)) {
+    private static bool ContainsSpecialChar(string password)
+    {
+        foreach (char c in password)
+        {
+            if (!Char.IsLetterOrDigit(c))
+            {
                 return true;
             }
         }
         return false;
     }
 
-        private static bool ContainsDigit(string password) {
-        foreach (char c in password) {
-            if (Char.IsDigit(c)) {
+    private static bool ContainsDigit(string password)
+    {
+        foreach (char c in password)
+        {
+            if (Char.IsDigit(c))
+            {
                 return true;
             }
         }

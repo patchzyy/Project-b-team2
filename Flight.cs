@@ -34,6 +34,26 @@ public class Flight
         connection.Close();
     }
 
+    public void UpdateFlightInDatabase(string valueToChange, string newValue)
+    {
+        string query = valueToChange switch
+        {
+            "Duur" => $"UPDATE Flights SET duration = '{Convert.ToInt32(newValue)}'",
+            "Datum" => $"UPDATE Flights SET date = '{newValue}'",
+            "Tijd" => $"UPDATE Flights SET time = '{newValue}'",
+            "Afkomst" => $"UPDATE Flights SET origin = '{newValue}'",
+            "Bestemming" => $"UPDATE Flights SET destination = '{newValue}'",
+            "Vliegtuig" => $"UPDATE Flights SET aircraft = '{newValue}'",
+            "Gate" => $"UPDATE Flights SET gate = '{newValue}'",
+        };
+        query += $" WHERE duration = '{Duration}' AND date = '{Date}' AND time = '{Time}' AND origin = '{Origin}' AND destination = '{Destination}' AND aircraft = '{Aircraft}' AND gate = '{Gate}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        DatabaseConnection.ExecuteNonQuery();
+        connection.Close();
+    }
+
     public override string ToString()
     {
         return @$"Duration: {Duration} - "

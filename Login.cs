@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 class Login
 {
     private static SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+    private static string WelcomeUser;
     public static User? LoggingIn()
     {
         Console.Clear();
@@ -65,21 +66,8 @@ class Login
                 }
                 if (userInfo.Password == password)
                 {
-                    // wat je ook doet, laat deze stukje aan niemand zien aub
-                    // HIGH SECRET
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n\nLogging in.");
-                    Thread.Sleep(300);
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n\nLogging in..");
-                    Thread.Sleep(500);
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n\nLogging in...");
-                    Thread.Sleep(190);
-                    Console.Clear();
-                    Information.DisplayLogo();
-                    Console.WriteLine($"Logging succesvol, welkom {userInfo.First_Name}.");
-                    Thread.Sleep(2000);
+                    WelcomeUser = userInfo.First_Name;
+                    SuccesLogin(userInfo.First_Name);
                     break;
                 }
                 else
@@ -272,6 +260,48 @@ class Login
         return founduser;
     }
 
+    private static void SuccesLogin(string firstname)
+    {
+        Console.Clear();
+        Console.WriteLine("\n\n\n\nLogging in.");
+        Thread.Sleep(300);
+        Console.Clear();
+        Console.WriteLine("\n\n\n\nLogging in..");
+        Thread.Sleep(500);
+        Console.Clear();
+        Console.WriteLine("\n\n\n\nLogging in...");
+        Thread.Sleep(190);
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
+        Console.Write("Druk op ");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("enter");
+        Console.ResetColor();
+        Console.WriteLine(" om door te gaan.\n");
+
+
+        while (true)
+        {
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
+            Console.Write("Druk op ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("enter");
+            Console.ResetColor();
+            Console.WriteLine(" om door te gaan.\n");
+            var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Enter)
+            {
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
     private static bool IsValidPassword(string password)
     {
         if (password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
