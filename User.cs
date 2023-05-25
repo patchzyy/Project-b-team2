@@ -44,12 +44,25 @@ public class User{
         Console.WriteLine("Vul je details in.");
 
         string first_name = FirstNameSequence();
-        string last_name = LastNameSequence();
-        string email = EmailSequence();
-        string password = PasswordSequence();
-        string phonenumber = PhonenumberSequence();
-        DateOnly date_of_birth = DateOfBirthSequence();
+        if (first_name == null) return null;
 
+        string last_name = LastNameSequence();
+        if (last_name == null) return null;   
+
+        string email = EmailSequence();
+        if (email == null) return null; 
+
+        string password = PasswordSequence();
+        if (password == null) return null;   
+
+        string phonenumber = PhonenumberSequence();
+        if (phonenumber == null) return null;
+
+        DateOnly date_of_birth = DateOfBirthSequence();
+        if(date_of_birth == null) return null;
+
+
+    
 
 
 
