@@ -6,12 +6,12 @@ public class User
     public int id { get; set; }
     public string First_Name { get; set; }
 
-    public string Last_Name {get; set; }
-    public string Email {get; set; }
-    public string Password {get; set; }
-    public bool has_Admin {get; set; }
+    public string Last_Name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public bool has_Admin { get; set; }
 
-    public bool can_Book {get; set; }
+    public bool can_Book { get; set; }
 
 
 
@@ -46,22 +46,22 @@ public class User
         if (first_name == null) return null;
 
         string last_name = LastNameSequence();
-        if (last_name == null) return null;   
+        if (last_name == null) return null;
 
         string email = EmailSequence();
-        if (email == null) return null; 
+        if (email == null) return null;
 
         string password = PasswordSequence();
-        if (password == null) return null;   
+        if (password == null) return null;
 
         string phonenumber = PhonenumberSequence();
         if (phonenumber == null) return null;
 
         DateOnly date_of_birth = DateOfBirthSequence();
-        if(date_of_birth == null) return null;
+        if (date_of_birth == null) return null;
 
 
-    
+
 
 
 
@@ -69,7 +69,7 @@ public class User
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
         currentuser.AddToDatabase();
-        
+
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
@@ -78,7 +78,7 @@ public class User
         return currentuser;
     }
 
-    private static string PhonenumberSequence()
+    public static string PhonenumberSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -86,27 +86,30 @@ public class User
         bool isValidInput = false;
         string phonenumber;
 
-        do{
+        do
+        {
             Console.Write("Wat is uw telefoon nummer? \n+");
             phonenumber = Console.ReadLine();
-            phonenumber = phonenumber.Replace(" ","");
+            phonenumber = phonenumber.Replace(" ", "");
 
-            if(ContainsDigit(phonenumber) && phonenumber.Length > 8 && phonenumber.Length <= 15){
+            if (ContainsDigit(phonenumber) && phonenumber.Length > 8 && phonenumber.Length <= 15)
+            {
                 isValidInput = true;
             }
-            else{
+            else
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Zorg ervoor dat het telefoon nummer correct is ingevoerd\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
         }
-        while(!isValidInput);
+        while (!isValidInput);
 
         return phonenumber;
 
     }
-    
+
 
     public static DateOnly DateOfBirthSequence()
     {
@@ -147,7 +150,8 @@ public class User
     //Voegt toe nieuwe User toe aan de database..
     // datbase wrapper die de verbinding instand houdt.
     // last rowid, bij user inserrt en dan ID ophalen.
-    public void AddToDatabase(){
+    public void AddToDatabase()
+    {
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
@@ -183,24 +187,24 @@ public class User
             // firstname = Console.ReadLine()!;
 
 
-                if (string.IsNullOrWhiteSpace(firstname))
-                {
-                    Console.Clear();
-                    Information.DisplayLogo();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je voornaam mag niet niks zijn.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
-                if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
-                {
-                    Console.Clear();
-                    Information.DisplayLogo();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Je voornaam mag alleen letters bevatten.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
+            if (string.IsNullOrWhiteSpace(firstname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je voornaam mag niet niks zijn.");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
+            if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je voornaam mag alleen letters bevatten.");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
 
             return firstname;
         }
@@ -227,7 +231,7 @@ public class User
 
 
     //last name
-    private static string LastNameSequence()
+    public static string LastNameSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
@@ -259,14 +263,15 @@ public class User
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
-            if (lastname.Length < 3){
+            if (lastname.Length < 3)
+            {
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je ingevoerde achternaam is te kort om gezien te worden als echt.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
-                }
+            }
 
             return lastname;
         }
@@ -291,7 +296,7 @@ public class User
         return Input.GetInput(IsValidLastName, 22);
     }
 
-    private static string EmailSequence()
+    public static string EmailSequence()
     {
         Console.Clear();
         Information.DisplayLogo();
