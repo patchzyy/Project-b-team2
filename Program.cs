@@ -6,7 +6,7 @@ class Program
     {
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        Menu menu = new Menu(new[] { "Login", "Register", "More Information", "Fast" });
+        Menu menu = new Menu(new[] { "Login", "Register", "Meer Informatie", "Fast" });
         menu.Run();
 
 

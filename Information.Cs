@@ -1,5 +1,22 @@
 public class Information
 {
+
+     public static void BackKey()
+    {
+        Console.WriteLine("druk op Escape of Backspace om terug te gaan");
+        ConsoleKeyInfo keyInfo;
+        do
+        {
+            keyInfo = Console.ReadKey(true);
+
+            if (keyInfo.Key == ConsoleKey.Escape || keyInfo.Key == ConsoleKey.Backspace)
+            {
+                return;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
+    }
+
     public static void GetInformation()
     {
         Console.Clear();
@@ -16,8 +33,7 @@ public class Information
         E-Mail: RotterdamAirlines@RDamSouthAirport.nl
         Telefoon: 010-85785619");
         Thread.Sleep(1000);
-        Console.WriteLine("Druk op enter om terug te gaan.");
-        Console.ReadLine();
+        BackKey();
     }
     public static void DisplayLogo()
     {

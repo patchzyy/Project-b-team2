@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using System.Text.RegularExpressions;
 
 // Admin is geinherrit van User class.
 public class User
@@ -14,6 +15,10 @@ public class User
     public bool can_Book { get; set; }
     public string? Phonenumber { get; set; }
     public DateOnly Date_of_Birth { get; set; }
+
+    public string Passport_Number { get; set; }
+
+    public string Origin { get; set; }
 
 
 
@@ -62,6 +67,12 @@ public class User
         DateOnly date_of_birth = DateOfBirthSequence();
         if (date_of_birth == null) return null;
 
+        string passport_number = PassportSequence();
+        if (passport_number == null) return null;
+
+
+        // string origin = OriginSequence();
+        // if (origin == null) return null;
 
 
 
@@ -70,6 +81,7 @@ public class User
         User currentuser = new User(first_name, last_name, email, password);
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
+        currentuser.Passport_Number = passport_number;
         currentuser.AddToDatabase();
 
         Console.Clear();
@@ -78,6 +90,45 @@ public class User
         Thread.Sleep(5000);
 
         return currentuser;
+    }
+
+    // moet in overleg
+    public static string OriginSequence()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+
+        bool validcountry = false;
+        string pattern = @"^\[A-Z]{2}";
+
+        return "...";
+    }
+
+    public static string PassportSequence()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+
+        bool validnumber = false;
+        string pattern = @"^\d{9}$";
+        string passportnumber;
+
+        do{
+            Console.WriteLine("Wat is uw passpoort nummer?");
+            passportnumber = Console.ReadLine();
+
+            if(Regex.IsMatch(passportnumber, pattern)){
+                validnumber=true;
+            }
+            else{
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+        } while(!validnumber);
+
+        return passportnumber;
     }
 
     public static string PhonenumberSequence()
