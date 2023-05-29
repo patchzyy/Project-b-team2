@@ -6,32 +6,28 @@ public class DrawBoeing787UI
         Console.WriteLine("        /                                            \\");
         Console.WriteLine("       /                                              \\");
         Console.Write("     _/                                                \\_");
-        Console.Write("                        Economy Plus stoelen staan");
-        Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write(" Donkerblauw ");
+        Console.Write("                       LEGENDA\n");
+        Console.Write("    /                                                    \\                      ");
+        Console.BackgroundColor = ConsoleColor.DarkGreen;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write("aangegeven. \n");
-        Console.Write("    /                                                    \\");
-        Console.Write("                       Business Class stoelen staan");
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.Write(" geel ");
+        Console.Write(" = EconomyPlus \n");
+        Console.Write("   /                                                      \\                     ");
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write("aangegeven. \n");
-        Console.Write("   /                                                      \\");
-        Console.Write("                      Standaard stoelen zijn Wit. \n");
-        Console.WriteLine("  /                                                        \\");
-        Console.Write(" /                                                          \\");
-        Console.Write("                    Stoelen die gereserveerd zijn staan ");
+        Console.Write(" = BusinessClass \n");
+        Console.Write("  /                                                        \\                    ");
         Console.BackgroundColor = ConsoleColor.Red;
-        Console.Write("rood");
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
-        Console.Write("/                                                            \\");
-        Console.Write("                   De stoel die U aan het bekijken bent staat ");
+        Console.Write(" = Gereserveerde stoel\n");
+        Console.Write(" /                                                          \\                   ");
         Console.BackgroundColor = ConsoleColor.Blue;
-        Console.Write("Blauw");
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
+        Console.Write(" = Huidige stoel\n");
+        Console.WriteLine("/                                                            \\");
         Console.WriteLine("|                                                            |");
         Console.WriteLine("|                                                            |");
         int rowNr = 1;
@@ -103,7 +99,7 @@ public class DrawBoeing787UI
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
 
                     if (seat.IsEconomyPlus)
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                     if (seat == currentSeat)
                         Console.BackgroundColor = ConsoleColor.Blue;
