@@ -403,24 +403,29 @@ public static class AdminTool
         if (selectedOption == "Voornaam")
         {
             string first_name = User.FirstNameSequence();
+            selectedUser.First_Name = first_name;
         }
         else if (selectedOption == "Achternaam")
         {
-            string first_name = User.LastNameSequence();
+            string last_name = User.LastNameSequence();
+            selectedUser.Last_Name = last_name;
         }
         else if (selectedOption == "Email")
         {
-            string first_name = User.EmailSequence();
+            string email = User.EmailSequence();
+            selectedUser.Email = email;
         }
         else if (selectedOption == "Wachtwoord")
         {
-            string first_name = User.PasswordSequence();
+            string password = User.PasswordSequence();
+            selectedUser.Password = password;
         }
         else if (selectedOption == "Admin rechten")
         {
-            string first_name = User.FirstNameSequence();
+            int? has_admin = HasAdminSequence(selectedUser.has_Admin);
+            selectedUser.has_Admin = true ? has_admin == 1 : false;
         }
-
+        selectedUser.UpdateInDatabase();
         Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
         Thread.Sleep(3000);
     }

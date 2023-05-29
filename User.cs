@@ -12,6 +12,8 @@ public class User
     public bool has_Admin { get; set; }
 
     public bool can_Book { get; set; }
+    public string? Phonenumber { get; set; }
+    public DateOnly Date_of_Birth { get; set; }
 
 
 
@@ -169,6 +171,27 @@ public class User
         connection.Close();
     }
 
+    public void UpdateInDatabase()
+    {
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+
+        string sql = "UPDATE users SET first_name = @first_name, last_name = @last_name, email = @email, "
+                     + "password = @password, has_admin = @has_admin WHERE email = @email2";
+
+        using (SqliteCommand command = new SqliteCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@first_name", this.First_Name);
+            command.Parameters.AddWithValue("@last_name", this.Last_Name);
+            command.Parameters.AddWithValue("@email", this.Email);
+            command.Parameters.AddWithValue("@password", this.Password);
+            command.Parameters.AddWithValue("@has_admin", this.has_Admin ? 1 : 0);
+            command.Parameters.AddWithValue("@email2", this.Email);
+            command.ExecuteNonQuery();
+        }
+
+        connection.Close();
+    }
 
     // Hieronder staat alles dat te maken heeft met register... 
     // TODO:    -checken op hoofdletter
