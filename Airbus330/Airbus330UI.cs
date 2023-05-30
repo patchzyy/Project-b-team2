@@ -387,30 +387,26 @@ public class DrawAirbus330UI
         Console.WriteLine("        /                                             \\");
         Console.Write("      _/                                               \\_");
         Console.Write("             LEGENDA \n");
-        Console.Write("     /                                                   \\");
-        Console.Write("            Stoelen met extra beenruimte staan");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write(" geel ");
+        Console.Write("     /                                                   \\             ");
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write("aangegeven. \n");
-        Console.Write("   _/                                                     \\_");
-        Console.Write("          Stoelen die Club Class zijn staan ");
-        Console.BackgroundColor = ConsoleColor.Cyan;
-        Console.Write("lichtblauw");
-        Console.ResetColor();
-        Console.Write(" aangegeven. \n");
-        Console.Write("  /                                                         \\");
-        Console.Write("         Stoelen die gereserveerd zijn staan ");
+        Console.Write(" = Extra Beenruimte\n");
+        Console.Write("   _/                                                     \\_           ");
         Console.BackgroundColor = ConsoleColor.Red;
-        Console.Write("rood");
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
-        Console.Write(" /                                                           \\");
-        Console.Write("        De stoel die U aan het bekijken bent staat ");
-        Console.BackgroundColor = ConsoleColor.Blue;
-        Console.Write("blauw");
+        Console.Write(" = Gereserveerde stoel\n");
+        Console.Write("  /                                                         \\          ");
+        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.Write("  ");
         Console.ResetColor();
-        Console.Write(" aangegeven. \n");
+        Console.Write(" = Club Class stoel\n");
+        Console.Write(" /                                                           \\         ");
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.Write("  ");
+        Console.ResetColor();
+        Console.Write(" = Huidige stoel\n");
         Console.WriteLine("|                                                            |");
         Console.WriteLine("|                                                            |");
         int rowNr = 1;
@@ -535,13 +531,13 @@ public class DrawAirbus330UI
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                     }
-                    if (seat == currentSeat)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Blue;
-                    }
                     if (seat.IsReserved)
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
+                    }
+                    if (seat == currentSeat)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Blue;
                     }
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
@@ -603,8 +599,7 @@ public class DrawAirbus330UI
         int selectedOption = 0;
         while (true)
         {
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
+            Console.SetCursorPosition(0, 65);
             if (selectedOption == 0)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -640,6 +635,7 @@ public class DrawAirbus330UI
                 case ConsoleKey.Enter:
                     if (selectedOption == 0)
                     {
+                        Console.WriteLine("\n\n");
                         return true;
                     }
                     else

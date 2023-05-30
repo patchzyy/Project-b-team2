@@ -4,11 +4,11 @@ class Program
 
     public static void Main()
     {
-        Information.DisplayLogo();
-        Thread.Sleep(2000);
+        // Information.DisplayLogo();
+        // Thread.Sleep(2000);
         Menu menu = new Menu(new[] { "Login", "Register", "Meer Informatie", "Fast" });
         menu.Run();
-
+        // DrawBoeing737UI.SelectBoeing737(new Boeing737());
 
 
 

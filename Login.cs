@@ -36,7 +36,16 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.WriteLine("Aanmelden\n");
+                    Console.Write("Aanmelden                 ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Verkeerde input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Juiste input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
                     Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
@@ -48,10 +57,16 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.WriteLine("Aanmelden\n");
+                    Console.Write("Aanmelden                 ");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
+                    Console.Write("Verkeerde input");
                     Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Juiste input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
                     Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
@@ -96,13 +111,32 @@ class Login
             {
                 if (!falseEmail)
                 {
+                    Console.Write("Aanmelden                 ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Verkeerde input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Juiste input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
                     Console.Write("Email: ");
                 }
                 else
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.WriteLine("Aanmelden\n");
+                    Console.Write("Aanmelden                 ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Verkeerde input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Juiste input");
+                    Console.ResetColor();
+                    Console.Write("  |  ");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(errortext);
                     Console.ForegroundColor = ConsoleColor.White;
