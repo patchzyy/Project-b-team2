@@ -49,7 +49,7 @@ public class ExtraUser
         }
         connection.Close();
         // now add the extra user to the database
-        query = $"INSERT INTO ExtraUsers (firstName, lastName, age, masterUserEmail, seat, bookingID) VALUES ('{FirstName}', '{LastName}', '{Age}', '{MasterUser.Email}' , '{Seat.ToString()}', '{bookingID}')";
+        query = $"INSERT INTO ExtraUsers (firstName, lastName, age, masterUserEmail, seat, bookingID) VALUES ('{FirstName}', '{LastName}', '{Age}', '{MasterUser.Email}' , '{Seat.SeatId}', '{bookingID}')";
         connection.Open();
         DatabaseConnection = new(query, connection);
         DatabaseConnection.ExecuteNonQuery();
@@ -63,6 +63,7 @@ public class ExtraUser
         string lastName = User.LastNameSequence();
         DateOnly date_of_birth = User.DateOfBirthSequence();
         int age = DateOnly.FromDateTime(DateTime.Now).Year - date_of_birth.Year;
+        string passportnumber = User.PassportSequence();
         ExtraUser Extrauser = new ExtraUser(firstName, lastName, age, user, seat, flight);
         Extrauser.AddToDatabase();
         return Extrauser;

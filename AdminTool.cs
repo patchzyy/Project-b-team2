@@ -246,7 +246,6 @@ public static class AdminTool
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine(prompt);
-            Console.Write($"Geef een getal op tussen {min} en {max}:");
             string input = Console.ReadLine();
             int number;
             try

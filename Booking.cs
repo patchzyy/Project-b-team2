@@ -11,6 +11,7 @@ public class Booking
 
     public readonly int phonenumber;
 
+
     public bool HasBaggage, HasVIP, HasEntertainment, HasLounge, HasInsurance;
 
     public Booking(User user, Flight flight, Seat seat)
@@ -94,9 +95,6 @@ public class Booking
         }
         DatabaseConnection = new(querynew, connection);
         DatabaseConnection.ExecuteNonQuery();
-        Console.WriteLine("Booking added to database");
-        //sleep for 3 seconds
-        Thread.Sleep(3000);
         connection.Close();
 
     }
@@ -120,6 +118,38 @@ public class Booking
         SqliteCommand DatabaseConnection = new(query, connection);
         DatabaseConnection.ExecuteNonQuery();
         connection.Close();
+    }
+
+    public static void AskForPassportNumber()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Wat is uw paspoortnummer?");
+        string passportNumber = Console.ReadLine();
+        if (passportNumber.Length == 9)
+        {
+            Console.WriteLine("Uw paspoortnummer is geldig!");
+            Thread.Sleep(2000);
+        }
+        else
+        {
+            Console.WriteLine("Uw paspoortnummer is niet geldig!");
+            Thread.Sleep(2000);
+            AskForPassportNumber();
+        }
+
+    }
+
+    public static void ClearDataBase()
+    {
+        // deze method is om de database te clearen, zodat we niet elke keer de database hoeven te clearen als we iets willen testen, maar niet de hele database willen verwijderen
+        string query = $"DROP TABLE Bookings";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        DatabaseConnection.ExecuteNonQuery();
+        connection.Close();
+
     }
 
 }

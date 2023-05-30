@@ -113,20 +113,23 @@ public class User
         string pattern = @"^\d{9}$";
         string passportnumber;
 
-        do{
+        do
+        {
             Console.WriteLine("Wat is uw passpoort nummer?");
             passportnumber = Console.ReadLine();
 
-            if(Regex.IsMatch(passportnumber, pattern)){
-                validnumber=true;
+            if (Regex.IsMatch(passportnumber, pattern))
+            {
+                validnumber = true;
             }
-            else{
+            else
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
 
-        } while(!validnumber);
+        } while (!validnumber);
 
         return passportnumber;
     }

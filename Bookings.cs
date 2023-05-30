@@ -7,7 +7,32 @@ public static class Bookings
         List<Flight> flights = Flights.GetDepartingFlights();
         List<Seat>? seats;
         int AmountOfBookings;
-        Flight SelectedFlight = flights[AdminTool.AskMultipleOptions<Flight>("tijdelijk menu om een vlucht te selecteren", flights)];
+
+
+        List<Flight> AllFlights = Flights.GetDepartingFlights();
+        List<String> FlightStrings = new List<String>();
+        // get the flight destination, if its not in the flightstrings, add it
+        foreach (Flight flight in AllFlights)
+        {
+            if (!FlightStrings.Contains(flight.Destination))
+            {
+                FlightStrings.Add(flight.Destination);
+            }
+        }
+
+        // ask for the destination
+        string Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
+        List<Flight> CorrectFlights = new List<Flight>();
+        // get all the flights that have the destination AllFlights
+        foreach (Flight flight in AllFlights)
+        {
+            if (flight.Destination == Destination)
+            {
+                CorrectFlights.Add(flight);
+            }
+        }
+
+        Flight SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
 
         // ask for the amount of users
         AmountOfBookings = AdminTool.AskForInt(1, 10, "Hoeveel mensen wilt u boeken?");
@@ -37,6 +62,8 @@ public static class Bookings
         // nu vragen we voor elke user om de extra informatie
         AmountOfBookings = AmountOfBookings - 1;
         Booking currentbooking = new Booking(CurrentUser, SelectedFlight, seats[0]);
+        // voordat we verder kunnen gaan hebben we het paspoortnummer nodig
+        string passport = User.PassportSequence();
         currentbooking.AddToDatabase();
         // dit is omdat de main user al een keer is gevraagd om de informatie
         List<ExtraUser> ExtraUsers = new List<ExtraUser>();
@@ -57,9 +84,9 @@ public static class Bookings
         // we maken een booking aan voor de main user
 
         // we maken een booking aan voor elke extra user
+        int seatnumber = 0;
         foreach (ExtraUser Extra in ExtraUsers)
         {
-            int seatnumber = 0;
             if (seats.Count > seatnumber) seatnumber++;
             Booking extraBooking = new Booking(CurrentUser, Extra, SelectedFlight, seats[seatnumber]);
         }
@@ -69,10 +96,24 @@ public static class Bookings
         Information.DisplayLogo();
         Console.WriteLine("Controleer of alle informatie klopt.");
         Console.WriteLine($"Vlucht van {SelectedFlight.Origin} naar {SelectedFlight.Destination} op {SelectedFlight.Date} om {SelectedFlight.Time}");
-        Console.WriteLine($"Stoel: {seats[0]}");
+        Console.WriteLine($"Stoel: {seats[0].SeatId}");
         Console.WriteLine($"Gebruiker: {CurrentUser.First_Name} {CurrentUser.Last_Name}");
         Console.WriteLine("Druk op enter om door te gaan.");
         Console.ReadLine();
+        // nu vragen we het zelfde voor elke extra user
+        seatnumber = 0;
+        foreach (ExtraUser Extra in ExtraUsers)
+        {
+            seatnumber++;
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine("Controleer of alle informatie klopt van de extra gebruikers.");
+            Console.WriteLine($"Vlucht van {SelectedFlight.Origin} naar {SelectedFlight.Destination} op {SelectedFlight.Date} om {SelectedFlight.Time}");
+            Console.WriteLine($"Stoel: {seats[seatnumber].SeatId}");
+            Console.WriteLine($"Gebruiker: {Extra.FirstName} {Extra.LastName}");
+            Console.WriteLine("Druk op enter om door te gaan.");
+            Console.ReadLine();
+        }
         double totalprice = 0;
         foreach (Seat seat in seats)
         {
@@ -82,15 +123,12 @@ public static class Bookings
         Console.WriteLine("Druk op enter om door te gaan.");
         Console.ReadLine();
 
-        // wacht 4 seconden op de betaling
-        Console.WriteLine("Wacht 4 seconden op de betaling.");
-        Thread.Sleep(4000);
+        // wacht 2 seconden op de betaling
+        Console.WriteLine("Wacht 2 seconden op de betaling.");
+        Thread.Sleep(2000);
         Console.WriteLine("Betaling gelukt.");
         Console.WriteLine("Druk op enter om door te gaan.");
         Console.ReadLine();
-        currentbooking.AddToDatabase();
 
     }
-
-
 }
