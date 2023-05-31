@@ -8,7 +8,7 @@ class Login
     {
         Console.Clear();
         Information.DisplayLogo();
-        Console.WriteLine("Aanmelden\n");
+        // Console.WriteLine("Aanmelden\n");
 
         string email = AskForEmail(null);
         if (email == null)
@@ -25,7 +25,7 @@ class Login
             {
                 break;
             }
-            email = AskForEmail(null);
+            email = AskForEmail("De gegeven email is niet gevonden, probeer het opnieuw.");
         }
         bool falsePassword = false;
         while (true)
@@ -67,6 +67,9 @@ class Login
                     Console.ResetColor();
                     Console.Write("  |  ");
                     Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
+                    Console.ResetColor();
                     Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
@@ -111,6 +114,8 @@ class Login
             {
                 if (!falseEmail)
                 {
+                    Console.Clear();
+                    Information.DisplayLogo();
                     Console.Write("Aanmelden                 ");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Verkeerde input");
@@ -121,6 +126,9 @@ class Login
                     Console.ResetColor();
                     Console.Write("  |  ");
                     Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(errortext);
+                    Console.ResetColor();
                     Console.Write("Email: ");
                 }
                 else
