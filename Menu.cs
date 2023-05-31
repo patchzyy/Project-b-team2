@@ -137,6 +137,11 @@ class Menu
                 AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
+        else if (selectedOption == "Boekingen bekijken")
+        {
+            Booking booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+
+        }
         else if (selectedOption == "Register")
         {
             _currentUser = User.Register();

@@ -64,4 +64,39 @@ public class Flight
             + @$"Aircraft: {Aircraft} - "
             + @$"Gate: {Gate}";
     }
+    public string GenerateFlightID()
+    {
+        // FlightID must start with RA- and end with 6 numbers that are unique and generated with the information used for this flight, and end with 2 letters of the destination
+        // Example: RA-123456-LO
+
+        // Get the first 2 letters of the destination
+        string Destination = this.Destination.Substring(0, 2).ToUpper();
+        string Time = this.Time.Replace(":", "");
+        string Date = this.Date.Replace("-", "");
+        string FlightID = $"RA-{Time}{Date}-{Destination}";
+        return FlightID;
+    }
+
+    public static Flight GetFlight_Database_id(int id)
+    {
+        string query = $"SELECT * FROM Flights WHERE id = '{id}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        while (reader.Read())
+        {
+            int duration = reader.GetInt32(1);
+            string date = reader.GetString(2);
+            string time = reader.GetString(3);
+            string origin = reader.GetString(4);
+            string destination = reader.GetString(5);
+            string aircraft = reader.GetString(6);
+            string gate = reader.GetString(7);
+            Flight flight = new Flight(duration, date, time, origin, destination, aircraft, gate);
+            return flight;
+        }
+        return null;
+
+    }
 }

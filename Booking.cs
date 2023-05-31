@@ -152,4 +152,25 @@ public class Booking
 
     }
 
+    public override string ToString()
+    {
+        // first see how many extra users, use the main user's email to look through the extrausers in the database
+        string query = $"SELECT * FROM ExtraUsers WHERE masterUserEmail = '{BookingsUser.Email}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        int extraUsers = 0;
+        while (reader.Read())
+        {
+            extraUsers++;
+        }
+        Flight currentflight = Flight;
+        if (currentflight == null)
+        {
+            return "Flght is null";
+        }
+        return $"Flight_ID: {currentflight.GenerateFlightID()} , Stoel: {Seat.SeatId}, Aaantal passagiers: {extraUsers + 1}, naar {currentflight.Destination}";
+    }
+
 }
