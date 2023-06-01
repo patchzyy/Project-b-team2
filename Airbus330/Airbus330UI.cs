@@ -12,6 +12,32 @@ public class DrawAirbus330UI
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
+                if (plane.Seats[seatIndex].IsReserved)
+                {
+                    SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
+                    returnSeats.Remove(plane.Seats[seatIndex]);
+                    plane.Seats[seatIndex].IsReserved = false;
+                    continue;
+                }
+                
+                if (SeatsChosen.Count == amountToSelect)
+                {
+                    Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
+                    Console.Write("Druk op ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("enter");
+                    Console.ResetColor();
+                    Console.Write(" om door te gaan");
+                    while (true)
+                    {
+                        key = Console.ReadKey();
+                        if (key.Key == ConsoleKey.Enter)
+                        {
+                            break;
+                        }
+                    }
+                continue;
+                }
                 if (!plane.Seats[seatIndex].IsReserved)
                 {
                     SeatsChosen.Add(plane.Seats[seatIndex].SeatId);
@@ -20,12 +46,11 @@ public class DrawAirbus330UI
                     Console.Clear();
                     DrawAirbus330(plane, plane.Seats[seatIndex]);
                 }
-                else
-                {
-                    SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
-                    returnSeats.Remove(plane.Seats[seatIndex]);
-                    plane.Seats[seatIndex].IsReserved = false;
-                }
+                // else
+                // {
+                //     SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
+                //     returnSeats.Remove(plane.Seats[seatIndex]);
+                //     plane.Seats[seatIndex].IsReserved = false;
                 // }
             }
             if (key.Key == ConsoleKey.Escape)
