@@ -599,7 +599,9 @@ public class DrawAirbus330UI
         int selectedOption = 0;
         while (true)
         {
-            Console.SetCursorPosition(0, 65);
+            // Console.WriteLine();
+            var cursor = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, cursor.Top);
             if (selectedOption == 0)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
