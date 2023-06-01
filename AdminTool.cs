@@ -147,7 +147,7 @@ public static class AdminTool
             flights.Add(flight);
         }
         Flight selectedFlight = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om aan te passen", flights)];
-        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate" };
+        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate", "Vlucht annuleren" };
         string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
         Console.WriteLine("Voer de nieuwe waarde in");
         if (selectedOption == "Duur")
@@ -184,6 +184,10 @@ public static class AdminTool
         {
             string gate = GateSequence();
             selectedFlight.UpdateFlightInDatabase(selectedOption, gate);
+        }
+        else if (selectedOption == "Vlucht annuleren")
+        {
+            CancelFlightSequence(selectedFlight);
         }
 
         Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
@@ -282,6 +286,20 @@ public static class AdminTool
     public static string GateSequence()
     {
         return AskStringInformation("Gate", 2, "G6");
+    }
+
+    public static void CancelFlightSequence(Flight flight)
+    {
+        List<string> options = new List<string> { "Ja", "Nee" };
+        string selectedOption = options[AskMultipleOptions<string>("Weet u zeker dat u deze vlucht wilt annuleren?", options)];
+        if (selectedOption == "Ja")
+        {
+            flight.UpdateFlightInDatabase("Tijd", "--:--");
+        }
+        if (selectedOption == "Nee")
+        {
+            ChangeFlight();
+        }
     }
 
     public static int? HasAdminSequence(bool currentlyHasAdmin)

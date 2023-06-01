@@ -63,20 +63,27 @@ public static class Flights
         {
             string state;
             string dateString = flight.Time;
-            DateTime currentTime = DateTime.Now;
-            DateTime time = DateTime.ParseExact(dateString, "HH:mm", CultureInfo.InvariantCulture);
-            TimeSpan timeDifference = time - currentTime;
-            if (currentTime > time)
+            if (dateString == "--:--")
             {
-                state = "Vertrokken";
-            }
-            else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 30)
-            {
-                state = "Boarding";
+                state = "Geannuleerd";
             }
             else
             {
-                state = "Inactief";
+                DateTime currentTime = DateTime.Now;
+                DateTime time = DateTime.ParseExact(dateString, "HH:mm", CultureInfo.InvariantCulture);
+                TimeSpan timeDifference = time - currentTime;
+                if (currentTime > time)
+                {
+                    state = "Vertrokken";
+                }
+                else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 30)
+                {
+                    state = "Boarding";
+                }
+                else
+                {
+                    state = "Inactief";
+                }
             }
             Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", flight.Time, flight.Destination, flight.Aircraft, state, flight.Gate);
         }
@@ -95,17 +102,24 @@ public static class Flights
             DateTime currentTime = DateTime.Now;
             DateTime time = DateTime.ParseExact(dateString, "HH:mm", CultureInfo.InvariantCulture);
             TimeSpan timeDifference = time - currentTime;
-            if (currentTime > time)
+            if (dateString == "--:--")
             {
-                state = "Geland";
-            }
-            else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 120)
-            {
-                state = "Onderweg";
+                state = "Geannuleerd";
             }
             else
             {
-                state = "Inactief";
+                if (currentTime > time)
+                {
+                    state = "Geland";
+                }
+                else if (timeDifference.TotalMinutes >= 1 && timeDifference.TotalMinutes <= 120)
+                {
+                    state = "Onderweg";
+                }
+                else
+                {
+                    state = "Inactief";
+                }
             }
 
             Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", flight.Time, flight.Origin, flight.Aircraft, state, flight.Gate);
