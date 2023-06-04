@@ -121,7 +121,7 @@ class Menu
             }
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             else
             {
@@ -140,11 +140,12 @@ class Menu
                 AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
-        else if (selectedOption == "Fast Admin"){
-            _currentUser = new("Issam", "benmassoud", "issam@gmail.com", "Wachtwoord123!",true);
+        else if (selectedOption == "Fast Admin")
+        {
+            _currentUser = new("Barrie", "Batsbak", "barriebatsbak@pruters.nl", "Gerrie123!", true);
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             else
             {
@@ -153,15 +154,25 @@ class Menu
         }
         else if (selectedOption == "Boekingen bekijken")
         {
-            booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
-            List<Booking> bookings = booking.GetExtraBookings();
-            if (booking.Flight.Time == "--:--")
+            if (Bookings.GetBookings(_currentUser).Count == 0)
             {
-                booking.Flight.CancelledMessage();
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.WriteLine("Je hebt nog geen boekingen gemaakt.");
+                Console.ReadKey();
             }
             else
             {
-                AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Vlucht annuleren", "Terug" });
+                booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+                List<Booking> bookings = booking.GetExtraBookings();
+                if (booking.Flight.Time == "--:--")
+                {
+                    booking.Flight.CancelledMessage();
+                }
+                else
+                {
+                    AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Vlucht annuleren", "Terug" });
+                }
             }
         }
 
@@ -210,10 +221,14 @@ class Menu
         }
         else if (selectedOption == "Vlucht boeken")
         {
-            if(!_currentUser.can_Book){
+            if (!_currentUser.can_Book)
+            {
                 AddMenu(new[] { "Helaas ben je te jong om te boeken! Je kunt wel de vluchten bekijken.", "Terug" });
             }
-            Bookings.BookingSequence(_currentUser);
+            else
+            {
+                Bookings.BookingSequence(_currentUser);
+            }
         }
 
         // Extra opties / features bijboeken.
