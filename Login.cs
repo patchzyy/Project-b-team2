@@ -45,7 +45,7 @@ class Login
                     Console.Write("Juiste input");
                     Console.ResetColor();
                     Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n\n");
                     Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
@@ -66,7 +66,7 @@ class Login
                     Console.Write("Juiste input");
                     Console.ResetColor();
                     Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n\n");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
                     Console.ResetColor();
@@ -313,14 +313,6 @@ class Login
         Console.Clear();
         Console.WriteLine("\n\n\n\nLogging in...");
         Thread.Sleep(190);
-        Console.Clear();
-        Information.DisplayLogo();
-        Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
-        Console.Write("Druk op ");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write("enter");
-        Console.ResetColor();
-        Console.WriteLine(" om door te gaan.\n");
 
 
         while (true)
@@ -328,11 +320,7 @@ class Login
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
-            Console.Write("Druk op ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("enter");
-            Console.ResetColor();
-            Console.WriteLine(" om door te gaan.\n");
+            Console.Write("Druk op enter om door te gaan.\n");
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
