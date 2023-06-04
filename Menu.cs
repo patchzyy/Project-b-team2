@@ -210,6 +210,9 @@ class Menu
         }
         else if (selectedOption == "Vlucht boeken")
         {
+            if(!_currentUser.can_Book){
+                AddMenu(new[] { "Helaas ben je te jong om te boeken! Je kunt wel de vluchten bekijken.", "Terug" });
+            }
             Bookings.BookingSequence(_currentUser);
         }
 

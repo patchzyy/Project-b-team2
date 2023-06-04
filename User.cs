@@ -71,8 +71,8 @@ public class User
         if (passport_number == null) return null;
 
 
-        // string origin = OriginSequence();
-        // if (origin == null) return null;
+        string origin = OriginSequence();
+        if (origin == null) return null;
 
 
 
@@ -82,6 +82,7 @@ public class User
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
         currentuser.Passport_Number = passport_number;
+        currentuser.Origin = origin;
         currentuser.AddToDatabase();
 
         Console.Clear();
@@ -99,9 +100,22 @@ public class User
         Information.DisplayLogo();
 
         bool validcountry = false;
-        string pattern = @"^\[A-Z]{2}";
+        string pattern = @"^(?!.*\d)[^\n]{0,58}$";
+        string country;
+        
+        do{
+            Console.WriteLine("Wat is uw land van herkomst?");
+            country = Console.ReadLine();
+            if (Regex.IsMatch(country, pattern)) validcountry = true;
+            else{
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Uw invoer is niet goed ingevuld, zorg ervoor dat het \n-Geen nummers bevat\nMinder dan 58 tekens heeft.\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+        while(!validcountry);
 
-        return "...";
+        return country;
     }
 
     public static string PassportSequence()
@@ -118,10 +132,7 @@ public class User
             Console.WriteLine("Wat is uw passpoort nummer?");
             passportnumber = Console.ReadLine();
 
-            if (Regex.IsMatch(passportnumber, pattern))
-            {
-                validnumber = true;
-            }
+            if (Regex.IsMatch(passportnumber, pattern)) validnumber = true;
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
