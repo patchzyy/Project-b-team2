@@ -23,11 +23,7 @@ public class DrawAirbus330UI
                 if (SeatsChosen.Count == amountToSelect)
                 {
                     Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
-                    Console.Write("Druk op ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("enter");
-                    Console.ResetColor();
-                    Console.Write(" om door te gaan");
+                    Console.Write("Druk op enter om door te gaan.\n");
                     while (true)
                     {
                         key = Console.ReadKey();
@@ -428,12 +424,14 @@ public class DrawAirbus330UI
         Console.ResetColor();
         Console.Write(" = Club Class stoel\n");
         Console.Write(" /                                                           \\         ");
-        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.BackgroundColor = ConsoleColor.DarkGreen;
         Console.Write("  ");
         Console.ResetColor();
         Console.Write(" = Huidige stoel\n");
-        Console.WriteLine("|                                                            |");
-        Console.WriteLine("|                                                            |");
+        Console.Write("|                                                            |");
+        Console.Write("         WASD = rond navigeren\n");
+        Console.Write("|                                                            |");
+        Console.Write("         Enter = stoel (de)selecteren\n");
         int rowNr = 1;
         bool rowHasSeats = true;
         while (rowHasSeats)
@@ -562,7 +560,7 @@ public class DrawAirbus330UI
                     }
                     if (seat == currentSeat)
                     {
-                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
                     }
                     Console.Write(seat.SeatId);
                     Console.ResetColor();

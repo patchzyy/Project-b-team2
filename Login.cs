@@ -45,7 +45,7 @@ class Login
                     Console.Write("Juiste input");
                     Console.ResetColor();
                     Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n\n");
                     Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
@@ -66,7 +66,7 @@ class Login
                     Console.Write("Juiste input");
                     Console.ResetColor();
                     Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Console.Write("Druk op ESC om terug te gaan.\n\n\n\n");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
                     Console.ResetColor();
@@ -313,14 +313,6 @@ class Login
         Console.Clear();
         Console.WriteLine("\n\n\n\nLogging in...");
         Thread.Sleep(190);
-        Console.Clear();
-        Information.DisplayLogo();
-        Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
-        Console.Write("Druk op ");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write("enter");
-        Console.ResetColor();
-        Console.WriteLine(" om door te gaan.\n");
 
 
         while (true)
@@ -328,11 +320,7 @@ class Login
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
-            Console.Write("Druk op ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("enter");
-            Console.ResetColor();
-            Console.WriteLine(" om door te gaan.\n");
+            Console.Write("Druk op enter om door te gaan.\n");
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
             {
@@ -355,7 +343,41 @@ class Login
 
     private static string CheckPassword()
     {
-        return Input.GetInput(IsValidPassword, 12);
+        // return Input.GetInput(IsValidPassword, 12);
+        string? password = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                return null;
+            }
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (password.Length > 0) {
+                    password = password.Remove(password.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(12, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                password += c;
+            }
+
+            foreach (char letter in password)
+            {
+                Console.Write("*");
+            }
+        }
+        return password;
     }
 
     private static bool ContainsSpecialChar(string password) {

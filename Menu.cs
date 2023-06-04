@@ -140,6 +140,17 @@ class Menu
                 AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
+        else if (selectedOption == "Fast Admin"){
+            _currentUser = new("Issam", "benmassoud", "issam@gmail.com", "Wachtwoord123!",true);
+            if (_currentUser.has_Admin)
+            {
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+            }
+            else
+            {
+                AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
+            }
+        }
         else if (selectedOption == "Boekingen bekijken")
         {
             booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
@@ -199,6 +210,9 @@ class Menu
         }
         else if (selectedOption == "Vlucht boeken")
         {
+            if(!_currentUser.can_Book){
+                AddMenu(new[] { "Helaas ben je te jong om te boeken! Je kunt wel de vluchten bekijken.", "Terug" });
+            }
             Bookings.BookingSequence(_currentUser);
         }
 
