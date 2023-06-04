@@ -19,7 +19,7 @@ public class DrawAirbus330UI
                     plane.Seats[seatIndex].IsReserved = false;
                     continue;
                 }
-                
+
                 if (SeatsChosen.Count == amountToSelect)
                 {
                     Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
@@ -36,7 +36,7 @@ public class DrawAirbus330UI
                             break;
                         }
                     }
-                continue;
+                    continue;
                 }
                 if (!plane.Seats[seatIndex].IsReserved)
                 {
@@ -423,7 +423,7 @@ public class DrawAirbus330UI
         Console.ResetColor();
         Console.Write(" = Gereserveerde stoel\n");
         Console.Write("  /                                                         \\          ");
-        Console.BackgroundColor = ConsoleColor.Cyan;
+        Console.BackgroundColor = ConsoleColor.DarkMagenta;
         Console.Write("  ");
         Console.ResetColor();
         Console.Write(" = Club Class stoel\n");
@@ -550,7 +550,7 @@ public class DrawAirbus330UI
                     }
                     if (seat.IsClubClass)
                     {
-                        Console.BackgroundColor = ConsoleColor.Cyan;
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     }
                     if (seat.ExtraBeenRuimte)
                     {
