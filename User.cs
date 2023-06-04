@@ -109,7 +109,7 @@ public class User
             if (Regex.IsMatch(country, pattern)) validcountry = true;
             else{
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Uw invoer is niet goed ingevuld, zorg ervoor dat het \n-Geen nummers bevat\nMinder dan 58 tekens heeft.\n");
+                Console.WriteLine("Uw invoer is niet goed ingevuld, zorg ervoor dat het \n-Geen nummers heeft\n-Minder dan 58 tekens heeft.\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
@@ -129,7 +129,7 @@ public class User
 
         do
         {
-            Console.WriteLine("Wat is uw passpoort nummer?");
+            Console.WriteLine("Wat is uw passpoort nummer? (Max 9 getallen)");
             passportnumber = Console.ReadLine();
 
             if (Regex.IsMatch(passportnumber, pattern)) validnumber = true;
@@ -182,29 +182,33 @@ public class User
     {
         Information.DisplayLogo();
         Console.Clear();
-        Console.WriteLine("Wat is uw geboorte datum?\n");
+        Console.WriteLine("Wat is uw geboorte datum\n DD-MM-JJJJ?\n");
+
+        string pattern = @"^(0[1-9]|1\d|2\d|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}$";
         int day, month, year;
+        string raw_date;
         bool isValidInput = false;
 
         do
         {
-            Console.Write("Dag van geboorte: ");
-            isValidInput = int.TryParse(Console.ReadLine(), out day) && day >= 1 && day <= 31;
-
-            Console.Write("Maand van geboorte: ");
-            isValidInput &= int.TryParse(Console.ReadLine(), out month) && month >= 1 && month <= 12;
-
-            Console.Write("Jaar van geboorte: ");
-            isValidInput &= int.TryParse(Console.ReadLine(), out year) && year >= 1;
+            Console.WriteLine("Geboorte datum: ");
+            raw_date = Console.ReadLine();
+            if (Regex.IsMatch(raw_date, pattern)) isValidInput = true;
 
             if (!isValidInput)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Datum verkeerd ingevoerd probeer het opniew (DD, MM, JJJJ)\n");
+                Console.WriteLine("Datum verkeerd ingevoerd probeer het opniew (DD-MM-JJJJ)\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
         while (!isValidInput);
+
+        string[] date_of_birth = raw_date.Split('-', '/');
+
+        day = int.Parse(date_of_birth[0]);
+        month = int.Parse(date_of_birth[1]);
+        year = int.Parse(date_of_birth[2]);
 
 
         return new DateOnly(year, month, day);
