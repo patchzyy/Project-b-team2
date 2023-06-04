@@ -446,4 +446,18 @@ public static class AdminTool
         Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
         Thread.Sleep(3000);
     }
+
+    public static DateTime ConvertTimeDate(string date, string time)
+    {
+        string[] timeArray = time.Split(":");
+        int hours = Convert.ToInt32(timeArray[0]);
+        int minutes = Convert.ToInt32(timeArray[1]);
+        string[] dateArray = date.Split("-");
+        int day = Convert.ToInt32(dateArray[0]);
+        int month = Convert.ToInt32(dateArray[1]);
+        int year = Convert.ToInt32(dateArray[2]);
+        DateTime dateTime = new DateTime(year, month, day, hours, minutes, 0);
+        return dateTime;
+
+    }
 }

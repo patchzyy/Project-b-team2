@@ -12,6 +12,8 @@ public static class Bookings
         List<Flight> AllFlights = Flights.GetDepartingFlights();
         List<String> FlightStrings = new List<String>();
         // get the flight destination, if its not in the flightstrings, add it
+        List<Flight> CorrectFlights = new List<Flight>();
+
         foreach (Flight flight in AllFlights)
         {
             if (!FlightStrings.Contains(flight.Destination))
@@ -19,10 +21,30 @@ public static class Bookings
                 FlightStrings.Add(flight.Destination);
             }
         }
+        foreach (Flight flight in CorrectFlights)
+        {
+            if (flight.Time == "--:--")
+            {
+                CorrectFlights.Remove(flight);
+            }
+            if (AdminTool.ConvertTimeDate(flight.Date, flight.Time) < DateTime.Now)
+            {
+                CorrectFlights.Remove(flight);
+            }
 
+        }
+        if (CorrectFlights.Count == 0)
+        {
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Er zijn geen vluchten beschikbaar.");
+            Console.ResetColor();
+            Console.ReadKey();
+            return;
+        }
         // ask for the destination
         string Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
-        List<Flight> CorrectFlights = new List<Flight>();
         // get all the flights that have the destination AllFlights
         foreach (Flight flight in AllFlights)
         {
@@ -31,9 +53,17 @@ public static class Bookings
                 CorrectFlights.Add(flight);
             }
         }
-
         Flight SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
-
+        List<Booking> bookings = Bookings.GetBookings(CurrentUser);
+        foreach (Booking booking in bookings)
+        {
+            if (booking.Flight == SelectedFlight)
+            {
+                Console.WriteLine("U heeft deze vlucht al geboekt.");
+                Console.ReadKey();
+                return;
+            }
+        }
         // ask for the amount of users
         AmountOfBookings = AdminTool.AskForInt(1, 10, "Hoeveel mensen wilt u boeken?");
 
@@ -132,6 +162,7 @@ public static class Bookings
 
     }
 
+    //in een refactoring van de code is deze statis in de user class met user.Getbookings() is veel logisher haha
     public static List<Booking> GetBookings(User user)
     {
         // this is how the database looks
