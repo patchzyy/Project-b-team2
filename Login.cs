@@ -343,7 +343,41 @@ class Login
 
     private static string CheckPassword()
     {
-        return Input.GetInput(IsValidPassword, 12);
+        // return Input.GetInput(IsValidPassword, 12);
+        string? password = "";
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            char c = keyInfo.KeyChar;
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                return null;
+            }
+
+            if (c == '\r') { // user has pressed the enter key
+                Console.WriteLine(); // move to the next line
+                break;
+            }
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+                if (password.Length > 0) {
+                    password = password.Remove(password.Length - 1);
+                    Console.Write("\b \b"); // erase the character from the console
+                }
+            }
+            Console.SetCursorPosition(12, Console.CursorTop);
+            if (keyInfo.Key != ConsoleKey.Backspace)
+            {
+                password += c;
+            }
+
+            foreach (char letter in password)
+            {
+                Console.Write("*");
+            }
+        }
+        return password;
     }
 
     private static bool ContainsSpecialChar(string password) {
