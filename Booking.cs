@@ -60,8 +60,7 @@ public class Booking
         HasInsurance = true;
     }
 
-
-    public void AddToDatabase()
+    public int GetFlightID()
     {
         string query = $"SELECT id FROM Flights WHERE duration = '{Flight.Duration}' AND date = '{Flight.Date}' AND time = '{Flight.Time}' AND origin = '{Flight.Origin}' AND destination = '{Flight.Destination}' AND aircraft = '{Flight.Aircraft}' AND gate = '{Flight.Gate}'";
         SqliteConnection connection = new("Data Source=airline_data.db");
@@ -73,31 +72,84 @@ public class Booking
         {
             flightID = reader.GetInt32(0);
         }
-        string querynew;
-        if (ExtraUser != null)
-        {
-            // eerst moeten we het booking ID vinden van de main booking
-            query = $"SELECT bookingID FROM Bookings WHERE userEmail = '{BookingsUser.Email}' AND flight = '{flightID}'";
-            DatabaseConnection = new(query, connection);
-            reader = DatabaseConnection.ExecuteReader();
-            int BookingID = 0;
-            while (reader.Read())
-            {
-                BookingID = reader.GetInt32(0);
-            }
-
-            querynew = $"INSERT INTO ExtraUsers (bookingID, masterUserEmail, firstName, lastName) VALUES ('{BookingID}', '{ExtraUser.MasterUser.Email}', '{ExtraUser.FirstName}', '{ExtraUser.LastName}')";
-
-        }
-        else
-        {
-            querynew = $"INSERT INTO Bookings (userEmail, flight, seatID, baggage, vip, entertainment, lounge, insurance) VALUES ('{BookingsUser.Email}', '{flightID}', '{Seat.SeatId}', '{HasBaggage}', '{HasVIP}', '{HasEntertainment}', '{HasLounge}', '{HasInsurance}')";
-        }
-        DatabaseConnection = new(querynew, connection);
-        DatabaseConnection.ExecuteNonQuery();
         connection.Close();
+        return flightID;
 
     }
+
+
+    public int GetBookingID()
+    {
+        string query = $"SELECT bookingID FROM Bookings WHERE userEmail = '{BookingsUser.Email}' AND flight = '{GetFlightID()}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        int bookingID = 0;
+        while (reader.Read())
+        {
+            bookingID = reader.GetInt32(0);
+        }
+        connection.Close();
+        return bookingID;
+    }
+    public void AddToDatabase()
+    {
+        int flightID = GetFlightID();
+        string connectionString = "Data Source=airline_data.db";
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            if (ExtraUser != null)
+            {
+                string bookingQuery = $"SELECT bookingID FROM Bookings WHERE userEmail = '{BookingsUser.Email}' AND flight = '{flightID}'";
+                using (SqliteCommand bookingCommand = new SqliteCommand(bookingQuery, connection))
+                {
+                    int bookingID = 0;
+                    using (SqliteDataReader reader = bookingCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            bookingID = reader.GetInt32(0);
+                        }
+                    }
+                    string extraUserQuery = $"INSERT INTO ExtraUsers (bookingID, masterUserEmail, firstName, lastName) VALUES ('{bookingID}', '{ExtraUser.MasterUser.Email}', '{ExtraUser.FirstName}', '{ExtraUser.LastName}')";
+                    using (SqliteCommand extraUserCommand = new SqliteCommand(extraUserQuery, connection))
+                    {
+                        extraUserCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            else
+            {
+                string bookingQuery = $"INSERT INTO Bookings (userEmail, flight, seatID, baggage, vip, entertainment, lounge, insurance) VALUES ('{BookingsUser.Email}', '{flightID}', '{Seat.SeatId}', '{HasBaggage}', '{HasVIP}', '{HasEntertainment}', '{HasLounge}', '{HasInsurance}')";
+                using (SqliteCommand bookingCommand = new SqliteCommand(bookingQuery, connection))
+                {
+                    bookingCommand.ExecuteNonQuery();
+                }
+            }
+            connection.Close();
+        }
+    }
+
+    public void RemoveFromDatabase()
+    {
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+        // eerst de extra users verwijderen
+        string extraUserQuery = $"DELETE FROM ExtraUsers WHERE masterUserEmail = '{BookingsUser.Email}' AND bookingID = '{GetBookingID()}'";
+        SqliteCommand extraUserCommand = new(extraUserQuery, connection);
+        extraUserCommand.ExecuteNonQuery();
+        // dan de booking verwijderen
+        string bookingQuery = $"DELETE FROM Bookings WHERE userEmail = '{BookingsUser.Email}' AND bookingID = '{GetBookingID()}'";
+        SqliteCommand bookingCommand = new(bookingQuery, connection);
+        bookingCommand.ExecuteNonQuery();
+        connection.Close();
+
+
+    }
+
 
     public static void MakeDatabaseTables()
     {
@@ -155,8 +207,8 @@ public class Booking
     public override string ToString()
     {
         // first see how many extra users, use the main user's email to look through the extrausers in the database
-
-        string query = $"SELECT * FROM ExtraUsers WHERE masterUserEmail = '{BookingsUser.Email}'";
+        int BookingDatabaseID = GetBookingID();
+        string query = $"SELECT * FROM ExtraUsers WHERE masterUserEmail = '{BookingsUser.Email}' AND bookingID = '{BookingDatabaseID}'";
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
         SqliteCommand DatabaseConnection = new(query, connection);
@@ -167,7 +219,35 @@ public class Booking
             extraUsers++;
         }
         Flight currentflight = Flight;
-        return $"Flight_ID: {currentflight.GenerateFlightID()} , Stoel: {Seat.SeatId}, Aantal passagiers: {extraUsers + 1}, naar {currentflight.Destination}";
+        connection.Close();
+        return $"Vlucht ID: {currentflight.GenerateFlightID()}, Aantal passagiers: {extraUsers + 1}, naar {currentflight.Destination}";
+    }
+
+
+    public List<Booking> GetExtraBookings()
+    {
+        string mastermail = BookingsUser.Email;
+        User MasterUser = BookingsUser;
+        int Booking_databaseid = GetFlightID();
+        string query = $"SELECT * FROM ExtraUsers WHERE MasterUserEmail = '{mastermail}' AND bookingID = '{Booking_databaseid}'";
+        List<Booking> bookings = new List<Booking>();
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand command = new SqliteCommand(query, connection);
+        SqliteDataReader reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            string firstname = reader.GetString(1);
+            string lastname = reader.GetString(2);
+            int seatid = reader.GetInt32(4);
+            int age = reader.GetInt32(3);
+            Seat seat = new Seat(seatid.ToString(), false, false, false, false, false, false, false);
+            ExtraUser extra = new ExtraUser(firstname, lastname, age, MasterUser, seat, Flight);
+            Booking extraBooking = new Booking(MasterUser, extra, Flight, seat);
+            bookings.Add(extraBooking);
+        }
+        connection.Close();
+        return bookings;
     }
 
 }

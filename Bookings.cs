@@ -42,12 +42,12 @@ public static class Bookings
             Console.WriteLine("Boeing 737 moet nog geimplementeerd worden.");
             seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
         }
-        if (SelectedFlight.Aircraft == "Boeing 787")
+        else if (SelectedFlight.Aircraft == "Boeing 787")
         {
             Console.WriteLine("Boeing 787 moet nog geimplementeerd worden.");
             seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
         }
-        if (SelectedFlight.Aircraft == "Airbus 330")
+        else if (SelectedFlight.Aircraft == "Airbus 330")
         {
             // string seat = DrawAirbus330UI.SelectAirbus330(new Airbus330());
             seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
@@ -56,6 +56,7 @@ public static class Bookings
         else
         {
             Console.WriteLine("Er is iets fout gegaan.");
+            Console.ReadKey();
             return;
         }
         // hier vragen we voor alle extra informatie die nodig is voor een booking
@@ -63,7 +64,7 @@ public static class Bookings
         AmountOfBookings = AmountOfBookings - 1;
         Booking currentbooking = new Booking(CurrentUser, SelectedFlight, seats[0]);
         // voordat we verder kunnen gaan hebben we het paspoortnummer nodig
-        string passport = User.PassportSequence();
+        // string passport = User.PassportSequence();
         currentbooking.AddToDatabase();
         // dit is omdat de main user al een keer is gevraagd om de informatie
         List<ExtraUser> ExtraUsers = new List<ExtraUser>();
@@ -73,8 +74,7 @@ public static class Bookings
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Gebruiker {i + 2} van {AmountOfBookings + 1}");
-            // klik om de informatie te vragen
-            Console.WriteLine("Druk op enter om de informatie in te vullen.");
+            Console.WriteLine($"Klik op een knop om de informatie voor gebruiker {i + 2} in te vullen.");
             Console.ReadKey();
             Seat ExtraSeat = seats[i + 1];
             ExtraUser extra = ExtraUser.AskForInformation(CurrentUser, ExtraSeat, SelectedFlight);
@@ -136,7 +136,6 @@ public static class Bookings
     {
         // this is how the database looks
         // duration = '{Flight.Duration}'  date = '{Flight.Date}'  time = '{Flight.Time}'  origin = '{Flight.Origin}'  destination = '{Flight.Destination}' AND aircraft = '{Flight.Aircraft}' AND gate = '{Flight.Gate}'";
-
         string query = $"SELECT * FROM Bookings WHERE userEmail = '{user.Email}'";
         // we loop through every booking, make a new booking add it to a list and return that list
         List<Booking> bookings = new List<Booking>();

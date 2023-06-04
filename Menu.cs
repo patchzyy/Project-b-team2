@@ -14,6 +14,9 @@ class Menu
     private int _selectedOption;
     private User _currentUser;
 
+    Booking booking;
+
+
     public Menu(string[] options)
     {
         _menuStack = new Stack<string[]>();
@@ -139,9 +142,35 @@ class Menu
         }
         else if (selectedOption == "Boekingen bekijken")
         {
-            Booking booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+            booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+            List<Booking> bookings = booking.GetExtraBookings();
+            if (booking.Flight.Time == "--:--")
+            {
+                booking.Flight.CancelledMessage();
+            }
+            else
+            {
+                AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Vlucht annuleren", "Terug" });
+            }
+        }
+
+        else if (selectedOption == "Vlucht annuleren")
+        {
+            booking.RemoveFromDatabase();
+            Console.WriteLine("Vlucht is geannuleerd");
+            Console.ReadKey();
+        }
+        else if (selectedOption == "Informatie over vlucht")
+        {
+            booking.Flight.ShowInformation();
 
         }
+        else if (selectedOption == "Informatie over boeking")
+        {
+            Console.WriteLine("test");
+            Console.ReadKey();
+        }
+
         else if (selectedOption == "Register")
         {
             _currentUser = User.Register();

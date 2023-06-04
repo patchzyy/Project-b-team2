@@ -140,7 +140,7 @@ public static class Flights
         {
             departingFlights.Add(new Flight(reader.GetInt16(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
         }
-
+        connection.Close();
         return departingFlights.OrderBy(f => f.Time).ToList();
     }
 
@@ -157,7 +157,7 @@ public static class Flights
         {
             arrivingFlights.Add(new Flight(reader.GetInt16(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)));
         }
-
+        connection.Close();
         return arrivingFlights.OrderBy(f => f.Time).ToList();
     }
 

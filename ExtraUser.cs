@@ -67,7 +67,6 @@ public class ExtraUser
         ExtraUser Extrauser = new ExtraUser(firstName, lastName, age, user, seat, flight);
         Extrauser.AddToDatabase();
         return Extrauser;
-        // user is de user waaronder deze extra user is geboekt
     }
 }
 

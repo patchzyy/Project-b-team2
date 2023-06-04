@@ -94,9 +94,52 @@ public class Flight
             string aircraft = reader.GetString(6);
             string gate = reader.GetString(7);
             Flight flight = new Flight(duration, date, time, origin, destination, aircraft, gate);
+            connection.Close();
             return flight;
         }
+        connection.Close();
         return null;
 
+    }
+
+    public void ShowInformation()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        if (Time == "--:--")
+        {
+            // Console.WriteLine("Deze vlucht is geannuleerd.");
+            // print this but make geannuleerd red
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Deze vlucht is geannuleerd.");
+            Console.ResetColor();
+            Console.WriteLine($"U word op de hoogte gehouden over de nieuwe vluchtinformatie van {Origin} naar {Destination}.");
+        }
+        else
+        {
+            Console.WriteLine("Vlucht informatie:");
+            Console.WriteLine($"Duur: {Duration}");
+            Console.WriteLine($"Datum: {Date}");
+            Console.WriteLine($"Tijd: {Time}");
+            Console.WriteLine($"Afkomst: {Origin}");
+            Console.WriteLine($"Bestemming: {Destination}");
+            Console.WriteLine($"Vliegtuig: {Aircraft}");
+            Console.WriteLine($"Gate: {Gate}");
+        }
+
+        Console.WriteLine("Druk op een toets om terug te gaan.");
+        Console.ReadKey();
+    }
+
+    public void CancelledMessage()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Deze vlucht is geannuleerd.");
+        Console.ResetColor();
+        Console.WriteLine($"U word op de hoogte gehouden over de nieuwe vluchtinformatie van {Origin} naar {Destination}.");
+        Console.WriteLine("Druk op een toets om terug te gaan.");
+        Console.ReadKey();
     }
 }
