@@ -43,8 +43,6 @@ public static class Flights
     public static void CheckFlights()
     {
         Console.Clear();
-        Thread.Sleep(1000);
-        Console.Clear();
         Information.DisplayLogo();
         Flights.DisplayArrivingFlights();
         Console.WriteLine("");
