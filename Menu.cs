@@ -116,7 +116,7 @@ class Menu
             _currentUser = Login.LoggingIn();
             if (_currentUser == null)
             {
-                AddMenu(new[] { "Login", "Register", "Meer Informatie" });
+                AddMenu(new[] { "Login", "Registeren", "Meer Informatie" });
                 return;
             }
             if (_currentUser.has_Admin)
@@ -193,13 +193,13 @@ class Menu
             Console.ReadKey();
         }
 
-        else if (selectedOption == "Register")
+        else if (selectedOption == "Registeren")
         {
             _currentUser = User.Register();
             if (_currentUser == null)
             {
                 Console.ResetColor();
-                AddMenu(new[] { "Login", "Register", "Meer Informatie" });
+                AddMenu(new[] { "Login", "Registeren", "Meer Informatie" });
                 return;
             }
             AddMenu(new[] { "Vluchten bekijken", "Vlucht ervaring uitbreiden", "Uitloggen" });

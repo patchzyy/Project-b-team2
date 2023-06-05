@@ -88,7 +88,7 @@ public class User
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
-        Thread.Sleep(5000);
+        Information.NextKey();
 
         return currentuser;
     }

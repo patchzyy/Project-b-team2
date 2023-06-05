@@ -1,15 +1,31 @@
 public class Information
 {
 
-     public static void BackKey()
+    public static void BackKey()
     {
-        Console.WriteLine("druk op Escape of Backspace om terug te gaan");
+        Console.WriteLine("Druk op escape of backspace om terug te gaan");
         ConsoleKeyInfo keyInfo;
         do
         {
             keyInfo = Console.ReadKey(true);
 
             if (keyInfo.Key == ConsoleKey.Escape || keyInfo.Key == ConsoleKey.Backspace)
+            {
+                return;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
+    }
+    
+    public static void NextKey()
+    {
+        Console.WriteLine("Druk op enter om door te gaan");
+        ConsoleKeyInfo keyInfo;
+        do
+        {
+            keyInfo = Console.ReadKey(true);
+
+            if (keyInfo.Key == ConsoleKey.Enter)
             {
                 return;
             }
