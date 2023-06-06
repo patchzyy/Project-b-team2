@@ -143,6 +143,7 @@ class Menu
         else if (selectedOption == "Fast Admin")
         {
             _currentUser = new("Barrie", "Batsbak", "barriebatsbak@pruters.nl", "Gerrie123!", true);
+            _currentUser.can_Book = true;
             if (_currentUser.has_Admin)
             {
                 AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
