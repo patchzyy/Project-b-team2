@@ -19,27 +19,85 @@ using System.Globalization;
 
 public static class Flights
 {
-    public static void SetDailyFlightSchedule()
+    // public static void SetDailyFlightSchedule()
+    // {
+    //     SqliteConnection connection = new("Data Source=airline_data.db");
+    //     connection.Open();
+
+    //     List<string> sqlQueries = new List<string>()
+    //     {
+    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('07:00', 'Rotterdam', 'Londen', 'Airbus 330', 'Inactief', 'G6')",
+    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('20:00', 'Rotterdam', 'Milaan', 'Boeing 737', 'Inactief', 'C3')",
+    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Berlijn', 'Rotterdam', 'Airbus 330', 'Inactief', 'E5')",
+    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Budapest', 'Rotterdam', 'Boeing 787', 'Inactief', 'E5')",
+    //     };
+
+    //     foreach (string sqlQuery in sqlQueries)
+    //     {
+    //         SqliteCommand command = new SqliteCommand(sqlQuery, connection);
+    //         command.ExecuteNonQuery();
+    //     }
+    //     connection.Close();
+    // }
+
+    public static void GenerateDepartingFlightScedule(int amount)
     {
-        SqliteConnection connection = new("Data Source=airline_data.db");
-        connection.Open();
+        List<Flight> flightlist = new List<Flight>();
 
-        List<string> sqlQueries = new List<string>()
+        for (int i = 0; i < amount; i++)
         {
-            "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('07:00', 'Rotterdam', 'Londen', 'Airbus 330', 'Inactief', 'G6')",
-            "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('20:00', 'Rotterdam', 'Milaan', 'Boeing 737', 'Inactief', 'C3')",
-            "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Berlijn', 'Rotterdam', 'Airbus 330', 'Inactief', 'E5')",
-            "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Budapest', 'Rotterdam', 'Boeing 787', 'Inactief', 'E5')",
-        };
-
-        foreach (string sqlQuery in sqlQueries)
-        {
-            SqliteCommand command = new SqliteCommand(sqlQuery, connection);
-            command.ExecuteNonQuery();
+            Flight flight = Flight.GenerateDepartingFlight();
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
+            Thread.Sleep(90);
+            flightlist.Add(flight);
         }
-        connection.Close();
+
+        // ask the admin if they want to check the flights or just commit them to the database
+        ShowWithPages(flightlist);
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        string input = Console.ReadLine();
+        if (input == "y")
+        {
+            foreach (Flight flight in flightlist)
+            {
+                flight.AddToDatabase();
+            }
+        }
+
     }
 
+
+
+    public static void ShowWithPages(List<Flight> flights)
+    {
+        int pageSize = 10;
+        int currentPage = 0;
+
+        while (currentPage * pageSize < flights.Count)
+        {
+            Console.Clear();
+            Console.WriteLine("Vluchten lijst - Pagina {0}", currentPage + 1);
+            Console.WriteLine("---------------------------");
+
+            int startIndex = currentPage * pageSize;
+            int endIndex = Math.Min(startIndex + pageSize, flights.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                Console.WriteLine("Vlucht nummer: {0}", flights[i].GenerateFlightID());
+                Console.WriteLine("Plaats van bestemming: {0}", flights[i].Destination);
+                Console.WriteLine("Tijd van de vlucht: {0}", flights[i].Duration);
+                Console.WriteLine("---------------------------");
+            }
+
+            Console.WriteLine("Klik op een knop om door te gaan naar de volgende pagina...");
+            Console.ReadKey();
+
+            currentPage++;
+        }
+    }
     public static void CheckFlights()
     {
         Console.Clear();

@@ -21,16 +21,19 @@ public static class Bookings
                 FlightStrings.Add(flight.Destination);
             }
         }
-        foreach (Flight flight in CorrectFlights)
+        foreach (Flight flight in AllFlights)
         {
             if (flight.Time == "--:--")
             {
                 CorrectFlights.Remove(flight);
+                continue;
             }
             if (AdminTool.ConvertTimeDate(flight.Date, flight.Time) < DateTime.Now)
             {
                 CorrectFlights.Remove(flight);
             }
+            CorrectFlights.Add(flight);
+
 
         }
         if (CorrectFlights.Count == 0)
@@ -46,6 +49,7 @@ public static class Bookings
         // ask for the destination
         string Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
         // get all the flights that have the destination AllFlights
+        CorrectFlights.Clear();
         foreach (Flight flight in AllFlights)
         {
             if (flight.Destination == Destination)

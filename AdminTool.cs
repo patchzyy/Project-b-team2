@@ -458,6 +458,121 @@ public static class AdminTool
         int year = Convert.ToInt32(dateArray[2]);
         DateTime dateTime = new DateTime(year, month, day, hours, minutes, 0);
         return dateTime;
+    }
 
+    public static int RandomDuration()
+    {
+        Random random = new Random();
+        int duration = random.Next(60, 600);
+        duration = duration - (duration % 30);
+        return duration;
+    }
+
+    public static string RandomDate()
+    {
+        Random random = new Random();
+        int month = random.Next(1, 12);
+        int maxdays = 30;
+        if (month == 2) maxdays = 28;
+        int day = random.Next(1, maxdays);
+        int year = random.Next(2023, 2024);
+        string date = $"{day}-{month}-{year}";
+        return date;
+    }
+
+    public static string RandomTime()
+    {
+        Random random = new Random();
+        int hours = random.Next(0, 23);
+        int minutes = random.Next(0, 59);
+        minutes = minutes - (minutes % 10);
+        // make sure its formatted 01:01 not 1:1 with lambda expression
+        string hourstring = hours.ToString().Length == 1 ? $"0{hours}" : hours.ToString();
+        string minutestring = minutes.ToString().Length == 1 ? $"0{minutes}" : minutes.ToString();
+        string time = $"{hourstring}:{minutestring}";
+        return time;
+    }
+
+    public static string RandomCity()
+    {
+        // HIER NOOIT ROTTERDAM AAN TOEVOEGEN
+        List<string> cities = new List<string>() { "Barcelona", "Berlijn", "Brussel", "Dubai", "Londen", "Madrid", "New York", "Parijs", "Rome", "Tokyo" };
+        Random random = new Random();
+        int index = random.Next(0, cities.Count);
+        return cities[index];
+    }
+
+    public static string RandomAircraft()
+    {
+        List<string> aircrafts = new List<string>() { "Boeing 737", "Airbus 330", "Boeing 787" };
+        Random random = new Random();
+        int index = random.Next(0, 2);
+        return aircrafts[index];
+    }
+
+    public static string RandomGate()
+    {
+        Random random = new Random();
+        int letter = random.Next(65, 71);
+        int number = random.Next(1, 21);
+        string gate = $"{(char)letter}{number}";
+        return gate;
+    }
+
+    public static void GenerateDepartingFlights()
+    {
+        int amount = AskHowManyFlights();
+        Flights.GenerateDepartingFlightScedule(amount);
+
+    }
+
+    public static void GenerateArrivingFlights()
+    {
+        int amount = AskHowManyFlights();
+    }
+
+
+
+    public static int AskHowManyFlights()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Hoeveel vluchten wilt u genereren?");
+        int amount = AskNumber();
+        return amount;
+    }
+
+    public static int AskNumber()
+    {
+        int number;
+        while (true)
+        {
+            string nr = Console.ReadLine();
+            try { number = Convert.ToInt32(nr); break; }
+            catch
+            {
+                Console.WriteLine("Voer een geldig getal in.");
+            }
+        }
+        return number;
+    }
+
+    public static void RemoveAllFlights()
+    {
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine("Weet je zeker dat je alle vluchten wilt verwijderen?");
+        List<string> options = new List<string> { "Ja", "Nee" };
+        if (options[AskMultipleOptions($"Weet je zeker dat je alle vluchten wilt verwijderen?", options)] == "Nee")
+        {
+            return;
+        }
+        // look thought the database and remove the matching email
+        SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+        connection.Open();
+        string query = $"DELETE FROM flights";
+        SqliteCommand command = new SqliteCommand(query, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
     }
 }

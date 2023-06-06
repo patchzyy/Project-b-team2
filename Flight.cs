@@ -102,6 +102,19 @@ public class Flight
 
     }
 
+    public static Flight GenerateDepartingFlight()
+    {
+        int duration = AdminTool.RandomDuration();
+        string date = AdminTool.RandomDate();
+        string time = AdminTool.RandomTime();
+        string origin = "Rotterdam";
+        string destination = AdminTool.RandomCity();
+        string aircraft = AdminTool.RandomAircraft();
+        string gate = AdminTool.RandomGate();
+        Flight flight = new Flight(duration, date, time, origin, destination, aircraft, gate);
+        return flight;
+
+    }
     public void ShowInformation()
     {
         Console.Clear();

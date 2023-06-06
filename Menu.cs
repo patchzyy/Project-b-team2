@@ -10,8 +10,8 @@ class Menu
     // --------------------------
     // Onderkant stack
 
-    private Stack<string[]> _menuStack;
-    private int _selectedOption;
+    public Stack<string[]> _menuStack;
+    public int _selectedOption;
     private User _currentUser;
 
     Booking booking;
@@ -286,11 +286,37 @@ class Menu
 
         else if (selectedOption == "Vlucht Toevoegen")
         {
+            AddMenu(new[] { "Handmatig Toevoegen", "Automatish Genereren", "Terug" });
+        }
+        else if (selectedOption == "Handmatig Toevoegen")
+        {
             AdminTool.AddFlight();
+        }
+        else if (selectedOption == "Automatish Genereren")
+        {
+            AddMenu(new[] { "Genereer Aankomende Vluchten", "Genereer Vertrekkende Vluchten", "Terug" });
+        }
+
+        else if (selectedOption == "Genereer Aankomende Vluchten")
+        {
+            AdminTool.GenerateArrivingFlights();
+        }
+        else if (selectedOption == "Genereer Vertrekkende Vluchten")
+        {
+            AdminTool.GenerateDepartingFlights();
         }
         else if (selectedOption == "Vlucht verwijderen")
         {
+            AddMenu(new[] { "Handmatig Verwijderen", "Alle Vluchten Automatish Verwijderen", "Terug" });
+        }
+
+        else if (selectedOption == "Handmatig Verwijderen")
+        {
             AdminTool.RemoveFlight();
+        }
+        else if (selectedOption == "Alle Vluchten Automatish Verwijderen")
+        {
+            AdminTool.RemoveAllFlights();
         }
         else if (selectedOption == "Vlucht aanpassen")
         {
