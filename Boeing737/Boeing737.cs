@@ -7,7 +7,7 @@ public class Boeing737 : Plane
 
     protected override void PopulateSeats()
     {
-        Seats.Add(new Seat("1-A", false, false, false, false, false, false, true) { IsReserved = true });
+        Seats.Add(new Seat("1-A", false, false, false, false, false, false, true));
         Seats.Add(new Seat("1-B", false, false, false, false, false, false, true));
         Seats.Add(new Seat("1-C", false, false, false, false, false, false, true));
 
@@ -16,7 +16,7 @@ public class Boeing737 : Plane
         Seats.Add(new Seat("2-C", false, false, false, false, false, false, true));
 
         Seats.Add(new Seat("2-D", false, false, false, false, false, false, true));
-        Seats.Add(new Seat("2-E", false, false, false, false, false, false, true) { IsReserved = true });
+        Seats.Add(new Seat("2-E", false, false, false, false, false, false, true));
         Seats.Add(new Seat("2-F", false, false, false, false, false, false, true));
 
         for (int rowNr = 3; rowNr <= 12; rowNr++)

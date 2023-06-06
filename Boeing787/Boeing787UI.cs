@@ -8,7 +8,7 @@ public class DrawBoeing787UI
         Console.Write("     _/                                                \\_");
         Console.Write("                       LEGENDA\n");
         Console.Write("    /                                                    \\                      ");
-        Console.BackgroundColor = ConsoleColor.DarkGreen;
+        Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Write("  ");
         Console.ResetColor();
         Console.Write(" = EconomyPlus \n");
@@ -23,13 +23,15 @@ public class DrawBoeing787UI
         Console.ResetColor();
         Console.Write(" = Gereserveerde stoel\n");
         Console.Write(" /                                                          \\                   ");
-        Console.BackgroundColor = ConsoleColor.Blue;
+        Console.BackgroundColor = ConsoleColor.DarkGreen;
         Console.Write("  ");
         Console.ResetColor();
         Console.Write(" = Huidige stoel\n");
         Console.WriteLine("/                                                            \\");
-        Console.WriteLine("|                                                            |");
-        Console.WriteLine("|                                                            |");
+        Console.Write("|                                                            |");
+        Console.Write("                  Gebruik de pijltjestoetsen om door het vliegtuig te navigeren.\n");
+        Console.Write("|                                                            |");
+        Console.Write("                  Druk op ENTER om een stoel te (de)selecteren\n");
         int rowNr = 1;
         bool rowHasSeats = true;
         while (rowHasSeats)
@@ -99,10 +101,10 @@ public class DrawBoeing787UI
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
 
                     if (seat.IsEconomyPlus)
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
 
                     if (seat == currentSeat)
-                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
 
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
@@ -131,11 +133,11 @@ public class DrawBoeing787UI
             }
             if (rowNr == 24)
             {
-                Console.WriteLine("|" + $"  {rowNr}" + "                   EconomyPlus: " + NederlandsBool[Convert.ToInt32(currentSeat.IsEconomyPlus)]);
+                Console.WriteLine("|" + $"  {rowNr}" + "                   " + (currentSeat.IsBusinessClass ? "BusinessClass" : currentSeat.IsEconomyPlus ? "EconomyPlus" : "Economy"));
             }
             if (rowNr == 25)
             {
-                Console.WriteLine("|" + $"  {rowNr}" + "                   BusinessClass: " + NederlandsBool[Convert.ToInt32(currentSeat.IsBusinessClass)]);
+                Console.WriteLine("|" + $"  {rowNr}");
             }
             if (rowNr != 22 && rowNr != 23 && rowNr != 24 && rowNr != 25)
             {

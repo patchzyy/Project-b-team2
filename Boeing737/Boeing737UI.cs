@@ -18,7 +18,7 @@ public class DrawBoeing737UI
         Console.ResetColor();
         Console.Write(" = Gereserveerde stoel\n");
         Console.Write(" /                                       \\                  ");
-        Console.BackgroundColor = ConsoleColor.DarkBlue;
+        Console.BackgroundColor = ConsoleColor.DarkGreen;
         Console.Write("  ");
         Console.ResetColor();
         Console.Write(" = Huidige stoel\n");
@@ -40,7 +40,7 @@ public class DrawBoeing737UI
             }
             if (rowNr == 17)
             {
-                Console.WriteLine("|                                         |" + "                 Extra beenruimte: " + NederlandsBool[Convert.ToInt32(currentSeat.ExtraBeenRuimte)]);
+                Console.WriteLine("|                                         |                 Prijs: " + currentSeat.SeatPrice());
             }
 
             rowHasSeats = false;
@@ -66,7 +66,7 @@ public class DrawBoeing737UI
                         Console.BackgroundColor = ConsoleColor.Red;
 
                     if (seat == currentSeat)
-                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
 
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
@@ -91,7 +91,7 @@ public class DrawBoeing737UI
             }
             if (rowNr == 17)
             {
-                Console.WriteLine("|" + $"  {rowNr}" + "             Prijs: " + currentSeat.SeatPrice());
+                Console.WriteLine("|" + $"  {rowNr}" + "             " + (currentSeat.ExtraBeenRuimte ? "Extra BeenRuimte" : ""));
             }
             else if (rowNr != 16 && rowNr != 17)
             {

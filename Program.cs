@@ -6,10 +6,11 @@ class Program
     {
         // Information.DisplayLogo();
         // Thread.Sleep(2000);
-        Menu menu = new Menu(new[] { "Login", "Registeren", "Meer Informatie", "Fast", "Fast Admin" });
-        menu.Run();
-        // DrawBoeing737UI.SelectBoeing737(new Boeing737());
-
+        //Menu menu = new Menu(new[] { "Login", "Registeren", "Meer Informatie", "Fast", "Fast Admin" });
+        //menu.Run();
+        //DrawBoeing737UI.SelectBoeing737(new Boeing737());
+        //DrawBoeing787UI.SelectBoeing787(new Boeing787());
+        DrawAirbus330UI.SelectAirbus330(new Airbus330(), 2);
 
 
 

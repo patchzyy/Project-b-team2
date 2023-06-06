@@ -429,9 +429,9 @@ public class DrawAirbus330UI
         Console.ResetColor();
         Console.Write(" = Huidige stoel\n");
         Console.Write("|                                                            |");
-        Console.Write("         WASD = rond navigeren\n");
+        Console.Write("         Gebruik de pijltjestoetsen om door het vliegtuig te navigeren.\n");
         Console.Write("|                                                            |");
-        Console.Write("         Enter = stoel (de)selecteren\n");
+        Console.Write("         Druk op ENTER om een stoel te (de)selecteren\n");
         int rowNr = 1;
         bool rowHasSeats = true;
         while (rowHasSeats)
