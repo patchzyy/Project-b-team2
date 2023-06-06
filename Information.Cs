@@ -33,6 +33,27 @@ public class Information
         } while (keyInfo.Key != ConsoleKey.Enter);
     }
 
+    public static void Progressbar(int step, int totalsteps)
+    {
+        double percentage = (step / (double)totalsteps) * 100;
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        for (int i = 0; i < percentage; i++)
+        {
+            Console.Write("█");
+        }
+
+        Console.ForegroundColor = ConsoleColor.Gray;
+        for (int i = 0; i < (100 - percentage); i++)
+        {
+            Console.Write("░");
+        }
+
+        Console.Write($" {Math.Round(percentage, 2)}% ");
+        Console.WriteLine("\n");
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
     public static void GetInformation()
     {
         Console.Clear();

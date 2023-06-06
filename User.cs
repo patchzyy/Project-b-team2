@@ -12,9 +12,10 @@ public class User
     public string Password { get; set; }
     public bool has_Admin { get; set; }
 
-    public bool can_Book { get; set; }
     public string? Phonenumber { get; set; }
     public DateOnly Date_of_Birth { get; set; }
+
+    public bool can_Book { get; set; }
 
     public string Passport_Number { get; set; }
 
@@ -81,16 +82,30 @@ public class User
         User currentuser = new User(first_name, last_name, email, password);
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
+        currentuser.can_Book = AgeCheck(date_of_birth);
         currentuser.Passport_Number = passport_number;
         currentuser.Origin = origin;
         currentuser.AddToDatabase();
 
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(8,8);
+
         Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
         Information.NextKey();
 
         return currentuser;
+    }
+
+    private static bool AgeCheck(DateOnly date_of_birth)
+    {
+        DateOnly currentDate = DateOnly.FromDateTime(DateTime.Today);
+        int age = currentDate.Year - date_of_birth.Year;
+
+        bool hasBirthdayPassed = currentDate.DayOfYear >= date_of_birth.DayOfYear;
+        age -= hasBirthdayPassed ? 0 : 1;
+
+        return age >= 18;
     }
 
     // moet in overleg
@@ -98,6 +113,8 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(7,8);
+
 
         bool validcountry = false;
         string pattern = @"^(?!.*\d)[^\n]{0,58}$";
@@ -122,6 +139,8 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(6,8);
+
 
         bool validnumber = false;
         string pattern = @"^\d{9}$";
@@ -149,6 +168,8 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(4,8);
+
 
         bool isValidInput = false;
         string phonenumber;
@@ -182,7 +203,9 @@ public class User
     {
         Information.DisplayLogo();
         Console.Clear();
-        Console.WriteLine("Wat is uw geboorte datum\n DD-MM-JJJJ?\n");
+        Information.Progressbar(5,8);
+
+        Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
 
         string pattern = @"^(0[1-9]|1\d|2\d|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}$";
         int day, month, year;
@@ -270,6 +293,10 @@ public class User
         string firstname;
         while (true)
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            Information.Progressbar(0,8);
+
             Console.Write("\nVul je voornaam in: ");
             firstname = CheckFirstName();
             if (firstname == null)
@@ -281,8 +308,6 @@ public class User
 
             if (string.IsNullOrWhiteSpace(firstname))
             {
-                Console.Clear();
-                Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je voornaam mag niet niks zijn.");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -290,8 +315,6 @@ public class User
             }
             if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
             {
-                Console.Clear();
-                Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Je voornaam mag alleen letters bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -327,6 +350,8 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(1,8);
+
         while (true)
         {
             Console.Write("Vul je achternaam in: ");
@@ -392,6 +417,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(2,8);
         string email = "";
         while (true)
         {
@@ -501,6 +527,8 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
+        Information.Progressbar(3,8);
+
 
         string password = "";
         string? confirmpassword = "";

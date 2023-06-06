@@ -203,7 +203,7 @@ class Menu
                 AddMenu(new[] { "Login", "Registeren", "Meer Informatie" });
                 return;
             }
-            AddMenu(new[] { "Vluchten bekijken", "Vlucht ervaring uitbreiden", "Uitloggen" });
+            AddMenu(new[] { "Vluchten bekijken", "Boeken", "Uitloggen" });
         }
         else if (selectedOption == "Meer Informatie")
         {
