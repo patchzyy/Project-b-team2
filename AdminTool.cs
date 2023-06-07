@@ -255,6 +255,12 @@ public static class AdminTool
             try
             {
                 number = Convert.ToInt32(input);
+                if (number < min || number > max)
+                {
+                    Console.WriteLine($"Ongeldige invoer. U kunt alleen maar tussen {min} en {max} kiezen.");
+                    Console.ReadKey(true);
+                    continue;
+                }
                 return number;
             }
             catch
@@ -575,5 +581,18 @@ public static class AdminTool
         SqliteCommand command = new SqliteCommand(query, connection);
         command.ExecuteNonQuery();
         connection.Close();
+        // also clear all bookings
+        connection.Open();
+        query = $"DELETE FROM bookings";
+        command = new SqliteCommand(query, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+        // delete from extrausers
+        connection.Open();
+        query = $"DELETE FROM extrausers";
+        command = new SqliteCommand(query, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+
     }
 }

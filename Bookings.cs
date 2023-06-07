@@ -69,7 +69,7 @@ public static class Bookings
             }
         }
         // ask for the amount of users
-        AmountOfBookings = AdminTool.AskForInt(1, 10, "Hoeveel mensen wilt u boeken?");
+        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt u boeken?\n U kunt voor maximaal 10 mensen boeken.");
 
         if (SelectedFlight.Aircraft == "Boeing 737")
         {
@@ -157,13 +157,31 @@ public static class Bookings
         {
             totalprice = totalprice + seat.GetTotalPrice(currentbooking.Flight);
         }
+        Console.Clear();
+        Information.DisplayLogo();
         Console.WriteLine($"De totale prijs is: {totalprice}");
-        Console.WriteLine("Druk op enter om door te gaan.");
-        Console.ReadLine();
+        List<string> options = new List<string>() { "Ja", "Nee" };
+        string choice = options[AdminTool.AskMultipleOptions<string>("Wilt u verder gaan met de betaling?", options)];
+        if (choice == "Nee")
+        {
+            Console.WriteLine("Betaling geannuleerd.");
+            // foreach (Booking booking in bookings)
+            // {
+            //     if (booking.Flight == SelectedFlight)
+            //     {
 
-        // wacht 2 seconden op de betaling
-        Console.WriteLine("Wacht 2 seconden op de betaling.");
-        Thread.Sleep(2000);
+            //         booking.RemoveFromDatabase();
+            //     }
+            // }
+            // foreach(ExtraUser extra in ExtraUsers)
+            // {
+            //     extra.Remove();
+            // }
+            // return;
+        }
+        // ask for payment method
+        List<string> paymentoptions = new List<string>() { "iDeal", "Creditcard" };
+        string paymentchoice = paymentoptions[AdminTool.AskMultipleOptions<string>("Kies een betaalmethode.", paymentoptions)];
         Console.WriteLine("Betaling gelukt.");
         Console.WriteLine("Druk op enter om door te gaan.");
         Console.ReadLine();

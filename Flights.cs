@@ -50,7 +50,7 @@ public static class Flights
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
-            Thread.Sleep(90);
+            Thread.Sleep(30);
             flightlist.Add(flight);
         }
 
