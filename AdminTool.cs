@@ -449,6 +449,7 @@ public static class AdminTool
 
     public static DateTime ConvertTimeDate(string date, string time)
     {
+        if (time == "--:--") return DateTime.Now;
         string[] timeArray = time.Split(":");
         int hours = Convert.ToInt32(timeArray[0]);
         int minutes = Convert.ToInt32(timeArray[1]);

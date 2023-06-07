@@ -111,7 +111,7 @@ public static class Flights
 
     public static void DisplayDepartingFlights()
     {
-        List<Flight> departingFlights = GetDepartingFlights();
+        List<Flight> departingFlights = GetDepartingFlights().Where(flight => (AdminTool.ConvertTimeDate(flight.Date, flight.Time) <= DateTime.Now)).ToList();
         Console.WriteLine("Vertrek\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
@@ -147,7 +147,7 @@ public static class Flights
 
     public static void DisplayArrivingFlights()
     {
-        List<Flight> arrivingFlights = GetArrivingFlights();
+        List<Flight> arrivingFlights = GetArrivingFlights().Where(flight => (AdminTool.ConvertTimeDate(flight.Date, flight.Time) <= DateTime.Now)).ToList();
         Console.WriteLine("Aankomst\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
