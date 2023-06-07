@@ -75,6 +75,10 @@ public static class Bookings
         {
             Console.WriteLine("Boeing 737 moet nog geimplementeerd worden.");
             seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
+            if (seats.Count == 0)
+            {
+                Bookings.BookingSequence(CurrentUser);
+            }
         }
         else if (SelectedFlight.Aircraft == "Boeing 787")
         {

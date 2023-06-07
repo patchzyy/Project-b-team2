@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using System.Text.RegularExpressions;
 // to go back to a menu, give HandleSelectedOption("Back");
 class Login
 {
@@ -220,36 +221,43 @@ class Login
     // idee: oranje toevoegen als 1 eis goed is maar niet alle
     private static bool IsValidEmail(string email)
     {
-        string leftover = "";
-        string invertedEmail = "";
-        if (email.Contains("."))
-        {
-            invertedEmail = InvertString(email);
-            string[] splitEmail = invertedEmail.Split('.');
-            leftover = splitEmail[0];
-        }
+        // string leftover = "";
+        // string invertedEmail = "";
+        // if (email.Contains("."))
+        // {
+        //     invertedEmail = InvertString(email);
+        //     string[] splitEmail = invertedEmail.Split('.');
+        //     leftover = splitEmail[0];
+        // }
 
-        if (email.Length < 8)
+        // if (email.Length < 8)
+        // {
+        //     return false;
+        // }
+        // if (!email.Contains("@"))
+        // {
+        //     return false;
+        // }
+        // if (!email.Contains("."))
+        // {
+        //     return false;
+        // }
+        // if (leftover.Length < 2)
+        // {
+        //     return false;
+        // }
+        // if (email.Contains("@."))
+        // {
+        //     return false;
+        // }
+        // return true;
+
+        string regex = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        if (Regex.IsMatch(email, regex))
         {
-            return false;
+            return true;
         }
-        if (!email.Contains("@"))
-        {
-            return false;
-        }
-        if (!email.Contains("."))
-        {
-            return false;
-        }
-        if (leftover.Length < 2)
-        {
-            return false;
-        }
-        if (email.Contains("@."))
-        {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     private static string? CheckEmail()

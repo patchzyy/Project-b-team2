@@ -1,6 +1,6 @@
 public class DrawAirbus330UI
 {
-    public static List<Seat> SelectAirbus330(Airbus330 plane, int amountToSelect)
+    public static List<Seat>? SelectAirbus330(Airbus330 plane, int amountToSelect)
     {
         int seatIndex = 0;
         List<string> SeatsChosen = new();
@@ -10,6 +10,10 @@ public class DrawAirbus330UI
             Console.Clear();
             DrawAirbus330(plane, plane.Seats[seatIndex]);
             var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+            {
+                return returnSeats;
+            }
             if (key.Key == ConsoleKey.Enter)
             {
                 if (plane.Seats[seatIndex].IsReserved)
