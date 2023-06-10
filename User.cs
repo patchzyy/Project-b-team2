@@ -145,18 +145,26 @@ public class User
         bool validnumber = false;
         string pattern = @"^\d{9}$";
         string passportnumber;
+        string errortext = "";
 
         do
         {
-            Console.WriteLine("Wat is uw passpoort nummer? (Max 9 getallen)");
+            Console.Clear();
+            Information.DisplayLogo();
+            if (errortext != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(errortext + "\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine("Wat is uw passpoort nummer? (9 getallen)");
             passportnumber = Console.ReadLine();
 
             if (Regex.IsMatch(passportnumber, pattern)) validnumber = true;
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.\n");
-                Console.ForegroundColor = ConsoleColor.White;
+
+                errortext = ("Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.\n");
             }
 
         } while (!validnumber);
@@ -173,10 +181,19 @@ public class User
 
         bool isValidInput = false;
         string phonenumber;
+        string errortext = "";
 
         do
         {
-            Console.Write("Wat is uw telefoon nummer? \n+");
+            Console.Clear();
+            Information.DisplayLogo();
+            if (errortext != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(errortext + "\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.Write("Wat is uw telefoon nummer? (06 12 34 56 78)\n+");
             phonenumber = Console.ReadLine();
             phonenumber = phonenumber.Replace(" ", "");
 
@@ -186,9 +203,7 @@ public class User
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Zorg ervoor dat het telefoon nummer correct is ingevoerd\n");
-                Console.ForegroundColor = ConsoleColor.White;
+                errortext = ("Zorg ervoor dat het telefoon nummer correct is ingevoerd\n");
             }
 
         }

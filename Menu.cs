@@ -204,10 +204,14 @@ class Menu
             if (_currentUser == null)
             {
                 Console.ResetColor();
-                AddMenu(new[] { "Login", "Registreren", "Meer Informatie" });
+                AddMenu(new[] { "Login", "Registreren", "Meer Informatie", "Fast", "Fast Admin" });
                 return;
             }
-            AddMenu(new[] { "Vluchten bekijken", "Boeken", "Uitloggen" });
+            if (_currentUser.has_Admin)
+            {
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
+            }
+            AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
         }
         else if (selectedOption == "Meer Informatie")
         {
