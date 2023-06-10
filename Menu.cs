@@ -73,7 +73,6 @@ class Menu
                     break;
             }
         }
-
         return _selectedOption;
     }
 
@@ -107,6 +106,7 @@ class Menu
 
     private void HandleSelectedOption(string selectedOption)
     {
+        _selectedOption = 0;
         Information.DisplayLogo();
         if (selectedOption == "Terug" || selectedOption == "Afmelden" || selectedOption == "Uitloggen")
         {
