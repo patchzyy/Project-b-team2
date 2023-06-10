@@ -6,7 +6,7 @@ class Program
     {
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        Menu menu = new Menu(new[] { "Login", "Registeren", "Meer Informatie", "Fast", "Fast Admin" });
+        Menu menu = new Menu(new[] { "Login", "Registreren", "Meer Informatie", "Fast", "Fast Admin" });
         menu.Run();
         //DrawBoeing737UI.SelectBoeing737(new Boeing737());
         //DrawBoeing787UI.SelectBoeing787(new Boeing787());

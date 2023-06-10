@@ -34,6 +34,10 @@ class Menu
             Information.DisplayLogo();
             string[] currentMenu = _menuStack.Peek();
             ExtraMenuText(currentMenu);
+            if (_currentUser != null)
+            {
+                Console.WriteLine($"Welkom {_currentUser.First_Name}!\n");
+            }
 
             Console.WriteLine("Selecteer een optie:");
             for (int i = 0; i < currentMenu.Length; i++)
@@ -116,7 +120,7 @@ class Menu
             _currentUser = Login.LoggingIn();
             if (_currentUser == null)
             {
-                AddMenu(new[] { "Login", "Registeren", "Meer Informatie" });
+                AddMenu(new[] { "Login", "Registreren", "Meer Informatie" });
                 return;
             }
             if (_currentUser.has_Admin)
@@ -194,13 +198,13 @@ class Menu
             Console.ReadKey();
         }
 
-        else if (selectedOption == "Registeren")
+        else if (selectedOption == "Registreren")
         {
             _currentUser = User.Register();
             if (_currentUser == null)
             {
                 Console.ResetColor();
-                AddMenu(new[] { "Login", "Registeren", "Meer Informatie" });
+                AddMenu(new[] { "Login", "Registreren", "Meer Informatie" });
                 return;
             }
             AddMenu(new[] { "Vluchten bekijken", "Boeken", "Uitloggen" });
