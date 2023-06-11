@@ -89,7 +89,7 @@ public class User
 
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(8,8);
+        Information.Progressbar(8, 8);
 
         Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
         Information.NextKey();
@@ -113,24 +113,26 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(7,8);
+        Information.Progressbar(7, 8);
 
 
         bool validcountry = false;
         string pattern = @"^(?!.*\d)[^\n]{0,58}$";
         string country;
-        
-        do{
+
+        do
+        {
             Console.WriteLine("Wat is uw land van herkomst?");
             country = Console.ReadLine();
             if (Regex.IsMatch(country, pattern)) validcountry = true;
-            else{
+            else
+            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Uw invoer is niet goed ingevuld, zorg ervoor dat het \n-Geen nummers heeft\n-Minder dan 58 tekens heeft.\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
-        while(!validcountry);
+        while (!validcountry);
 
         return country;
     }
@@ -139,7 +141,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(6,8);
+        Information.Progressbar(6, 8);
 
 
         bool validnumber = false;
@@ -176,7 +178,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(4,8);
+        Information.Progressbar(4, 8);
 
 
         bool isValidInput = false;
@@ -218,7 +220,7 @@ public class User
     {
         Information.DisplayLogo();
         Console.Clear();
-        Information.Progressbar(5,8);
+        Information.Progressbar(5, 8);
 
         Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
 
@@ -310,7 +312,7 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
-            Information.Progressbar(0,8);
+            Information.Progressbar(0, 8);
 
             Console.Write("\nVul je voornaam in: ");
             firstname = CheckFirstName();
@@ -365,7 +367,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(1,8);
+        Information.Progressbar(1, 8);
 
         while (true)
         {
@@ -432,7 +434,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(2,8);
+        Information.Progressbar(2, 8);
         string email = "";
         while (true)
         {
@@ -489,6 +491,20 @@ public class User
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
+            // if email in users database return false
+            SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
+            connection.Open();
+            SqliteCommand command = new SqliteCommand("SELECT * FROM users WHERE email = '" + email + "'", connection);
+            SqliteDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Dit emailadres is al in gebruik.\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                continue;
+            }
             break;
         }
         return email;
@@ -542,7 +558,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(3,8);
+        Information.Progressbar(3, 8);
 
 
         string password = "";
