@@ -56,24 +56,27 @@ public class Flight
 
     public override string ToString()
     {
-        return @$"Duration: {Duration} - "
-            + @$"Date: {Date} - "
-            + @$"Time: {Time} - "
-            + @$"Origin: {Origin} - "
-            + @$"Destination: {Destination} - "
-            + @$"Aircraft: {Aircraft} - "
-            + @$"Gate: {Gate}";
+        string flightID = GenerateFlightID();
+
+        string origin = $"Van: {Origin}";
+        string destination = $"Naar: {Destination}";
+
+        return $"Vlucht ID: {flightID,-20} - Date: {Date,-25} - Time: {Time,-25}";
     }
+
     public string GenerateFlightID()
     {
         // FlightID must start with RA- and end with 6 numbers that are unique and generated with the information used for this flight, and end with 2 letters of the destination
         // Example: RA-123456-LO
 
         // Get the first 2 letters of the destination
-        string Destination = this.Destination.Substring(0, 2).ToUpper();
+        string Destination_short = this.Destination.Substring(0, 2).ToUpper();
+        string Origin_short = this.Origin.Substring(0, 2).ToUpper();
         string Time = this.Time.Replace(":", "");
         string Date = this.Date.Replace("-", "");
-        string FlightID = $"RA-{Time}{Date}-{Destination}";
+        string FlightID;
+        if (Origin == "Rotterdam") FlightID = $"RA-{Time}{Date}-{Destination_short}";
+        else FlightID = $"{Origin_short}-{Time}{Date}-RA";
         return FlightID;
     }
 
