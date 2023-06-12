@@ -152,25 +152,28 @@ public class Booking
 
     public void ShowInformation()
     {
-        Console.WriteLine($"Booking ID: {GetBookingID()}");
-        Console.WriteLine($"Flight ID: {GetFlightID()}");
-        Console.WriteLine($"User: {BookingsUser.Email}");
-        Console.WriteLine($"Seat: {Seat.SeatId}");
-        if (ExtraUser != null)
+        Console.Clear();
+        Information.DisplayLogo();
+        Console.WriteLine($"Boeking Informatie");
+        Console.WriteLine($"Vlucht: {Flight.GenerateFlightID()}");
+        Console.WriteLine($"Gebruiker: {BookingsUser.Email}");
+        Console.WriteLine($"Stoel: {Seat.SeatId}");
+        // database connection
+        string query = $"SELECT * FROM ExtraUsers WHERE BookingID = {GetBookingID()}";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        DatabaseConnection.ExecuteNonQuery();
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        while (reader.Read())
         {
-            Console.WriteLine($"Extra user: {ExtraUser.FirstName} {ExtraUser.LastName}");
+            string firstName = reader.GetString(1);
+            string lastName = reader.GetString(2);
+            string seat = reader.GetString(4);
+            Console.WriteLine($"Extra gebruiker: {firstName} {lastName}");
+            Console.WriteLine($"Stoel van {firstName} {lastName}: {seat}");
         }
         //you have no baggage / you have baggage one liners
-        if (HasBaggage)
-            Console.WriteLine("You have baggage");
-        if (HasVIP)
-            Console.WriteLine("You have VIP");
-        if (HasEntertainment)
-            Console.WriteLine("You have entertainment");
-        if (HasLounge)
-            Console.WriteLine("You have lounge");
-        if (HasInsurance)
-            Console.WriteLine("You have insurance");
 
 
 
