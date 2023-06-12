@@ -1,7 +1,7 @@
 public class DrawAirbus330UI
 {
     private static bool _reversedSeatFirst = true;
-    public static List<Seat>? SelectAirbus330(Airbus330 plane, int amountToSelect)
+    public static List<Seat>? SelectAirbus330(Airbus330 plane, int amountToSelect, Flight flight)
     {
         int seatIndex = 0;
         List<string> SeatsChosen = new();
@@ -9,7 +9,7 @@ public class DrawAirbus330UI
         while (true)
         {
             Console.Clear();
-            DrawAirbus330(plane, plane.Seats[seatIndex]);
+            DrawAirbus330(plane, plane.Seats[seatIndex], flight);
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Escape)
             {
@@ -19,7 +19,7 @@ public class DrawAirbus330UI
             {
                 _reversedSeatFirst = true;
                 Console.Clear();
-                DrawAirbus330(plane, plane.Seats[seatIndex]);
+                DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                 if (plane.Seats[seatIndex].IsReserved)
                 {
                     SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
@@ -27,7 +27,7 @@ public class DrawAirbus330UI
                     plane.Seats[seatIndex].IsReserved = false;
                     _reversedSeatFirst = true;
                     Console.Clear();
-                    DrawAirbus330(plane, plane.Seats[seatIndex]);
+                    DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                     continue;
                 }
 
@@ -46,7 +46,7 @@ public class DrawAirbus330UI
                     // continue;
                     _reversedSeatFirst = true;
                     Console.Clear();
-                    DrawAirbus330(plane, plane.Seats[seatIndex]);
+                    DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                     Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
                     Console.WriteLine("\nWil je doorgaan met het boeken?");
                     if (ChooseTheSeats())
@@ -64,7 +64,7 @@ public class DrawAirbus330UI
                     returnSeats.Add(plane.Seats[seatIndex]);
                     plane.Seats[seatIndex].IsReserved = true;
                     Console.Clear();
-                    DrawAirbus330(plane, plane.Seats[seatIndex]);
+                    DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                 }
                 // else
                 // {
@@ -100,7 +100,7 @@ public class DrawAirbus330UI
             {
                 _reversedSeatFirst = false;
                 Console.Clear();
-                DrawAirbus330(plane, plane.Seats[seatIndex]);
+                DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                 if (seatIndex < 6)
                 {
                     seatIndex += 6;
@@ -252,7 +252,7 @@ public class DrawAirbus330UI
             {
                 _reversedSeatFirst = false;
                 Console.Clear();
-                DrawAirbus330(plane, plane.Seats[seatIndex]);
+                DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                 if (seatIndex < 6)
                 {
                     continue;
@@ -396,7 +396,7 @@ public class DrawAirbus330UI
             if (SeatsChosen.Count == amountToSelect)
             {
                 Console.Clear();
-                DrawAirbus330(plane, plane.Seats[seatIndex]);
+                DrawAirbus330(plane, plane.Seats[seatIndex], flight);
                 Console.Write("\nJe gekozen stoelen zijn: ");
                 foreach (string seat in SeatsChosen)
                 {
@@ -434,7 +434,7 @@ public class DrawAirbus330UI
         return returnSeats;
     }
 
-    public static void DrawAirbus330(Airbus330 plane, Seat currentSeat)
+    public static void DrawAirbus330(Airbus330 plane, Seat currentSeat, Flight flight)
     {
         Console.WriteLine("         _/                                         \\_");
         Console.WriteLine("        /                                             \\");
@@ -642,7 +642,7 @@ public class DrawAirbus330UI
             }
             if (rowNr == 21)
             {
-                Console.WriteLine("|" + $"  {rowNr}" + "                   Prijs: " + currentSeat.SeatPrice());
+                Console.WriteLine("|" + $"  {rowNr}" + "                   Prijs: " + currentSeat.GetTotalPrice(flight));
             }
             if (rowNr == 22)
             {

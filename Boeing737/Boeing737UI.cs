@@ -1,7 +1,7 @@
 public class DrawBoeing737UI
 {
     private static bool _reversedSeatFirst = true;
-    public static void DrawBoeing737(Boeing737 plane, Seat currentSeat)
+    public static void DrawBoeing737(Boeing737 plane, Seat currentSeat, Flight flight)
     {
         string[] NederlandsBool = new string[2] { "Nee", "Ja" };
         Console.WriteLine("         _/                     \\_");
@@ -43,7 +43,7 @@ public class DrawBoeing737UI
             }
             if (rowNr == 17)
             {
-                Console.WriteLine("|                                         |                 Prijs: " + currentSeat.SeatPrice());
+                Console.WriteLine("|                                         |                 Prijs: " + currentSeat.GetTotalPrice(flight));
             }
 
             rowHasSeats = false;
@@ -111,7 +111,7 @@ public class DrawBoeing737UI
             }
             if (rowNr == 17)
             {
-                Console.WriteLine("|" + $"  {rowNr}" + "             " + (currentSeat.ExtraBeenRuimte ? "Extra BeenRuimte" : ""));
+                Console.WriteLine("|" + $"  {rowNr}" + "             " + (currentSeat.ExtraBeenRuimte ? "Extra Beenruimte" : ""));
             }
             else if (rowNr != 16 && rowNr != 17)
             {
@@ -132,7 +132,7 @@ public class DrawBoeing737UI
 
     }
 
-    public static List<Seat>? SelectBoeing737(Boeing737 plane, int amountToSelect)
+    public static List<Seat>? SelectBoeing737(Boeing737 plane, int amountToSelect, Flight flight)
     {
         int seatIndex = 0;
         List<string> SeatsChosen = new();
@@ -140,7 +140,7 @@ public class DrawBoeing737UI
         while (true)
         {
             Console.Clear();
-            DrawBoeing737(plane, plane.Seats[seatIndex]);
+            DrawBoeing737(plane, plane.Seats[seatIndex], flight);
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Escape)
             {
@@ -150,7 +150,7 @@ public class DrawBoeing737UI
             {
                 _reversedSeatFirst = true;
                 Console.Clear();
-                DrawBoeing737(plane, plane.Seats[seatIndex]);
+                DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                 if (plane.Seats[seatIndex].IsReserved)
                 {
                     SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
@@ -158,7 +158,7 @@ public class DrawBoeing737UI
                     plane.Seats[seatIndex].IsReserved = false;
                     _reversedSeatFirst = true;
                     Console.Clear();
-                    DrawBoeing737(plane, plane.Seats[seatIndex]);
+                    DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                     continue;
                 }
 
@@ -177,7 +177,7 @@ public class DrawBoeing737UI
                     // continue;
                     _reversedSeatFirst = true;
                     Console.Clear();
-                    DrawBoeing737(plane, plane.Seats[seatIndex]);
+                    DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                     Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
                     Console.WriteLine("\nWil je doorgaan met het boeken?");
                     if (ChooseTheSeats())
@@ -195,7 +195,7 @@ public class DrawBoeing737UI
                     returnSeats.Add(plane.Seats[seatIndex]);
                     plane.Seats[seatIndex].IsReserved = true;
                     Console.Clear();
-                    DrawBoeing737(plane, plane.Seats[seatIndex]);
+                    DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                 }
             }
             if (key.Key == ConsoleKey.Escape)
@@ -222,7 +222,7 @@ public class DrawBoeing737UI
             {
                 _reversedSeatFirst = false;
                 Console.Clear();
-                DrawBoeing737(plane, plane.Seats[seatIndex]);
+                DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                 seatIndex -= 3;
                 if (seatIndex > 2)
                     seatIndex -= 3;
@@ -231,7 +231,7 @@ public class DrawBoeing737UI
             {
                 _reversedSeatFirst = false;
                 Console.Clear();
-                DrawBoeing737(plane, plane.Seats[seatIndex]);
+                DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                 if (seatIndex < 3)
                     seatIndex += 3;
                 else
@@ -241,7 +241,7 @@ public class DrawBoeing737UI
             if (SeatsChosen.Count == amountToSelect)
             {
                 Console.Clear();
-                DrawBoeing737(plane, plane.Seats[seatIndex]);
+                DrawBoeing737(plane, plane.Seats[seatIndex], flight);
                 Console.Write("\nJe gekozen stoelen zijn: ");
                 foreach (string seat in SeatsChosen)
                 {
@@ -270,7 +270,7 @@ public class DrawBoeing737UI
                 continue;
             }
         }
-        
+
         foreach (Seat seat in returnSeats)
         {
             Seat addSeat = new Seat(seat.SeatId, seat.ExtraBeenRuimte, seat.IsClubClass, seat.IsDoubleSeat, seat.IsFrontSeat, seat.IsBusinessClass, seat.IsEconomyPlus, seat.IsEconomy);
@@ -292,7 +292,7 @@ public class DrawBoeing737UI
             }
         }
     }
-    
+
     private static bool ChooseTheSeats()
     {
         List<string> choices = new() { "Ja", "Nee" };

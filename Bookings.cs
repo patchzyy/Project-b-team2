@@ -74,7 +74,7 @@ public static class Bookings
         if (SelectedFlight.Aircraft == "Boeing 737")
         {
             Console.WriteLine("Boeing 737 moet nog geimplementeerd worden.");
-            seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
+            seats = DrawBoeing737UI.SelectBoeing737(new Boeing737(), AmountOfBookings, SelectedFlight);
             if (seats.Count == 0)
             {
                 Bookings.BookingSequence(CurrentUser);
@@ -83,12 +83,12 @@ public static class Bookings
         else if (SelectedFlight.Aircraft == "Boeing 787")
         {
             Console.WriteLine("Boeing 787 moet nog geimplementeerd worden.");
-            seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
+            seats = DrawBoeing787UI.SelectBoeing787(new Boeing787(), AmountOfBookings, SelectedFlight);
         }
         else if (SelectedFlight.Aircraft == "Airbus 330")
         {
             // string seat = DrawAirbus330UI.SelectAirbus330(new Airbus330());
-            seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings);
+            seats = DrawAirbus330UI.SelectAirbus330(new Airbus330(), AmountOfBookings, SelectedFlight);
 
         }
         else

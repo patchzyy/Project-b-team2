@@ -99,8 +99,8 @@ public class Seat
 
     public double DurationPrice(Flight flight)
     {
-        double PricePerHour = 50;
+        double PricePerMinute = 0.75;
         double DurationPrice = 0.0;
-        return DurationPrice + flight.Duration * PricePerHour;
+        return DurationPrice + flight.Duration * PricePerMinute;
     }
 }
