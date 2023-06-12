@@ -135,6 +135,7 @@ class Menu
         else if (selectedOption == "Fast")
         {
             _currentUser = new("Issam", "benmassoud", "issam@gmail.com", "Wachtwoord123!");
+            _currentUser.can_Book = true;
             if (_currentUser.has_Admin)
             {
                 AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });

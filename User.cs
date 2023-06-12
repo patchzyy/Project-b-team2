@@ -1,7 +1,6 @@
 using Microsoft.Data.Sqlite;
 using System.Text.RegularExpressions;
 
-// Admin is geinherrit van User class.
 public class User
 {
     public int id { get; set; }
@@ -23,8 +22,6 @@ public class User
 
 
 
-    // Even een constructor om te testen.. Deze test helaas niet of de data wel goed is
-    // daarom is het de bedoeling dat de static method "Register" gebruikt wordt.
     public User(string first_name, string last_name, string email, string password, bool has_admin = false)
     {
         First_Name = first_name;
@@ -36,8 +33,6 @@ public class User
 
     override public string ToString()
     {
-        // gebruik deze methode om de user te printen.
-        //Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
         return $"email: {Email,-20}\t name: {First_Name} {Last_Name}";
 
     }
@@ -75,10 +70,6 @@ public class User
         string origin = OriginSequence();
         if (origin == null) return null;
 
-
-
-
-
         User currentuser = new User(first_name, last_name, email, password);
         currentuser.Phonenumber = phonenumber;
         currentuser.Date_of_Birth = date_of_birth;
@@ -108,12 +99,12 @@ public class User
         return age >= 18;
     }
 
-    // moet in overleg
-    public static string OriginSequence()
+    public static string OriginSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(7, 8);
+        if(!usedinbook) Information.Progressbar(7, 8);
+        else Information.Progressbar(step, maxstep);
 
 
         bool validcountry = false;
@@ -137,11 +128,13 @@ public class User
         return country;
     }
 
-    public static string PassportSequence()
+    public static string PassportSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
         Console.Clear();
         Information.DisplayLogo();
-        Information.Progressbar(6, 8);
+        if(!usedinbook) Information.Progressbar(6, 8);
+        else Information.Progressbar(step, maxstep);
+
 
 
         bool validnumber = false;
@@ -170,7 +163,6 @@ public class User
             }
 
         } while (!validnumber);
-
         return passportnumber;
     }
 
@@ -216,11 +208,12 @@ public class User
     }
 
 
-    public static DateOnly DateOfBirthSequence()
+    public static DateOnly DateOfBirthSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
         Information.DisplayLogo();
         Console.Clear();
-        Information.Progressbar(5, 8);
+        if(!usedinbook) Information.Progressbar(5, 8);
+        else Information.Progressbar(step, maxstep);
 
         Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
 
@@ -266,7 +259,7 @@ public class User
         SqliteConnection connection = new("Data Source=airline_data.db");
         connection.Open();
 
-        string sql = "INSERT INTO users (first_name, last_name, email, password, has_admin) VALUES (@first_name, @last_name, @email, @password, @has_admin)";
+        string sql = "INSERT INTO users (first_name, last_name, email, password, has_admin, phonenumber, dateofbirth, can_book, passport_number, origin) VALUES (@first_name, @last_name, @email, @password, @has_admin, @phonenumber, @dateofbirth, @can_book, @passport_number, @origin)";
         using (SqliteCommand command = new SqliteCommand(sql, connection))
         {
             command.Parameters.AddWithValue("@first_name", this.First_Name);
@@ -274,6 +267,12 @@ public class User
             command.Parameters.AddWithValue("@email", this.Email);
             command.Parameters.AddWithValue("@password", this.Password);
             command.Parameters.AddWithValue("@has_admin", this.has_Admin ? 1 : 0);
+            command.Parameters.AddWithValue("@phonenumber", this.Phonenumber);
+            command.Parameters.AddWithValue("@dateofbirth", this.Date_of_Birth);
+            command.Parameters.AddWithValue("@can_book", this.can_Book ? 1 : 0);
+            command.Parameters.AddWithValue("@passport_number", this.Passport_Number);
+            command.Parameters.AddWithValue("@origin", this.Origin);
+            
             command.ExecuteNonQuery();
         }
 
@@ -304,15 +303,15 @@ public class User
 
     // Hieronder staat alles dat te maken heeft met register... 
     // TODO:    -checken op hoofdletter
-    //          -password zo doen dat ipv chars bolletjes komen ter bescherming?
-    public static string FirstNameSequence()
+    public static string FirstNameSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
         string firstname;
         while (true)
         {
             Console.Clear();
             Information.DisplayLogo();
-            Information.Progressbar(0, 8);
+            if(!usedinbook)  Information.Progressbar(0, 8);
+            else Information.Progressbar(step, maxstep);
 
             Console.Write("\nVul je voornaam in: ");
             firstname = CheckFirstName();
@@ -320,7 +319,6 @@ public class User
             {
                 return null;
             }
-            // firstname = Console.ReadLine()!;
 
 
             if (string.IsNullOrWhiteSpace(firstname))
@@ -363,14 +361,16 @@ public class User
 
 
     //last name
-    public static string LastNameSequence()
+    public static string LastNameSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        Information.Progressbar(1, 8);
 
         while (true)
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            if(!usedinbook)  Information.Progressbar(1, 8);
+            else Information.Progressbar(step, maxstep);
+
             Console.Write("Vul je achternaam in: ");
             string lastname = CheckLastName();
             if (lastname == null)

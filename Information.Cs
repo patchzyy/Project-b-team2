@@ -78,12 +78,10 @@ public class Information
         3011 WN,
         Rotterdam
         ");
-        Thread.Sleep(1000);
         Console.WriteLine(@"
         U kunt ons bereiken via:
         E-Mail: RotterdamAirlines@RDamSouthAirport.nl
         Telefoon: 010-85785619");
-        Thread.Sleep(1000);
         BackKey();
     }
     public static void DisplayLogo()
