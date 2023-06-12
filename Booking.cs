@@ -173,7 +173,6 @@ public class Booking
             Console.WriteLine($"Extra gebruiker: {firstName} {lastName}");
             Console.WriteLine($"Stoel van {firstName} {lastName}: {seat}");
         }
-        //you have no baggage / you have baggage one liners
         if (HasBaggage)
             Console.WriteLine("U heeft bagage");
         if (HasVIP)

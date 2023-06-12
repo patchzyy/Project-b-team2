@@ -50,23 +50,36 @@ public static class Flights
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
-            Thread.Sleep(30);
+            // Thread.Sleep(30);
             flightlist.Add(flight);
         }
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
-        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
-        string input = Console.ReadLine();
-        if (input == "ja")
+        while (true)
         {
-            foreach (Flight flight in flightlist)
+            Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
+            string input = Console.ReadLine();
+            if (input == "ja")
             {
-                flight.AddToDatabase();
+                foreach (Flight flight in flightlist)
+                {
+                    flight.AddToDatabase();
+                }
+                break;
+            }
+            else if (input == "nee")
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige invoer.");
             }
         }
-
     }
+
+
     public static void GenerateArrivingFlightScedule(int amount)
     {
         List<Flight> flightlist = new List<Flight>();
@@ -77,7 +90,7 @@ public static class Flights
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
-            Thread.Sleep(30);
+            // Thread.Sleep(30);
             flightlist.Add(flight);
         }
 

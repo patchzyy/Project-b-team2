@@ -107,11 +107,11 @@ public class Flight
 
     public static Flight GenerateDepartingFlight()
     {
-        int duration = AdminTool.RandomDuration();
         string date = AdminTool.RandomDate();
         string time = AdminTool.RandomTime();
         string origin = "Rotterdam";
         string destination = AdminTool.RandomCity();
+        int duration = AdminTool.RandomDuration(destination);
         string aircraft = AdminTool.RandomAircraft();
         string gate = AdminTool.RandomGate();
         Flight flight = new Flight(duration, date, time, origin, destination, aircraft, gate);
@@ -121,10 +121,10 @@ public class Flight
 
     public static Flight GenerateArrivingFlight()
     {
-        int duration = AdminTool.RandomDuration();
         string date = AdminTool.RandomDate();
         string time = AdminTool.RandomTime();
         string origin = AdminTool.RandomCity();
+        int duration = AdminTool.RandomDuration(origin);
         string destination = "Rotterdam";
         string aircraft = AdminTool.RandomAircraft();
         string gate = AdminTool.RandomGate();

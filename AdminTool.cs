@@ -32,17 +32,38 @@ public static class AdminTool
         Console.CursorVisible = false;
 
         int selectedIndex = 0;
+        int currentPage = 1;
+        int pageSize = 20;
 
         while (true)
         {
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"{prompt}: ");
+            if (options.Count > 19)
+            {
+                Console.WriteLine($"Pagina {currentPage}");
+            }
+            int startIndex = (currentPage - 1) * pageSize;
+            int endIndex = Math.Min(startIndex + pageSize, options.Count);
 
-            for (int i = 0; i < options.Count; i++)
+            for (int i = startIndex; i < endIndex; i++)
             {
                 Console.WriteLine(i == selectedIndex ? $"> {options[i]}" : $"  {options[i]}");
                 Console.ResetColor();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Gebruik de pijltjestoetsen om te navigeren. Druk op Enter om te selecteren. Druk op Escape om terug te gaan.");
+
+            if (currentPage > 1)
+            {
+                Console.WriteLine("Gebruik de PageUp-toets om terug te gaan naar de vorige pagina.");
+            }
+
+            if (endIndex < options.Count)
+            {
+                Console.WriteLine("Gebruik de PageDown-toets om naar de volgende pagina te gaan.");
             }
 
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -51,17 +72,37 @@ public static class AdminTool
             {
                 case ConsoleKey.UpArrow:
                     selectedIndex--;
-                    if (selectedIndex < 0)
+                    if (selectedIndex < startIndex)
                     {
-                        selectedIndex = options.Count - 1;
+                        if (currentPage > 1)
+                        {
+                            currentPage--;
+                            startIndex -= pageSize;
+                            endIndex = Math.Min(startIndex + pageSize, options.Count);
+                            selectedIndex = endIndex - 1;
+                        }
+                        else
+                        {
+                            selectedIndex = options.Count - 1;
+                        }
                     }
                     break;
 
                 case ConsoleKey.DownArrow:
                     selectedIndex++;
-                    if (selectedIndex >= options.Count)
+                    if (selectedIndex >= endIndex)
                     {
-                        selectedIndex = 0;
+                        if (endIndex < options.Count)
+                        {
+                            currentPage++;
+                            startIndex += pageSize;
+                            endIndex = Math.Min(startIndex + pageSize, options.Count);
+                            selectedIndex = startIndex;
+                        }
+                        else
+                        {
+                            selectedIndex = startIndex;
+                        }
                     }
                     break;
 
@@ -69,11 +110,34 @@ public static class AdminTool
                     Console.CursorVisible = true;
                     Console.Clear();
                     return selectedIndex;
+
                 case ConsoleKey.Escape:
                     return -1;
+
+                case ConsoleKey.PageUp:
+                    if (currentPage > 1)
+                    {
+                        currentPage--;
+                        startIndex = (currentPage - 1) * pageSize;
+                        endIndex = Math.Min(startIndex + pageSize, options.Count);
+                        selectedIndex = Math.Min(selectedIndex, endIndex - 1);
+                    }
+                    break;
+
+                case ConsoleKey.PageDown:
+                    if (endIndex < options.Count)
+                    {
+                        currentPage++;
+                        startIndex = (currentPage - 1) * pageSize;
+                        endIndex = Math.Min(startIndex + pageSize, options.Count);
+                        selectedIndex = startIndex;
+                    }
+                    break;
             }
         }
     }
+
+
 
 
     public static void AddBooking(Flight flight, User user, Seat seat)
@@ -222,7 +286,7 @@ public static class AdminTool
 
     public static string DateSequence()
     {
-        return AskStringInformation("De datum van de vlucht (DD:MM:YY format. Dag, Maand, Jaar)", 9, "1");
+        return AskStringInformation("De datum van de vlucht (DD-MM-YY format. Dag, Maand, Jaar)", 9, "1");
     }
 
     public static string TimeSequence()
@@ -408,7 +472,7 @@ public static class AdminTool
         foreach (User user in GetAllUsers())
         {
             users.Add(user);
-        
+
         }
         User UserToRemove;
         try
@@ -448,7 +512,7 @@ public static class AdminTool
         foreach (User user in GetAllUsers())
         {
             users.Add(user);
-        
+
         }
         User selectedUser;
         try
@@ -510,25 +574,63 @@ public static class AdminTool
         return dateTime;
     }
 
-    public static int RandomDuration()
+    public static int RandomDuration(string city)
     {
         Random random = new Random();
-        int duration = random.Next(60, 600);
-        duration = duration - (duration % 30);
+        int baseDuration = random.Next(60, 120);
+        baseDuration = baseDuration - (baseDuration % 30);
+
+        int duration;
+        switch (city)
+        {
+            case "Barcelona":
+            case "Madrid":
+                duration = baseDuration + 120;
+                break;
+            case "Berlijn":
+                duration = baseDuration + 60;
+                break;
+            case "Brussel":
+                duration = baseDuration + 30;
+                break;
+            case "Dubai":
+            case "New York":
+            case "Tokyo":
+                duration = baseDuration + 360;
+                break;
+            case "Londen":
+            case "Parijs":
+            case "Rome":
+                duration = baseDuration + 90;
+                break;
+            default:
+                duration = baseDuration;
+                break;
+        }
+
         return duration;
     }
+
 
     public static string RandomDate()
     {
         Random random = new Random();
         int month = random.Next(1, 12);
-        int maxdays = 30;
-        if (month == 2) maxdays = 28;
-        int day = random.Next(1, maxdays);
+        int maxDays = 30;
+
+        if (month == 2)
+            maxDays = 28;
+
+        int day = random.Next(1, maxDays);
         int year = random.Next(2023, 2024);
-        string date = $"{day}-{month}-{year}";
+
+        string formattedMonth = month.ToString("00");
+        string formattedDay = day.ToString("00");
+
+        string date = $"{formattedDay}-{formattedMonth}-{year}";
         return date;
     }
+
 
     public static string RandomTime()
     {
