@@ -153,24 +153,24 @@ public class Booking
     public void ShowInformation()
     {
         Console.WriteLine($"Booking ID: {GetBookingID()}");
-        Console.WriteLine($"Flight ID: {GetFlightID()}");
-        Console.WriteLine($"User: {BookingsUser.Email}");
-        Console.WriteLine($"Seat: {Seat.SeatId}");
+        Console.WriteLine($"Vlucht ID: {GetFlightID()}");
+        Console.WriteLine($"Gebriker: {BookingsUser.Email}");
+        Console.WriteLine($"Stoel: {Seat.SeatId}");
         if (ExtraUser != null)
         {
             Console.WriteLine($"Extra user: {ExtraUser.FirstName} {ExtraUser.LastName}");
         }
         //you have no baggage / you have baggage one liners
         if (HasBaggage)
-            Console.WriteLine("You have baggage");
+            Console.WriteLine("U heeft bagage");
         if (HasVIP)
-            Console.WriteLine("You have VIP");
+            Console.WriteLine("U heeft VIP");
         if (HasEntertainment)
-            Console.WriteLine("You have entertainment");
+            Console.WriteLine("U heeft entertainment");
         if (HasLounge)
-            Console.WriteLine("You have lounge");
+            Console.WriteLine("U heeft lounge-access");
         if (HasInsurance)
-            Console.WriteLine("You have insurance");
+            Console.WriteLine("U bent verzekerd");
 
 
 
@@ -210,7 +210,7 @@ public class Booking
         }
         else
         {
-            Console.WriteLine("Uw paspoortnummer is niet geldig!");
+            Console.WriteLine("Uw paspoortnummer is ongeldig!");
             Thread.Sleep(2000);
             AskForPassportNumber();
         }

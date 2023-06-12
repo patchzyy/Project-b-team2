@@ -48,7 +48,7 @@ public class User
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Laten we elkaar leren kennen!");
-        Console.WriteLine("Vul je details in.");
+        Console.WriteLine("Vul hier a.u.b. uw details in.");
 
         string first_name = FirstNameSequence();
         if (first_name == null) return null;
@@ -91,7 +91,7 @@ public class User
         Information.DisplayLogo();
         Information.Progressbar(8, 8);
 
-        Console.WriteLine($"\n\nWelkom in Rotterdam Airlines, {first_name} {last_name}!\n");
+        Console.WriteLine($"\n\nWelkom bij Rotterdam Airlines, {first_name} {last_name}!\n");
         Information.NextKey();
 
         return currentuser;
@@ -314,7 +314,7 @@ public class User
             Information.DisplayLogo();
             Information.Progressbar(0, 8);
 
-            Console.Write("\nVul je voornaam in: ");
+            Console.Write("\nVul uw voornaam in: ");
             firstname = CheckFirstName();
             if (firstname == null)
             {
@@ -326,7 +326,7 @@ public class User
             if (string.IsNullOrWhiteSpace(firstname))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je voornaam mag niet niks zijn.");
+                Console.WriteLine("Je voornaam kan niet niks zijn.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -383,7 +383,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je achternaam mag niet leeg zijn.");
+                Console.WriteLine("Je achternaam kan niet leeg zijn.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -393,7 +393,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je achternaam mag alleen letters bevatten.");
+                Console.WriteLine("Je achternaam kan alleen letters bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -438,7 +438,7 @@ public class User
         string email = "";
         while (true)
         {
-            Console.Write("Vul je emailadres in: ");
+            Console.Write("Vul uw emailadres in: ");
             email = CheckEmail();
             if (email == null)
             {
@@ -459,7 +459,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je emailadres moet ten minste een '@' bevatten.");
+                Console.WriteLine("Uw emailadres moet ten minste een '@' bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -469,7 +469,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je emailadres moet ten minste een '.' bevatten.");
+                Console.WriteLine("Uw emailadres moet ten minste een '.' bevatten.");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -478,7 +478,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je email mag niet korter dan 8 tekens zijn.\n");
+                Console.WriteLine("Uw email mag niet korter dan 8 tekens zijn.\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -487,7 +487,7 @@ public class User
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je email moet een domein bevatten (.com, .nl).\n");
+                Console.WriteLine("Uw email moet een domein bevatten (.com, .nl).\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 continue;
             }
@@ -580,19 +580,19 @@ public class User
             if (password.Length > 8 && ContainsSpecialChar(password) && ContainsDigit(password))
             {
                 Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
-                Console.Write("Bevestig je wachtwoord: ");
+                Console.Write("Bevestig Uw wachtwoord: ");
                 confirmpassword = Console.ReadLine();
 
                 // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
                 if (password != confirmpassword)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("De wachtwoorden verschillen van elkaar, probeer het opnieuw.\n");
+                    Console.WriteLine("De wachtwoorden komen niet overeen, probeer het opnieuw.\n");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
-                    Console.WriteLine("Je wachtwoord is correct. Een moment alstublieft.");
+                    Console.WriteLine("Je wachtwoord is bevestigd. Een moment alstublieft.");
                     Thread.Sleep(750);
                     return password;
                 }

@@ -69,7 +69,7 @@ public static class Bookings
             }
         }
         // ask for the amount of users
-        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt u boeken?\n U kunt voor maximaal 10 mensen boeken.");
+        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt U boeken?\n U kunt voor maximaal 10 mensen boeken.");
 
         if (SelectedFlight.Aircraft == "Boeing 737")
         {
