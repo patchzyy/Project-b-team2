@@ -150,7 +150,32 @@ public class Booking
 
     }
 
+    public void ShowInformation()
+    {
+        Console.WriteLine($"Booking ID: {GetBookingID()}");
+        Console.WriteLine($"Flight ID: {GetFlightID()}");
+        Console.WriteLine($"User: {BookingsUser.Email}");
+        Console.WriteLine($"Seat: {Seat.SeatId}");
+        if (ExtraUser != null)
+        {
+            Console.WriteLine($"Extra user: {ExtraUser.FirstName} {ExtraUser.LastName}");
+        }
+        //you have no baggage / you have baggage one liners
+        if (HasBaggage)
+            Console.WriteLine("You have baggage");
+        if (HasVIP)
+            Console.WriteLine("You have VIP");
+        if (HasEntertainment)
+            Console.WriteLine("You have entertainment");
+        if (HasLounge)
+            Console.WriteLine("You have lounge");
+        if (HasInsurance)
+            Console.WriteLine("You have insurance");
 
+
+
+
+    }
     public static void MakeDatabaseTables()
     {
         // dit is een method om de tabellen aan te maken, zodat als we ooit iets veranderen aan de database, we niet de hele database opnieuw hoeven te maken vanaf niks.

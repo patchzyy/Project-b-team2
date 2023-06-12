@@ -16,7 +16,7 @@ public class Information
 
         } while (keyInfo.Key != ConsoleKey.Enter);
     }
-    
+
     public static void NextKey()
     {
         Console.WriteLine("Druk op enter om door te gaan");
@@ -58,7 +58,7 @@ public class Information
     {
         Console.Clear();
         Information.DisplayLogo();
-        #pragma warning restore format
+#pragma warning restore format
         Console.WriteLine(@"Rotterdam Airlines is gevestigd in Rotterdam South Airport in:
         Driemanssteeweg 107,
         3011 WN,
@@ -94,7 +94,8 @@ public class Information
         -----------------------------------------------------------------------------------------------------------------------");
     }
 
-    public static void DisplayLugageInfo(){
+    public static void DisplayLugageInfo()
+    {
         Console.WriteLine(@"
 Wat zijn de tarieven voor ruimbagage?
 -----------------------------------------------------------------------------------------------------------------------
@@ -106,8 +107,9 @@ De tarieven voor ruimbagage zijn:
         ");
     }
 
-    public static void DisplayMenuInfo(){
-    Console.WriteLine(@"
+    public static void DisplayMenuInfo()
+    {
+        Console.WriteLine(@"
 Menu aan boord
 -----------------------------------------------------------------------------------------------------------------------
 Welkom aan boord bij Rotterdam Airlines. Hieronder vindt u onze selectie van heerlijke gerechten en drankjes die u kunt bestellen.
@@ -137,13 +139,14 @@ Dranken:
 
 -----------------------------------------------------------------------------------------------------------------------
 Laat ons weten als u speciale dieetwensen heeft. Wij hopen dat u geniet van uw vlucht!"
-        );
+            );
 
         Console.WriteLine("Druk op enter om terug te gaan.");
         Console.ReadLine();
     }
 
-    public static void DisplayVipInfo(){
+    public static void DisplayVipInfo()
+    {
         Console.WriteLine(@"
 VIP services Rotterdam Airlines
 -----------------------------------------------------------------------------------------------------------------------
@@ -162,7 +165,8 @@ Upgrade naar VIP-services voor slechts €40 per persoon.
         ");
     }
 
-    public static void DisplayEntertainmentInfo(){
+    public static void DisplayEntertainmentInfo()
+    {
         Console.WriteLine(@"
 On-Flight Entertainment
 -----------------------------------------------------------------------------------------------------------------------
@@ -184,7 +188,8 @@ Breidt uit met de Entertainment bundel voor slechts €10 per persoon.
     }
 
 
-    public static void DisplayLoungeInfo(){
+    public static void DisplayLoungeInfo()
+    {
         Console.WriteLine(@"
 Lounge Acces
 -----------------------------------------------------------------------------------------------------------------------
@@ -203,7 +208,8 @@ Beschikbaar voor €35,00 PP
         ");
     }
 
-    public static void DiplayInsuranceInfo(){
+    public static void DiplayInsuranceInfo()
+    {
         Console.WriteLine(@"
 Vlieg Verzekering
 -----------------------------------------------------------------------------------------------------------------------
@@ -219,6 +225,6 @@ Kies voor onze Vluchtverzekering:
 Reis met mentale rust. Sluit vandaag nog uw Vluchtverzekering af!
 
 ----------------------------------------------------------------------------------------------------------------------- 
-        ");  
+        ");
     }
 }

@@ -115,6 +115,19 @@ public class Flight
         return flight;
 
     }
+
+    public static Flight GenerateArrivingFlight()
+    {
+        int duration = AdminTool.RandomDuration();
+        string date = AdminTool.RandomDate();
+        string time = AdminTool.RandomTime();
+        string origin = AdminTool.RandomCity();
+        string destination = "Rotterdam";
+        string aircraft = AdminTool.RandomAircraft();
+        string gate = AdminTool.RandomGate();
+        Flight flight = new Flight(duration, date, time, origin, destination, aircraft, gate);
+        return flight;
+    }
     public void ShowInformation()
     {
         Console.Clear();

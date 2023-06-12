@@ -194,7 +194,7 @@ class Menu
         }
         else if (selectedOption == "Informatie over boeking")
         {
-            Console.WriteLine("test");
+            booking.ShowInformation();
             Console.ReadKey();
         }
 

@@ -536,9 +536,9 @@ public static class AdminTool
     public static void GenerateArrivingFlights()
     {
         int amount = AskHowManyFlights();
+        Flights.GenerateArrivingFlightScedule(amount);
+
     }
-
-
 
     public static int AskHowManyFlights()
     {

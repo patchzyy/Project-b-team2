@@ -67,6 +67,32 @@ public static class Flights
         }
 
     }
+    public static void GenerateArrivingFlightScedule(int amount)
+    {
+        List<Flight> flightlist = new List<Flight>();
+
+        for (int i = 0; i < amount; i++)
+        {
+            Flight flight = Flight.GenerateArrivingFlight();
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
+            Thread.Sleep(30);
+            flightlist.Add(flight);
+        }
+
+        // ask the admin if they want to check the flights or just commit them to the database
+        ShowWithPages(flightlist);
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        string input = Console.ReadLine();
+        if (input == "y")
+        {
+            foreach (Flight flight in flightlist)
+            {
+                flight.AddToDatabase();
+            }
+        }
+    }
 
 
 
