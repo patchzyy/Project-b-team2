@@ -344,7 +344,8 @@ class Menu
         }
         else if (selectedOption == "Test vliegtuig selectie")
         {
-            var seat = DrawBoeing737UI.SelectBoeing737(new Boeing737(), 3);
+            // var seat = DrawBoeing737UI.SelectBoeing737(new Boeing737(), 3);
+            var seat = DrawBoeing787UI.SelectBoeing787(new Boeing787(), 3);
             Console.WriteLine("druk op enter om terug te gaan.");
             Console.ReadLine();
         }

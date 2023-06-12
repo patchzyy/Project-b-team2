@@ -463,7 +463,7 @@ public class DrawAirbus330UI
         Console.Write("|                                                            |");
         Console.Write("         Gebruik de pijltjestoetsen om door het vliegtuig te navigeren.\n");
         Console.Write("|                                                            |");
-        Console.Write("         Druk op ENTER om een stoel te (de)selecteren\n");
+        Console.Write("         Druk op ENTER om een stoel te (de)selecteren.\n");
         int rowNr = 1;
         bool rowHasSeats = true;
         while (rowHasSeats)
