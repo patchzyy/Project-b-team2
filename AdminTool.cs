@@ -69,6 +69,8 @@ public static class AdminTool
                     Console.CursorVisible = true;
                     Console.Clear();
                     return selectedIndex;
+                case ConsoleKey.Escape:
+                    return -1;
             }
         }
     }
@@ -128,7 +130,15 @@ public static class AdminTool
         {
             flights.Add(flight);
         }
-        Flight FlightToRemove = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om te verwijderen", flights)];
+        Flight FlightToRemove;
+        try
+        {
+            FlightToRemove = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om te verwijderen", flights)];
+        }
+        catch
+        {
+            return;
+        }
         FlightToRemove.RemoveFromDatabase();
     }
 
@@ -146,8 +156,16 @@ public static class AdminTool
         {
             flights.Add(flight);
         }
-        Flight selectedFlight = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om aan te passen", flights)];
-        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate", "Vlucht annuleren" };
+        Flight selectedFlight;
+        try
+        {
+            selectedFlight = flights[AskMultipleOptions<Flight>("Selecteer een vlucht om aan te passen", flights)];
+        }
+        catch
+        {
+            return;
+        }
+        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate", "Vlucht annuleren", "Terug" };
         string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
         Console.WriteLine("Voer de nieuwe waarde in");
         if (selectedOption == "Duur")
@@ -189,9 +207,12 @@ public static class AdminTool
         {
             CancelFlightSequence(selectedFlight);
         }
-
+        else if (selectedOption == "Terug")
+        {
+            ChangeFlight();
+        }
         Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
-        Thread.Sleep(3000);
+        Console.ReadKey();
     }
 
     public static int DurationSequence()
@@ -387,8 +408,17 @@ public static class AdminTool
         foreach (User user in GetAllUsers())
         {
             users.Add(user);
+        
         }
-        User UserToRemove = users[AskMultipleOptions<User>("Selecteer een gebruiker om te verwijderen", users)];
+        User UserToRemove;
+        try
+        {
+            UserToRemove = users[AskMultipleOptions<User>("Selecteer een gebruiker om te verwijderen", users)];
+        }
+        catch
+        {
+            return;
+        }
         string email = UserToRemove.Email;
 
         // ask the user if they are sure
@@ -418,9 +448,18 @@ public static class AdminTool
         foreach (User user in GetAllUsers())
         {
             users.Add(user);
+        
         }
-        User selectedUser = users[AskMultipleOptions<User>("Selecteer een vlucht om aan te passen", users)];
-        List<string> optionList = new List<string>() { "Voornaam", "Achternaam", "Email", "Wachtwoord", "Admin rechten" };
+        User selectedUser;
+        try
+        {
+            selectedUser = users[AskMultipleOptions<User>("Selecteer een gebruiker om aan te passen", users)];
+        }
+        catch
+        {
+            return;
+        }
+        List<string> optionList = new List<string>() { "Voornaam", "Achternaam", "Email", "Wachtwoord", "Admin rechten", "Terug" };
         string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
         Console.WriteLine("Voer de nieuwe waarde in");
         if (selectedOption == "Voornaam")
@@ -448,9 +487,13 @@ public static class AdminTool
             int? has_admin = HasAdminSequence(selectedUser.has_Admin);
             selectedUser.has_Admin = true ? has_admin == 1 : false;
         }
+        else if (selectedOption == "Terug")
+        {
+            ChangeUser();
+        }
         selectedUser.UpdateInDatabase();
-        Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
-        Thread.Sleep(3000);
+        Console.WriteLine("Gelukt! De aanpassingen aan de gebruiker zijn doorgevoerd.");
+        Console.ReadKey();
     }
 
     public static DateTime ConvertTimeDate(string date, string time)
