@@ -174,6 +174,19 @@ public class Booking
             Console.WriteLine($"Stoel van {firstName} {lastName}: {seat}");
         }
         //you have no baggage / you have baggage one liners
+<<<<<<< HEAD
+=======
+        if (HasBaggage)
+            Console.WriteLine("U heeft bagage");
+        if (HasVIP)
+            Console.WriteLine("U heeft VIP");
+        if (HasEntertainment)
+            Console.WriteLine("U heeft entertainment");
+        if (HasLounge)
+            Console.WriteLine("U heeft lounge-access");
+        if (HasInsurance)
+            Console.WriteLine("U bent verzekerd");
+>>>>>>> 63ba037c80d1660af908a68b30703527f4cd9ab6
 
 
 
@@ -213,7 +226,7 @@ public class Booking
         }
         else
         {
-            Console.WriteLine("Uw paspoortnummer is niet geldig!");
+            Console.WriteLine("Uw paspoortnummer is ongeldig!");
             Thread.Sleep(2000);
             AskForPassportNumber();
         }

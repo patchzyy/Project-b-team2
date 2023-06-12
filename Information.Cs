@@ -1,6 +1,19 @@
 public class Information
 {
 
+    public static void InputBar(){
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine();
+        Console.Write("Verkeerde input");
+        Console.ResetColor();
+        Console.Write("  |  ");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("Juiste input");
+        Console.ResetColor();
+        Console.Write("  |  ");
+        Console.Write("Druk op ESC om terug te gaan.\n\n");
+    }
+
     public static void BackKey()
     {
         Console.WriteLine("Druk op escape of backspace om terug te gaan");
@@ -51,6 +64,7 @@ public class Information
 
         Console.Write($" {Math.Round(percentage, 2)}% ");
         Console.WriteLine("\n");
+        Information.InputBar();
         Console.ForegroundColor = ConsoleColor.White;
     }
 
@@ -151,12 +165,12 @@ Laat ons weten als u speciale dieetwensen heeft. Wij hopen dat u geniet van uw v
 VIP services Rotterdam Airlines
 -----------------------------------------------------------------------------------------------------------------------
 Geen gedoe op de airport? 
-Onze Vip Services zorgen voor meer confort.
+Onze Vip Services zorgen voor meer comfort.
 
 VIP-services:
 - Snelle check-ins
-- Priority acces bij Beveiligingscontroles
-- In-Person Bagageafhandeling
+- Snellere toegang bij beveiligingscontroles
+- In-Person bagageafhandeling
 - Voorrang bij het instappen
 
 Upgrade naar VIP-services voor slechts €40 per persoon.
@@ -176,12 +190,12 @@ Bevat:
 - Film-Arrangement
     200 films met IMDB rating boven 6,5! 
 - Games
-    20 Games + een controller.
+    20 games + een controller.
 - Muziek
     On-Flight radio
 - 1 frisdrank naar keuze
 
-Breidt uit met de Entertainment bundel voor slechts €10 per persoon.
+Breidt uit met de entertainment bundel voor slechts €10 per persoon.
 
 ----------------------------------------------------------------------------------------------------------------------- 
         ");
@@ -193,7 +207,7 @@ Breidt uit met de Entertainment bundel voor slechts €10 per persoon.
         Console.WriteLine(@"
 Lounge Acces
 -----------------------------------------------------------------------------------------------------------------------
-Rust nodig? Dat kan.
+Rust nodig? Dat kan!
 
 Met Lounge-Acces kan je genieten van een afgesloten omgeving op het vliegveld
 (Deze lounge is alleen beschikbaar voor zij die betaald hebben)
@@ -211,18 +225,18 @@ Beschikbaar voor €35,00 PP
     public static void DiplayInsuranceInfo()
     {
         Console.WriteLine(@"
-Vlieg Verzekering
+Vlieg verzekering
 -----------------------------------------------------------------------------------------------------------------------
-Reizen met meer vertrouwen?
+Reizen met meer zekerheid?
 
-Kies voor onze Vluchtverzekering:
-    Dekking bij Reisannulering en Onderbreking
-    Medische Noodgevallen gedekt
-    Verlies of Vertraging van Bagage opgelost
-    Vluchtvertraging of Annulering vergoed
+Kies voor onze vluchtverzekering:
+    Dekking bij reisannulering en onderbreking
+    Medische noodgevallen gedekt
+    Verlies of vertraging van bagage opgelost
+    Vluchtvertraging of annulering vergoed
     24/7 Assistentie beschikbaar
 
-Reis met mentale rust. Sluit vandaag nog uw Vluchtverzekering af!
+Reis met mentale rust. Sluit vandaag nog uw vluchtverzekering af!
 
 ----------------------------------------------------------------------------------------------------------------------- 
         ");

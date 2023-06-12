@@ -56,9 +56,9 @@ public static class Flights
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
-        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
         string input = Console.ReadLine();
-        if (input == "y")
+        if (input == "ja")
         {
             foreach (Flight flight in flightlist)
             {
@@ -83,9 +83,9 @@ public static class Flights
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
-        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
         string input = Console.ReadLine();
-        if (input == "y")
+        if (input == "ja")
         {
             foreach (Flight flight in flightlist)
             {

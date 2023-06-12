@@ -117,16 +117,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Verkeerde input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Juiste input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Information.InputBar();
+                    Console.WriteLine("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(errortext);
                     Console.ResetColor();
@@ -136,16 +128,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Verkeerde input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Juiste input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Information.InputBar();
+                    Console.Write("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(errortext);
                     Console.ForegroundColor = ConsoleColor.White;
@@ -168,31 +152,31 @@ class Login
                 }
                 if (email.Contains("@."))
                 {
-                    errortext = ("Je email moet een domein bevatten.\n");
+                    errortext = ("Uw email moet een domein bevatten.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (!email.Contains("@"))
                 {
-                    errortext = ("Je email moet ten minste een '@'-teken bevatten.\n");
+                    errortext = ("Uw email moet ten minste een '@'-teken bevatten.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (!email.Contains("."))
                 {
-                    errortext = ("Je email moet ten minste een extension bevatten (.com, .nl).\n");
+                    errortext = ("Uw email moet ten minste een extension bevatten (.com, .nl).\n");
                     falseEmail = true;
                     continue;
                 }
                 if (email.Length < 8)
                 {
-                    errortext = ("Je email mag niet korter dan 8 tekens zijn.\n");
+                    errortext = ("Uw email mag niet korter dan 8 tekens zijn.\n");
                     falseEmail = true;
                     continue;
                 }
                 if (leftover.Length < 2)
                 {
-                    errortext = ("Je email moet een extension bevatten (.com, .nl).\n");
+                    errortext = ("Uw email moet een extension bevatten (.com, .nl).\n");
                     falseEmail = true;
                     continue;
                 }
@@ -327,7 +311,7 @@ class Login
         {
             Console.Clear();
             Information.DisplayLogo();
-            Console.WriteLine($"Logging succesvol, welkom {firstname}.\n");
+            Console.WriteLine($"Login succesvol, welkom {firstname}.\n");
             Console.Write("Druk op enter om door te gaan.\n");
             var key = Console.ReadKey();
             if (key.Key == ConsoleKey.Enter)
@@ -363,13 +347,15 @@ class Login
                 return null;
             }
 
-            if (c == '\r') { // user has pressed the enter key
+            if (c == '\r')
+            { // user has pressed the enter key
                 Console.WriteLine(); // move to the next line
                 break;
             }
             if (keyInfo.Key == ConsoleKey.Backspace)
             {
-                if (password.Length > 0) {
+                if (password.Length > 0)
+                {
                     password = password.Remove(password.Length - 1);
                     Console.Write("\b \b"); // erase the character from the console
                 }
@@ -388,18 +374,24 @@ class Login
         return password;
     }
 
-    private static bool ContainsSpecialChar(string password) {
-        foreach (char c in password) {
-            if (!Char.IsLetterOrDigit(c)) {
+    private static bool ContainsSpecialChar(string password)
+    {
+        foreach (char c in password)
+        {
+            if (!Char.IsLetterOrDigit(c))
+            {
                 return true;
             }
         }
         return false;
     }
 
-        private static bool ContainsDigit(string password) {
-        foreach (char c in password) {
-            if (Char.IsDigit(c)) {
+    private static bool ContainsDigit(string password)
+    {
+        foreach (char c in password)
+        {
+            if (Char.IsDigit(c))
+            {
                 return true;
             }
         }

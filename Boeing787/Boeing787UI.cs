@@ -1,5 +1,6 @@
 public class DrawBoeing787UI
 {
+    private static bool _reversedSeatFirst = true;
     public static void DrawBoeing787(Boeing787 plane, Seat currentSeat)
     {
         string[] NederlandsBool = new string[2] { "Nee", "Ja" };
