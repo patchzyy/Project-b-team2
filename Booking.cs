@@ -174,8 +174,6 @@ public class Booking
             Console.WriteLine($"Stoel van {firstName} {lastName}: {seat}");
         }
         //you have no baggage / you have baggage one liners
-<<<<<<< HEAD
-=======
         if (HasBaggage)
             Console.WriteLine("U heeft bagage");
         if (HasVIP)
@@ -186,10 +184,6 @@ public class Booking
             Console.WriteLine("U heeft lounge-access");
         if (HasInsurance)
             Console.WriteLine("U bent verzekerd");
->>>>>>> 63ba037c80d1660af908a68b30703527f4cd9ab6
-
-
-
 
     }
     public static void MakeDatabaseTables()
