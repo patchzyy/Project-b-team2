@@ -1,5 +1,6 @@
 public class DrawAirbus330UI
 {
+    private static bool _reversedSeatFirst = true;
     public static List<Seat>? SelectAirbus330(Airbus330 plane, int amountToSelect)
     {
         int seatIndex = 0;
@@ -16,27 +17,46 @@ public class DrawAirbus330UI
             }
             if (key.Key == ConsoleKey.Enter)
             {
+                _reversedSeatFirst = true;
+                Console.Clear();
+                DrawAirbus330(plane, plane.Seats[seatIndex]);
                 if (plane.Seats[seatIndex].IsReserved)
                 {
                     SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
                     returnSeats.Remove(plane.Seats[seatIndex]);
                     plane.Seats[seatIndex].IsReserved = false;
+                    _reversedSeatFirst = true;
+                    Console.Clear();
+                    DrawAirbus330(plane, plane.Seats[seatIndex]);
                     continue;
                 }
 
                 if (SeatsChosen.Count == amountToSelect)
                 {
+                    // Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
+                    // Console.Write("Druk op enter om door te gaan.\n");
+                    // while (true)
+                    // {
+                    //     key = Console.ReadKey();
+                    //     if (key.Key == ConsoleKey.Enter)
+                    //     {
+                    //         break;
+                    //     }
+                    // }
+                    // continue;
+                    _reversedSeatFirst = true;
+                    Console.Clear();
+                    DrawAirbus330(plane, plane.Seats[seatIndex]);
                     Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
-                    Console.Write("Druk op enter om door te gaan.\n");
-                    while (true)
+                    Console.WriteLine("\nWil je doorgaan met het boeken?");
+                    if (ChooseTheSeats())
                     {
-                        key = Console.ReadKey();
-                        if (key.Key == ConsoleKey.Enter)
-                        {
-                            break;
-                        }
+                        break;
                     }
-                    continue;
+                    else
+                    {
+                        continue;
+                    }
                 }
                 if (!plane.Seats[seatIndex].IsReserved)
                 {
@@ -59,6 +79,7 @@ public class DrawAirbus330UI
             }
             if (key.Key == ConsoleKey.RightArrow)
             {
+                _reversedSeatFirst = false;
                 if (seatIndex != 344)
                 {
                     seatIndex++;
@@ -67,6 +88,7 @@ public class DrawAirbus330UI
             }
             if (key.Key == ConsoleKey.LeftArrow)
             {
+                _reversedSeatFirst = false;
                 if (seatIndex != 0)
                 {
                     seatIndex--;
@@ -76,6 +98,9 @@ public class DrawAirbus330UI
 
             if (key.Key == ConsoleKey.DownArrow)
             {
+                _reversedSeatFirst = false;
+                Console.Clear();
+                DrawAirbus330(plane, plane.Seats[seatIndex]);
                 if (seatIndex < 6)
                 {
                     seatIndex += 6;
@@ -225,6 +250,9 @@ public class DrawAirbus330UI
             }
             if (key.Key == ConsoleKey.UpArrow)
             {
+                _reversedSeatFirst = false;
+                Console.Clear();
+                DrawAirbus330(plane, plane.Seats[seatIndex]);
                 if (seatIndex < 6)
                 {
                     continue;
@@ -435,7 +463,7 @@ public class DrawAirbus330UI
         Console.Write("|                                                            |");
         Console.Write("         Gebruik de pijltjestoetsen om door het vliegtuig te navigeren.\n");
         Console.Write("|                                                            |");
-        Console.Write("         Druk op ENTER om een stoel te (de)selecteren\n");
+        Console.Write("         Druk op ENTER om een stoel te (de)selecteren.\n");
         int rowNr = 1;
         bool rowHasSeats = true;
         while (rowHasSeats)
@@ -558,13 +586,27 @@ public class DrawAirbus330UI
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                     }
-                    if (seat.IsReserved)
+                    if (!DrawAirbus330UI._reversedSeatFirst)
                     {
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        if (seat.IsReserved)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
+                        if (seat == currentSeat)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        }
                     }
-                    if (seat == currentSeat)
+                    if (DrawAirbus330UI._reversedSeatFirst)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        if (seat == currentSeat)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        }
+                        if (seat.IsReserved)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
                     }
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
@@ -594,8 +636,26 @@ public class DrawAirbus330UI
                 Console.Write("     ");
             }
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("|" + $"  {rowNr}");
-
+            if (rowNr == 20)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   Huidige stoel: " + currentSeat.SeatId);
+            }
+            if (rowNr == 21)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   Prijs: " + currentSeat.SeatPrice());
+            }
+            if (rowNr == 22)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   " + (currentSeat.IsClubClass ? "ClubClass" : currentSeat.ExtraBeenRuimte ? "Extra Beenruimte" : ""));
+            }
+            if (rowNr == 23)
+            {
+                Console.WriteLine("|" + $"  {rowNr}");
+            }
+            if (rowNr != 20 && rowNr != 21 && rowNr != 22 && rowNr != 23)
+            {
+                Console.WriteLine("|" + $"  {rowNr}");
+            }
             rowNr++;
             if (rowNr == 51)
             {

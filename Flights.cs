@@ -56,9 +56,9 @@ public static class Flights
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
-        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
         string input = Console.ReadLine();
-        if (input == "y")
+        if (input == "ja")
         {
             foreach (Flight flight in flightlist)
             {
@@ -83,9 +83,9 @@ public static class Flights
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
-        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (y/n)");
+        Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
         string input = Console.ReadLine();
-        if (input == "y")
+        if (input == "ja")
         {
             foreach (Flight flight in flightlist)
             {
@@ -137,7 +137,7 @@ public static class Flights
 
     public static void DisplayDepartingFlights()
     {
-        List<Flight> departingFlights = GetDepartingFlights().Where(flight => (AdminTool.ConvertTimeDate(flight.Date, flight.Time) <= DateTime.Now)).ToList();
+        List<Flight> departingFlights = GetDepartingFlights().Where(flight => flight.Date == DateTime.Now.ToString("dd-MM-yyyy").Split()[0]).ToList();
         Console.WriteLine("Vertrek\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Bestemming", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");
@@ -173,7 +173,7 @@ public static class Flights
 
     public static void DisplayArrivingFlights()
     {
-        List<Flight> arrivingFlights = GetArrivingFlights().Where(flight => (AdminTool.ConvertTimeDate(flight.Date, flight.Time) <= DateTime.Now)).ToList();
+        List<Flight> arrivingFlights = GetArrivingFlights().Where(flight => flight.Date == DateTime.Now.ToString("dd-MM-yyyy").Split()[0]).ToList();
         Console.WriteLine("Aankomst\n");
         Console.WriteLine("{0,-10} {1,-15} {2,-15} {3,-15} {4}", "Tijd", "Afkomst", "Toestel", "Status", "Gate");
         Console.WriteLine("-------------------------------------------------------------");

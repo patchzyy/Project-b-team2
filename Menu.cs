@@ -164,12 +164,12 @@ class Menu
             {
                 Console.Clear();
                 Information.DisplayLogo();
-                Console.WriteLine("Je hebt nog geen boekingen gemaakt.");
+                Console.WriteLine("U heeft nog geen boekingen gemaakt.");
                 Console.ReadKey();
             }
             else
             {
-                booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar je de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+                booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar U de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
                 List<Booking> bookings = booking.GetExtraBookings();
                 if (booking.Flight.Time == "--:--")
                 {
@@ -185,7 +185,7 @@ class Menu
         else if (selectedOption == "Vlucht annuleren")
         {
             booking.RemoveFromDatabase();
-            Console.WriteLine("Vlucht is geannuleerd");
+            Console.WriteLine("De vlucht is geannuleerd");
             Console.ReadKey();
         }
         else if (selectedOption == "Informatie over vlucht")
@@ -233,7 +233,7 @@ class Menu
         {
             if (!_currentUser.can_Book)
             {
-                AddMenu(new[] { "Helaas ben je te jong om te boeken! Je kunt wel de vluchten bekijken.", "Terug" });
+                AddMenu(new[] { "Helaas ben je te jong om te boeken! Je moet minstens 18 jaar oud zijn. Je kunt wel de vluchten bekijken.", "Terug" });
             }
             else
             {
@@ -345,7 +345,8 @@ class Menu
         }
         else if (selectedOption == "Test vliegtuig selectie")
         {
-            string seat = DrawBoeing737UI.SelectBoeing737(new Boeing737());
+            // var seat = DrawBoeing737UI.SelectBoeing737(new Boeing737(), 3);
+            var seat = DrawBoeing787UI.SelectBoeing787(new Boeing787(), 3);
             Console.WriteLine("druk op enter om terug te gaan.");
             Console.ReadLine();
         }

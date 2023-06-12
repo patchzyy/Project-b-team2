@@ -69,7 +69,7 @@ public static class Bookings
             }
         }
         // ask for the amount of users
-        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt u boeken?\n U kunt voor maximaal 10 mensen boeken.");
+        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt U boeken?\n U kunt voor maximaal 10 mensen boeken.");
 
         if (SelectedFlight.Aircraft == "Boeing 737")
         {
@@ -203,10 +203,10 @@ public static class Bookings
         while (reader.Read())
         {
             int flight_databaseid = reader.GetInt32(2);
-            int seatid = reader.GetInt32(3);
+            string seatid = reader.GetString(3);
             Flight flight = Flight.GetFlight_Database_id(flight_databaseid);
             // TIJDELIJK, TODO
-            Seat seat = new Seat(seatid.ToString(), false, false, false, false, false, false, false);
+            Seat seat = new Seat(seatid, false, false, false, false, false, false, false);
             Booking booking = new Booking(user, flight, seat);
             bookings.Add(booking);
         }

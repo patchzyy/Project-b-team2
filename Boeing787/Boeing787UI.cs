@@ -1,5 +1,6 @@
 public class DrawBoeing787UI
 {
+    private static bool _reversedSeatFirst = true;
     public static void DrawBoeing787(Boeing787 plane, Seat currentSeat)
     {
         string[] NederlandsBool = new string[2] { "Nee", "Ja" };
@@ -63,7 +64,9 @@ public class DrawBoeing787UI
                 if (seat.SeatId.StartsWith(rowNr.ToString() + "-"))
                 {
                     if (seat.SeatId.Length == 3)
+                    {
                         Console.Write(" ");
+                    }
                     if (rowNr > 16 && rowNr < 37)
                     {
                         if (seat.SeatId.EndsWith("D"))
@@ -94,18 +97,38 @@ public class DrawBoeing787UI
                             Console.Write("     ");
                         }
                     }
-                    if (seat.IsReserved)
-                        Console.BackgroundColor = ConsoleColor.Red;
-
                     if (seat.IsBusinessClass)
+                    {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    }
 
                     if (seat.IsEconomyPlus)
+                    {
                         Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    }
 
-                    if (seat == currentSeat)
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-
+                    if (!DrawBoeing787UI._reversedSeatFirst)
+                    {
+                        if (seat.IsReserved)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
+                        if (seat == currentSeat)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        }
+                    }
+                    if (DrawBoeing787UI._reversedSeatFirst)
+                    {
+                        if (seat == currentSeat)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        }
+                        if (seat.IsReserved)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
+                    }
                     Console.Write(seat.SeatId);
                     Console.ResetColor();
                     Console.Write("  ");
@@ -159,28 +182,82 @@ public class DrawBoeing787UI
         }
     }
 
-    public static string? SelectBoeing787(Boeing787 plane)
+    public static List<Seat>? SelectBoeing787(Boeing787 plane, int amountToSelect)
     {
-        var hasSelection = false;
-        var seatIndex = 0;
-        while (!hasSelection)
+        int seatIndex = 0;
+        List<string> SeatsChosen = new();
+        List<Seat> returnSeats = new();
+        while (true)
         {
             Console.Clear();
             DrawBoeing787(plane, plane.Seats[seatIndex]);
             var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+            {
+                return returnSeats;
+            }
             if (key.Key == ConsoleKey.Enter)
             {
+                _reversedSeatFirst = true;
+                Console.Clear();
+                DrawBoeing787(plane, plane.Seats[seatIndex]);
+                if (plane.Seats[seatIndex].IsReserved)
+                {
+                    SeatsChosen.Remove(plane.Seats[seatIndex].SeatId);
+                    returnSeats.Remove(plane.Seats[seatIndex]);
+                    plane.Seats[seatIndex].IsReserved = false;
+                    _reversedSeatFirst = true;
+                    Console.Clear();
+                    DrawBoeing787(plane, plane.Seats[seatIndex]);
+                    continue;
+                }
+
+                if (SeatsChosen.Count == amountToSelect)
+                {
+                    _reversedSeatFirst = true;
+                    Console.Clear();
+                    DrawBoeing787(plane, plane.Seats[seatIndex]);
+                    Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
+                    Console.WriteLine("\nWil je doorgaan met het boeken?");
+                    if (ChooseTheSeats())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
                 if (!plane.Seats[seatIndex].IsReserved)
-                    hasSelection = true;
+                {
+                    SeatsChosen.Add(plane.Seats[seatIndex].SeatId);
+                    returnSeats.Add(plane.Seats[seatIndex]);
+                    plane.Seats[seatIndex].IsReserved = true;
+                    Console.Clear();
+                    DrawBoeing787(plane, plane.Seats[seatIndex]);
+                }
             }
             if (key.Key == ConsoleKey.Escape)
+            {
                 return null;
+            }
             if ((key.Key == ConsoleKey.LeftArrow) && (seatIndex > 0))
+            {
+                _reversedSeatFirst = false;
                 seatIndex--;
+                continue;
+            }
             if ((key.Key == ConsoleKey.RightArrow) && (seatIndex < (plane.Seats.Count - 1)))
+            {
+                _reversedSeatFirst = false;
                 seatIndex++;
+                continue;
+            }
             if ((key.Key == ConsoleKey.UpArrow) && (seatIndex > 5))
             {
+                _reversedSeatFirst = false;
+                Console.Clear();
+                DrawBoeing787(plane, plane.Seats[seatIndex]);
                 //row 38
                 if (seatIndex == plane.Seats.Count - 1 || seatIndex == plane.Seats.Count - 2 || seatIndex == plane.Seats.Count - 3)
                 {
@@ -221,6 +298,9 @@ public class DrawBoeing787UI
             }
             if ((key.Key == ConsoleKey.DownArrow) && (seatIndex < (plane.Seats.Count - 3)))
             {
+                _reversedSeatFirst = false;
+                Console.Clear();
+                DrawBoeing787(plane, plane.Seats[seatIndex]);
                 //row 1-5
                 if (seatIndex >= 0 && seatIndex <= 29)
                 {
@@ -284,13 +364,115 @@ public class DrawBoeing787UI
                     seatIndex += 3;
                 }
             }
+
+            if (SeatsChosen.Count == amountToSelect)
+            {
+                Console.Clear();
+                DrawBoeing787(plane, plane.Seats[seatIndex]);
+                Console.Write("\nJe gekozen stoelen zijn: ");
+                foreach (string seat in SeatsChosen)
+                {
+                    bool isLastSeat = seat.Equals(SeatsChosen.Last());
+                    Console.Write($"{seat}");
+
+                    if (!isLastSeat)
+                    {
+                        Console.Write(", ");
+                    }
+                }
+                Console.Write(".");
+                Console.WriteLine("\nWil je doorgaan met het boeken?");
+                if (ChooseTheSeats())
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else if (SeatsChosen.Count > amountToSelect)
+            {
+                MovingOn(amountToSelect);
+                continue;
+            }
         }
-        if (hasSelection)
+        foreach (Seat seat in returnSeats)
         {
-            Console.WriteLine("Selected seat: " + plane.Seats[seatIndex].SeatId);
-            return plane.Seats[seatIndex].SeatId;
+            Seat addSeat = new Seat(seat.SeatId, seat.ExtraBeenRuimte, seat.IsClubClass, seat.IsDoubleSeat, seat.IsFrontSeat, seat.IsBusinessClass, seat.IsEconomyPlus, seat.IsEconomy);
+            returnSeats.Append(addSeat);
         }
-        else
-            return null;
+        return returnSeats;
+        
+    }
+
+    private static void MovingOn(int amountToSelect)
+    {
+        Console.WriteLine($"Selecteer a.u.b. alleen {amountToSelect} stoelen.");
+        Console.WriteLine("Druk op enter om door te gaan met stoelen selecteren.");
+        var keyForMenu = Console.ReadKey(true);
+        while (true)
+        {
+            if (keyForMenu.Key == ConsoleKey.Enter)
+            {
+                break;
+            }
+        }
+    }
+    
+    private static bool ChooseTheSeats()
+    {
+        List<string> choices = new() { "Ja", "Nee" };
+        int selectedOption = 0;
+        while (true)
+        {
+            // Console.WriteLine();
+            var cursor = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, cursor.Top);
+            if (selectedOption == 0)
+            {
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write("Ja");
+                Console.ResetColor();
+                Console.Write("   ");
+                Console.Write("Nee");
+            }
+            else if (selectedOption == 1)
+            {
+                Console.Write("Ja");
+                Console.Write("   ");
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write("Nee");
+                Console.ResetColor();
+            }
+            var key = Console.ReadKey(true);
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (selectedOption > 0)
+                    {
+                        selectedOption--;
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (selectedOption < choices.Count - 1)
+                    {
+                        selectedOption++;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (selectedOption == 0)
+                    {
+                        Console.WriteLine("\n\n");
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+
+        }
     }
 }
