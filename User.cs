@@ -336,7 +336,7 @@ public class User
                 continue;
             }
 
-            return firstname;
+            return char.ToUpper(firstname[0]) + firstname.Substring(1);
         }
     }
 
@@ -407,7 +407,7 @@ public class User
                 continue;
             }
 
-            return lastname;
+            return char.ToUpper(lastname[0]) + lastname.Substring(1);
         }
 
     }
