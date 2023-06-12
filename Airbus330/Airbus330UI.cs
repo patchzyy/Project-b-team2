@@ -636,8 +636,26 @@ public class DrawAirbus330UI
                 Console.Write("     ");
             }
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("|" + $"  {rowNr}");
-
+            if (rowNr == 20)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   Huidige stoel: " + currentSeat.SeatId);
+            }
+            if (rowNr == 21)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   Prijs: " + currentSeat.SeatPrice());
+            }
+            if (rowNr == 22)
+            {
+                Console.WriteLine("|" + $"  {rowNr}" + "                   " + (currentSeat.IsClubClass ? "ClubClass" : currentSeat.ExtraBeenRuimte ? "Extra Beenruimte" : ""));
+            }
+            if (rowNr == 23)
+            {
+                Console.WriteLine("|" + $"  {rowNr}");
+            }
+            if (rowNr != 20 && rowNr != 21 && rowNr != 22 && rowNr != 23)
+            {
+                Console.WriteLine("|" + $"  {rowNr}");
+            }
             rowNr++;
             if (rowNr == 51)
             {
