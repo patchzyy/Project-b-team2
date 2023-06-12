@@ -117,16 +117,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Verkeerde input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Juiste input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Information.InputBar();
+                    Console.WriteLine("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(errortext);
                     Console.ResetColor();
@@ -136,16 +128,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Verkeerde input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Juiste input");
-                    Console.ResetColor();
-                    Console.Write("  |  ");
-                    Console.Write("Druk op ESC om terug te gaan.\n\n\n");
+                    Information.InputBar();
+                    Console.Write("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(errortext);
                     Console.ForegroundColor = ConsoleColor.White;

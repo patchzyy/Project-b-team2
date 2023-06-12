@@ -1,6 +1,19 @@
 public class Information
 {
 
+    public static void InputBar(){
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine();
+        Console.Write("Verkeerde input");
+        Console.ResetColor();
+        Console.Write("  |  ");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("Juiste input");
+        Console.ResetColor();
+        Console.Write("  |  ");
+        Console.Write("Druk op ESC om terug te gaan.\n\n");
+    }
+
     public static void BackKey()
     {
         Console.WriteLine("Druk op escape of backspace om terug te gaan");
@@ -51,6 +64,7 @@ public class Information
 
         Console.Write($" {Math.Round(percentage, 2)}% ");
         Console.WriteLine("\n");
+        Information.InputBar();
         Console.ForegroundColor = ConsoleColor.White;
     }
 
