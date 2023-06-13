@@ -16,9 +16,13 @@ public static class AdminTool
             Console.WriteLine($"{prompt}: ");
 
             string input = Console.ReadLine();
+            // if (Console.ReadKey().Key == ConsoleKey.Escape)
+            // {
+
+            // }
             if (string.IsNullOrEmpty(input) || input.Length < minLength)
             {
-                Console.WriteLine("Ongeldig formaat.");
+                Console.WriteLine("Ongeldig formaat. Klik op een toets om het opnieuw te proberen.");
                 Console.ReadKey();
                 continue;
             }
@@ -598,7 +602,11 @@ public static class AdminTool
                 duration = baseDuration + 30;
                 break;
             case "Dubai":
+                duration = baseDuration + 240;
+                break;
             case "New York":
+                duration = baseDuration + 240;
+                break;
             case "Tokyo":
                 duration = baseDuration + 360;
                 break;
@@ -626,7 +634,7 @@ public static class AdminTool
             maxDays = 28;
 
         int day = random.Next(1, maxDays);
-        int year = random.Next(2023);
+        int year = 2023;
 
         string formattedMonth = month.ToString("00");
         string formattedDay = day.ToString("00");

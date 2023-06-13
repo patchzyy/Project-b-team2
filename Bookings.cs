@@ -34,7 +34,6 @@ public static class Bookings
             }
             CorrectFlights.Add(flight);
 
-
         }
         if (CorrectFlights.Count == 0)
         {
@@ -66,9 +65,13 @@ public static class Bookings
         List<Booking> bookings = Bookings.GetBookings(CurrentUser);
         foreach (Booking booking in bookings)
         {
-            if (booking.Flight == SelectedFlight)
+            if (booking.Flight.GenerateFlightID() == SelectedFlight.GenerateFlightID())
             {
-                Console.WriteLine("U heeft deze vlucht al geboekt.");
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("U heeft deze vlucht al geboekt. Klik op een toets om terug te gaan.");
+                Console.ResetColor();
                 Console.ReadKey();
                 return;
             }
@@ -165,6 +168,8 @@ public static class Bookings
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine($"De totale prijs is: {totalprice}");
+        Console.WriteLine("Druk op een knop om verder te gaan.");
+        Console.ReadKey();
         List<string> options = new List<string>() { "Ja", "Nee" };
         string choice = options[AdminTool.AskMultipleOptions<string>("Wilt u verder gaan met de betaling?", options)];
         if (choice == "Nee")
@@ -179,8 +184,12 @@ public static class Bookings
             Console.ReadLine();
             return;
         }
+
         List<string> paymentoptions = new List<string>() { "iDeal", "Creditcard" };
         string paymentchoice = paymentoptions[AdminTool.AskMultipleOptions<string>("Kies een betaalmethode.", paymentoptions)];
+        // fake loading bar
+        Console.Clear();
+        Information.DisplayLogo();
         Console.WriteLine("Betaling gelukt.");
         Console.WriteLine("Druk op enter om door te gaan.");
         Console.ReadLine();
