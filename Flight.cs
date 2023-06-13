@@ -54,6 +54,58 @@ public class Flight
         connection.Close();
     }
 
+
+    public int GetDatabaseID()
+    {
+        string query = $"SELECT id FROM Flights WHERE duration = '{Duration}' AND date = '{Date}' AND time = '{Time}' AND origin = '{Origin}' AND destination = '{Destination}' AND aircraft = '{Aircraft}' AND gate = '{Gate}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        int id = 0;
+        while (reader.Read())
+        {
+            id = reader.GetInt32(0);
+        }
+        connection.Close();
+        return id;
+    }
+    public List<Seat> GetReservedSeats()
+    {
+        string query = $"SELECT * FROM bookings WHERE flight = '{GetDatabaseID()}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+        List<Seat> seats = new();
+        List<int> bookings = new();
+        while (reader.Read())
+        {
+            string seat_id = reader.GetString(3);
+            Seat seat = new Seat(seat_id, true, false, true, true, true, true, true);
+            seats.Add(seat);
+            int booking = reader.GetInt32(0);
+            bookings.Add(booking);
+        }
+        connection.Close();
+        foreach (int booking in bookings)
+        {
+            query = $"SELECT * FROM ExtraUsers WHERE BookingID = '{booking}'";
+            connection.Open();
+            DatabaseConnection = new(query, connection);
+            reader = DatabaseConnection.ExecuteReader();
+            while (reader.Read())
+            {
+                string seat_id = reader.GetString(4);
+                Seat seat = new Seat(seat_id, true, false, true, true, true, true, true);
+                seats.Add(seat);
+            }
+            connection.Close();
+        }
+        return seats;
+
+    }
+
     public override string ToString()
     {
         string flightID = GenerateFlightID();

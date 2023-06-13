@@ -35,6 +35,7 @@ public class DrawBoeing787UI
         Console.Write("                  Druk op ENTER om een stoel te (de)selecteren\n");
         int rowNr = 1;
         bool rowHasSeats = true;
+        List<Seat> reservedSeats = flight.GetReservedSeats();
         while (rowHasSeats)
         {
             if (rowNr == 4)
@@ -61,6 +62,18 @@ public class DrawBoeing787UI
             }
             foreach (var seat in plane.Seats)
             {
+                foreach (var reservedSeat in reservedSeats)
+                {
+                    if (seat.SeatId == reservedSeat.SeatId)
+                    {
+                        seat.IsReserved = true;
+                        break;
+                    }
+                    else
+                    {
+                        seat.IsReserved = false;
+                    }
+                }
                 if (seat.SeatId.StartsWith(rowNr.ToString() + "-"))
                 {
                     if (seat.SeatId.Length == 3)

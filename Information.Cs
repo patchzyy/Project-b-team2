@@ -1,7 +1,8 @@
 public class Information
 {
 
-    public static void InputBar(){
+    public static void InputBar()
+    {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine();
         Console.Write("Verkeerde input");

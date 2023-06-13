@@ -103,7 +103,7 @@ public class User
     {
         Console.Clear();
         Information.DisplayLogo();
-        if(!usedinbook) Information.Progressbar(7, 8);
+        if (!usedinbook) Information.Progressbar(7, 8);
         else Information.Progressbar(step, maxstep);
 
 
@@ -203,9 +203,9 @@ public class User
 
     public static DateOnly DateOfBirthSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
-        Information.DisplayLogo();
         Console.Clear();
-        if(!usedinbook) Information.Progressbar(5, 8);
+        Information.DisplayLogo();
+        if (!usedinbook) Information.Progressbar(5, 8);
         else Information.Progressbar(step, maxstep);
 
         Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
@@ -265,7 +265,7 @@ public class User
             command.Parameters.AddWithValue("@can_book", this.can_Book ? 1 : 0);
             command.Parameters.AddWithValue("@passport_number", this.Passport_Number);
             command.Parameters.AddWithValue("@origin", this.Origin);
-            
+
             command.ExecuteNonQuery();
         }
 
@@ -303,7 +303,7 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
-            if(!usedinbook)  Information.Progressbar(0, 8);
+            if (!usedinbook) Information.Progressbar(0, 8);
             else Information.Progressbar(step, maxstep);
 
             Console.Write("\nVul uw voornaam in: ");
@@ -361,7 +361,7 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
-            if(!usedinbook)  Information.Progressbar(1, 8);
+            if (!usedinbook) Information.Progressbar(1, 8);
             else Information.Progressbar(step, maxstep);
 
             Console.Write("Vul je achternaam in: ");

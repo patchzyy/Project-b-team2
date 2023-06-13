@@ -50,7 +50,7 @@ public static class Flights
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
-            // Thread.Sleep(30);
+            Thread.Sleep(10);
             flightlist.Add(flight);
         }
 
@@ -90,7 +90,7 @@ public static class Flights
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine($"Vluchten genereren. Status: {i + 1}/{amount}");
-            // Thread.Sleep(30);
+            Thread.Sleep(10);
             flightlist.Add(flight);
         }
 
@@ -111,7 +111,7 @@ public static class Flights
 
     public static void ShowWithPages(List<Flight> flights)
     {
-        int pageSize = 10;
+        int pageSize = 7;
         int currentPage = 0;
 
         while (currentPage * pageSize < flights.Count)
@@ -128,6 +128,7 @@ public static class Flights
                 Console.WriteLine("Vlucht nummer: {0}", flights[i].GenerateFlightID());
                 Console.WriteLine("Plaats van bestemming: {0}", flights[i].Destination);
                 Console.WriteLine("Tijd van de vlucht: {0}", flights[i].Duration);
+                Console.WriteLine("Datum van de vlucht: {0}", flights[i].Date);
                 Console.WriteLine("---------------------------");
             }
 
