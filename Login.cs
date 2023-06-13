@@ -319,7 +319,7 @@ class Login
 
     private static string CheckPassword()
     {
-        // return Input.GetInput(IsValidPassword, 12);
+        // return Input.GetPasswordInput(IsValidPassword, 12);
         string? password = "";
         while (true)
         {

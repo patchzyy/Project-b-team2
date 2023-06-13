@@ -12,7 +12,7 @@ class Menu
 
     public Stack<string[]> _menuStack;
     public int _selectedOption;
-    private User _currentUser;
+    private User? _currentUser;
 
     Booking booking;
 
@@ -69,6 +69,10 @@ class Menu
                     {
                         _menuStack.Pop();
                         _selectedOption = 0;
+                        if (currentMenu.Contains("Uitloggen"))
+                        {
+                            _currentUser = null;
+                        }
                     }
                     break;
             }
@@ -110,6 +114,10 @@ class Menu
         Information.DisplayLogo();
         if (selectedOption == "Terug" || selectedOption == "Afmelden" || selectedOption == "Uitloggen")
         {
+            if (Console.ReadKey().Key == ConsoleKey.Escape)
+            {
+                _currentUser = null;
+            }
             if (selectedOption == "Uitloggen") _currentUser = null;
 
             _menuStack.Pop();
