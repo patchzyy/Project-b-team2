@@ -130,12 +130,6 @@ public class User
 
     public static string PassportSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        if(!usedinbook) Information.Progressbar(6, 8);
-        else Information.Progressbar(step, maxstep);
-
-
 
         bool validnumber = false;
         string pattern = @"^\d{9}$";
@@ -146,6 +140,8 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
+            if(!usedinbook) Information.Progressbar(6, 8);
+            else Information.Progressbar(step, maxstep);
             if (errortext != null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -168,10 +164,6 @@ public class User
 
     public static string PhonenumberSequence()
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        Information.Progressbar(4, 8);
-
 
         bool isValidInput = false;
         string phonenumber;
@@ -181,13 +173,14 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
+            Information.Progressbar(4, 8);
             if (errortext != null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(errortext + "\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            Console.Write("Wat is uw telefoon nummer? (06 12 34 56 78)\n+");
+            Console.Write("Wat is uw telefoon nummer? (06 12 34 56 78)\nUw telefoonnummer: ");
             phonenumber = Console.ReadLine();
             phonenumber = phonenumber.Replace(" ", "");
 

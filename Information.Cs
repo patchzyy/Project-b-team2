@@ -99,11 +99,11 @@ public class Information
     public static void DisplayControls()
     {
         Console.WriteLine(@"
-        Instructies om door het menu te navigeren.
-        -----------------------------------------------------------------------------------------------------------------------
-        Gebruik de pijltjestoetsen om naar boven en beneden te gaan, de pijl (->) geeft aan welke optie U geselecteerd heeft.
-        Druk op de ENTER toets om een optie te kiezen
-        -----------------------------------------------------------------------------------------------------------------------");
+Instructies om door het menu te navigeren.
+-----------------------------------------------------------------------------------------------------------------------
+Gebruik de pijltjestoetsen om naar boven en beneden te gaan, de pijl (->) geeft aan welke optie U geselecteerd heeft.
+Druk op de ENTER toets om een optie te kiezen
+-----------------------------------------------------------------------------------------------------------------------");
     }
 
     public static void DisplayLugageInfo()
