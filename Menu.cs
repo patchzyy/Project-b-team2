@@ -69,6 +69,10 @@ class Menu
                     {
                         _menuStack.Pop();
                         _selectedOption = 0;
+                        if (currentMenu.Contains("Uitloggen"))
+                        {
+                            _currentUser = null;
+                        }
                     }
                     break;
             }
