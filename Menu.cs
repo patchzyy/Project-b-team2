@@ -177,16 +177,19 @@ class Menu
                 }
                 else
                 {
-                    AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Vlucht annuleren", "Terug" });
+                    AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Boeking annuleren", "Terug" });
                 }
             }
         }
 
-        else if (selectedOption == "Vlucht annuleren")
+        else if (selectedOption == "Boeking annuleren")
         {
             booking.RemoveFromDatabase();
-            Console.WriteLine("De vlucht is geannuleerd");
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.WriteLine("De Boeking is geannuleerd, druk op een toets om terug te gaan naar het menu.");
             Console.ReadKey();
+            _menuStack.Pop();
         }
         else if (selectedOption == "Informatie over vlucht")
         {

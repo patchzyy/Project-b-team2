@@ -39,6 +39,7 @@ public static class AdminTool
         {
             Console.Clear();
             Information.DisplayLogo();
+            Information.DisplayControls();
             Console.WriteLine($"{prompt}: ");
             if (options.Count > 19)
             {
@@ -54,7 +55,7 @@ public static class AdminTool
             }
 
             Console.WriteLine();
-            Console.WriteLine("Gebruik de pijltjestoetsen om te navigeren. Druk op Enter om te selecteren. Druk op Escape om terug te gaan.");
+            // Console.WriteLine("Gebruik de pijltjestoetsen om te navigeren. Druk op Enter om te selecteren. Druk op Escape om terug te gaan.");
 
             if (currentPage > 1)
             {
@@ -178,7 +179,8 @@ public static class AdminTool
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine($"\n\nDe vlucht is toegevoegd!\n");
-        Thread.Sleep(5000);
+        Console.WriteLine("Druk op een toets om terug te gaan naar het menu.");
+        Console.ReadKey();
     }
     public static void RemoveFlight()
     {
@@ -270,6 +272,7 @@ public static class AdminTool
         else if (selectedOption == "Vlucht annuleren")
         {
             CancelFlightSequence(selectedFlight);
+            ChangeFlight();
         }
         else if (selectedOption == "Terug")
         {
@@ -286,7 +289,7 @@ public static class AdminTool
 
     public static string DateSequence()
     {
-        return AskStringInformation("De datum van de vlucht (DD-MM-YY format. Dag, Maand, Jaar)", 9, "1");
+        return AskStringInformation("De datum van de vlucht (DD-MM-YY format. Dag, Maand, Jaar)", 9, "31-12-2023");
     }
 
     public static string TimeSequence()
@@ -296,13 +299,14 @@ public static class AdminTool
         {
             if (!isValid)
             {
-                Console.WriteLine("Ongeldig formaat.");
+                Console.WriteLine("Ongeldig formaat. Klik op een toets om het opnieuw te proberen.");
                 Console.ReadKey(true);
                 isValid = true;
             }
             Console.Clear();
             Information.DisplayLogo();
-            Console.WriteLine("Format: 00:00");
+            Console.WriteLine("De tijd van de vlucht (HH:MM format. Uur, Minuten)");
+            Console.WriteLine("Voorbeeld: 12:30");
             Console.Write("Tijd: ");
 
             string time = Console.ReadLine();
@@ -359,12 +363,12 @@ public static class AdminTool
 
     public static string OriginSequence()
     {
-        return AskStringInformation("Vertrek", 3, "Rotterdam");
+        return AskStringInformation("Locatie van vertrek", 3, "Rotterdam");
     }
 
     public static string DestinationSequence()
     {
-        return AskStringInformation("Bestemming", 3, "Londen");
+        return AskStringInformation("Locatie van bestemming", 3, "Londen");
     }
 
     public static string AircraftSequence()
@@ -615,14 +619,14 @@ public static class AdminTool
     public static string RandomDate()
     {
         Random random = new Random();
-        int month = random.Next(1, 12);
+        int month = random.Next(6, 9);
         int maxDays = 30;
 
         if (month == 2)
             maxDays = 28;
 
         int day = random.Next(1, maxDays);
-        int year = random.Next(2023, 2024);
+        int year = random.Next(2023);
 
         string formattedMonth = month.ToString("00");
         string formattedDay = day.ToString("00");

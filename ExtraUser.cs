@@ -68,6 +68,17 @@ public class ExtraUser
         Extrauser.AddToDatabase();
         return Extrauser;
     }
+
+    public void RemoveFromDatabase()
+    {
+        string query = $"DELETE FROM ExtraUsers WHERE firstName = '{FirstName}' AND lastName = '{LastName}' AND age = '{Age}' AND masterUserEmail = '{MasterUser.Email}' AND seat = '{Seat.SeatId}'";
+        SqliteConnection connection = new("Data Source=airline_data.db");
+        connection.Open();
+        SqliteCommand DatabaseConnection = new(query, connection);
+        DatabaseConnection.ExecuteNonQuery();
+        connection.Close();
+
+    }
 }
 
 

@@ -47,7 +47,12 @@ public static class Bookings
             return;
         }
         // ask for the destination
-        string Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
+        string Destination;
+        try
+        {
+            Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
+        }
+        catch { return; }
         // get all the flights that have the destination AllFlights
         CorrectFlights.Clear();
         foreach (Flight flight in AllFlights)
@@ -133,11 +138,11 @@ public static class Bookings
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine("Controleer of alle informatie klopt.");
-        Console.WriteLine($"Vlucht van {SelectedFlight.Origin} naar {SelectedFlight.Destination} op {SelectedFlight.Date} om {SelectedFlight.Time}");
+        Console.WriteLine($"Vlucht van {SelectedFlight.Origin} \n naar {SelectedFlight.Destination} \n Datum: {SelectedFlight.Date} \n Tijd van vertrek {SelectedFlight.Time}");
         Console.WriteLine($"Stoel: {seats[0].SeatId}");
         Console.WriteLine($"Gebruiker: {CurrentUser.First_Name} {CurrentUser.Last_Name}");
-        Console.WriteLine("Druk op enter om door te gaan.");
-        Console.ReadLine();
+        Console.WriteLine("Druk op een knop om verder te gaan.");
+        Console.ReadKey();
         // nu vragen we het zelfde voor elke extra user
         seatnumber = 0;
         foreach (ExtraUser Extra in ExtraUsers)
@@ -146,11 +151,11 @@ public static class Bookings
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine("Controleer of alle informatie klopt van de extra gebruikers.");
-            Console.WriteLine($"Vlucht van {SelectedFlight.Origin} naar {SelectedFlight.Destination} op {SelectedFlight.Date} om {SelectedFlight.Time}");
+            Console.WriteLine($"Vlucht van {SelectedFlight.Origin} \n naar {SelectedFlight.Destination} \n Datum: {SelectedFlight.Date} \n Tijd van vertrek {SelectedFlight.Time}");
             Console.WriteLine($"Stoel: {seats[seatnumber].SeatId}");
             Console.WriteLine($"Gebruiker: {Extra.FirstName} {Extra.LastName}");
-            Console.WriteLine("Druk op enter om door te gaan.");
-            Console.ReadLine();
+            Console.WriteLine("Druk op een knop om verder te gaan.");
+            Console.ReadKey();
         }
         double totalprice = 0;
         foreach (Seat seat in seats)
@@ -165,21 +170,15 @@ public static class Bookings
         if (choice == "Nee")
         {
             Console.WriteLine("Betaling geannuleerd.");
-            // foreach (Booking booking in bookings)
-            // {
-            //     if (booking.Flight == SelectedFlight)
-            //     {
-
-            //         booking.RemoveFromDatabase();
-            //     }
-            // }
-            // foreach(ExtraUser extra in ExtraUsers)
-            // {
-            //     extra.Remove();
-            // }
-            // return;
+            currentbooking.RemoveFromDatabase();
+            foreach (ExtraUser Extra in ExtraUsers)
+            {
+                Extra.RemoveFromDatabase();
+            }
+            Console.WriteLine("Druk op enter om door te gaan.");
+            Console.ReadLine();
+            return;
         }
-        // ask for payment method
         List<string> paymentoptions = new List<string>() { "iDeal", "Creditcard" };
         string paymentchoice = paymentoptions[AdminTool.AskMultipleOptions<string>("Kies een betaalmethode.", paymentoptions)];
         Console.WriteLine("Betaling gelukt.");

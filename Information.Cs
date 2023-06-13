@@ -1,7 +1,8 @@
 public class Information
 {
 
-    public static void InputBar(){
+    public static void InputBar()
+    {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine();
         Console.Write("Verkeerde input");
@@ -103,6 +104,7 @@ public class Information
         -----------------------------------------------------------------------------------------------------------------------
         Gebruik de pijltjestoetsen om naar boven en beneden te gaan, de pijl (->) geeft aan welke optie U geselecteerd heeft.
         Druk op de ENTER toets om een optie te kiezen
+        Druk op de ESCAPE toets om terug te gaan naar het vorige menu
         -----------------------------------------------------------------------------------------------------------------------");
     }
 

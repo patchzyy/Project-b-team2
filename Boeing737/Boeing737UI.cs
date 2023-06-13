@@ -31,6 +31,7 @@ public class DrawBoeing737UI
         int rowNr = 1;
         bool rowHasSeats = true;
         // blijf in deze loop zolang er stoelen zijn met het huidige rowNr
+        List<Seat> reservedSeats = flight.GetReservedSeats();
         while (rowHasSeats)
         {
             if (rowNr == 13)
@@ -53,6 +54,19 @@ public class DrawBoeing737UI
 
             foreach (var seat in plane.Seats)
             {
+                foreach (var reservedSeat in reservedSeats)
+                {
+                    if (seat.SeatId == reservedSeat.SeatId)
+                    {
+                        seat.IsReserved = true;
+                        break;
+                    }
+                    else
+                    {
+                        seat.IsReserved = false;
+                    }
+                }
+
                 if (seat.SeatId.StartsWith(rowNr.ToString() + "-"))
                 {
                     // Als het seatId op rij < 10 is, dan extra spatie voor het stoelnummer
@@ -164,17 +178,6 @@ public class DrawBoeing737UI
 
                 if (SeatsChosen.Count == amountToSelect)
                 {
-                    // Console.WriteLine($"Je hebt al {amountToSelect} stoelen gekozen.");
-                    // Console.Write("Druk op enter om door te gaan.\n");
-                    // while (true)
-                    // {
-                    //     key = Console.ReadKey();
-                    //     if (key.Key == ConsoleKey.Enter)
-                    //     {
-                    //         break;
-                    //     }
-                    // }
-                    // continue;
                     _reversedSeatFirst = true;
                     Console.Clear();
                     DrawBoeing737(plane, plane.Seats[seatIndex], flight);
@@ -205,16 +208,12 @@ public class DrawBoeing737UI
             if ((key.Key == ConsoleKey.LeftArrow) && (seatIndex > 0))
             {
                 _reversedSeatFirst = false;
-                // Console.Clear();
-                // DrawBoeing737(plane, plane.Seats[seatIndex]);
                 seatIndex--;
                 continue;
             }
             if ((key.Key == ConsoleKey.RightArrow) && (seatIndex < (plane.Seats.Count - 1)))
             {
                 _reversedSeatFirst = false;
-                // Console.Clear();
-                // DrawBoeing737(plane, plane.Seats[seatIndex]);
                 seatIndex++;
                 continue;
             }
