@@ -5,7 +5,7 @@ public class Boeing737 : Plane
 
     }
 
-    protected override void PopulateSeats()
+    public override void PopulateSeats()
     {
         Seats.Add(new Seat("1-A", false, false, false, false, false, false, true));
         Seats.Add(new Seat("1-B", false, false, false, false, false, false, true));

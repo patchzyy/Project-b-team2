@@ -5,7 +5,7 @@ public class Airbus330 : Plane
 
     }
 
-    protected override void PopulateSeats()
+    public override void PopulateSeats()
     {
         for (int rowNr = 1; rowNr <= 2; rowNr++)
         {

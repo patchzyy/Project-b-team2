@@ -61,7 +61,7 @@ public static class Bookings
                 CorrectFlights.Add(flight);
             }
         }
-        Flight SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
+        Flight SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>($"Selecteer een vlucht naar {Destination}", CorrectFlights)];
         List<Booking> bookings = Bookings.GetBookings(CurrentUser);
         foreach (Booking booking in bookings)
         {
@@ -200,8 +200,6 @@ public static class Bookings
     //in een refactoring van de code is deze statis in de user class met user.Getbookings() is veel logisher haha
     public static List<Booking> GetBookings(User user)
     {
-        // this is how the database looks
-        // duration = '{Flight.Duration}'  date = '{Flight.Date}'  time = '{Flight.Time}'  origin = '{Flight.Origin}'  destination = '{Flight.Destination}' AND aircraft = '{Flight.Aircraft}' AND gate = '{Flight.Gate}'";
         string query = $"SELECT * FROM Bookings WHERE userEmail = '{user.Email}'";
         // we loop through every booking, make a new booking add it to a list and return that list
         List<Booking> bookings = new List<Booking>();
@@ -214,8 +212,8 @@ public static class Bookings
             int flight_databaseid = reader.GetInt32(2);
             string seatid = reader.GetString(3);
             Flight flight = Flight.GetFlight_Database_id(flight_databaseid);
-            // TIJDELIJK, TODO
-            Seat seat = new Seat(seatid, false, false, false, false, false, false, false);
+            String airplane = flight.Aircraft;
+            Seat seat = Seat.seat_from_string(seatid, flight.Aircraft);
             Booking booking = new Booking(user, flight, seat);
             bookings.Add(booking);
         }

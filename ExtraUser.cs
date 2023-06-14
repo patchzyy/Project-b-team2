@@ -59,11 +59,11 @@ public class ExtraUser
 
     public static ExtraUser AskForInformation(User user, Seat seat, Flight flight)
     {
-        string firstName = User.FirstNameSequence();
-        string lastName = User.LastNameSequence();
-        DateOnly date_of_birth = User.DateOfBirthSequence();
+        string firstName = User.FirstNameSequence(true, 0, 4);
+        string lastName = User.LastNameSequence(true, 1, 4);
+        DateOnly date_of_birth = User.DateOfBirthSequence(true, 2, 4);
         int age = DateOnly.FromDateTime(DateTime.Now).Year - date_of_birth.Year;
-        string passportnumber = User.PassportSequence();
+        string passportnumber = User.PassportSequence(true, 3, 4);
         ExtraUser Extrauser = new ExtraUser(firstName, lastName, age, user, seat, flight);
         Extrauser.AddToDatabase();
         return Extrauser;

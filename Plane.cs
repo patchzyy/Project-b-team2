@@ -9,5 +9,5 @@ public abstract class Plane
         PopulateSeats();
     }
 
-    protected abstract void PopulateSeats();
+    public abstract void PopulateSeats();
 }

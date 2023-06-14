@@ -5,7 +5,7 @@ public class Boeing787 : Plane
 
     }
 
-    protected override void PopulateSeats()
+    public override void PopulateSeats()
     {
         //row 1-6
         for (int rowNr = 1; rowNr <= 6; rowNr++)

@@ -4,6 +4,7 @@ class Program
 
     public static void Main()
     {
+        Console.ResetColor();
         Information.DisplayLogo();
         Thread.Sleep(2000);
         Menu menu = new Menu(new[] { "Login", "Registreren", "Meer Informatie", "Fast", "Fast Admin" });

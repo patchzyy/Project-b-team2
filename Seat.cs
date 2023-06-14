@@ -103,4 +103,45 @@ public class Seat
         double DurationPrice = 0.0;
         return DurationPrice + flight.Duration * PricePerMinute;
     }
+
+    public static Seat seat_from_string(string seat_id, string plane)
+    {
+        if (plane == "Airbus 330")
+        {
+            Airbus330 airplane = new Airbus330();
+            airplane.PopulateSeats();
+            foreach (Seat seat in airplane.Seats)
+            {
+                if (seat.SeatId == seat_id)
+                {
+                    return seat;
+                }
+            }
+        }
+        if (plane == "Boeing 737")
+        {
+            Boeing737 airplane = new Boeing737();
+            airplane.PopulateSeats();
+            foreach (Seat seat in airplane.Seats)
+            {
+                if (seat.SeatId == seat_id)
+                {
+                    return seat;
+                }
+            }
+        }
+        if (plane == "Boeing 787")
+        {
+            Boeing787 airplane = new Boeing787();
+            airplane.PopulateSeats();
+            foreach (Seat seat in airplane.Seats)
+            {
+                if (seat.SeatId == seat_id)
+                {
+                    return seat;
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -112,8 +112,13 @@ public class Flight
 
         string origin = $"Van: {Origin}";
         string destination = $"Naar: {Destination}";
+        string FormattedDuration;
 
-        return $"Vlucht ID: {flightID,-20} - Date: {Date,-25} - Time: {Time,-25}";
+        if (Duration < 60) FormattedDuration = $"{Duration}u";
+        if (Duration % 60 == 0) FormattedDuration = $"{Duration / 60}u";
+        else FormattedDuration = $"{Duration / 60}u en {Duration % 60}m";
+
+        return $"Datum: {Date,-15} - Tijd: {Time,-20} Vlucht duur: {FormattedDuration}";
     }
 
     public string GenerateFlightID()
