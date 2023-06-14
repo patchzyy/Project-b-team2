@@ -105,6 +105,7 @@ public static class Bookings
             Console.ReadKey();
             return;
         }
+        if (seats.Count == 0) return;
         // hier vragen we voor alle extra informatie die nodig is voor een booking
         // nu vragen we voor elke user om de extra informatie
         AmountOfBookings = AmountOfBookings - 1;

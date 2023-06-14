@@ -114,10 +114,10 @@ class Menu
         Information.DisplayLogo();
         if (selectedOption == "Terug" || selectedOption == "Afmelden" || selectedOption == "Uitloggen")
         {
-            if (Console.ReadKey().Key == ConsoleKey.Escape)
-            {
-                _currentUser = null;
-            }
+            // if (Console.ReadKey().Key == ConsoleKey.Escape)
+            // {
+            //     _currentUser = null;
+            // }
             if (selectedOption == "Uitloggen") _currentUser = null;
 
             _menuStack.Pop();
