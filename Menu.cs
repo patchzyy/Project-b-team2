@@ -192,12 +192,14 @@ class Menu
 
         else if (selectedOption == "Boeking annuleren")
         {
+            //weet je het zeker?
             booking.RemoveFromDatabase();
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine("De Boeking is geannuleerd, druk op een toets om terug te gaan naar het menu.");
             Console.ReadKey();
             _menuStack.Pop();
+
         }
         else if (selectedOption == "Informatie over vlucht")
         {
