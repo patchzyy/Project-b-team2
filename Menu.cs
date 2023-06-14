@@ -242,14 +242,14 @@ class Menu
         }
         else if (selectedOption == "Vlucht boeken")
         {
-            if (!_currentUser.can_Book)
-            {
-                AddMenu(new[] { "Helaas ben je te jong om te boeken! Je moet minstens 18 jaar oud zijn. Je kunt wel de vluchten bekijken.", "Terug" });
-            }
-            else
-            {
-                Bookings.BookingSequence(_currentUser);
-            }
+            // if (!_currentUser.can_Book)
+            // {
+            //     AddMenu(new[] { "Helaas ben je te jong om te boeken! Je moet minstens 18 jaar oud zijn. Je kunt wel de vluchten bekijken.", "Terug" });
+            // }
+            // else
+            // {
+            Bookings.BookingSequence(_currentUser);
+            // }
         }
 
         // Extra opties / features bijboeken.
