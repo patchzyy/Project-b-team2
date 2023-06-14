@@ -44,7 +44,7 @@ public static class Input
         return output;
     }
 
-    public static string? GetPasswordInput(ValidationDelegate validate, int cursorPosition)
+    public static string? GetPasswordInput(ValidationDelegate validate, int cursorPosition, string comparePassword = "", bool checkSamePassword = false)
     {
         string? output = "";
         while (true)
@@ -70,22 +70,37 @@ public static class Input
                     Console.Write("\b \b"); // erase the character from the console
                 }
             }
-            Console.SetCursorPosition(12, Console.CursorTop);
+            Console.SetCursorPosition(cursorPosition, Console.CursorTop);
             if (keyInfo.Key != ConsoleKey.Backspace)
             {
                 output += c;
             }
 
-            if (validate(output)) {
-                Console.ForegroundColor = ConsoleColor.Green;
-            } else {
-                Console.ForegroundColor = ConsoleColor.Red;
+            if (!checkSamePassword)
+            {
+                if (validate(output)) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                } else {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+            }
+            else
+            {
+                if (output == comparePassword)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
             }
 
             foreach (char letter in output)
             {
                 Console.Write("*");
             }
+            Console.ResetColor();
         }
         return output;
     }

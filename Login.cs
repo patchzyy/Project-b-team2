@@ -37,9 +37,9 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
                     Information.InputBar();
-                    Console.Write("Email: ");
+                    Console.WriteLine("Aanmelden");
+                    Console.WriteLine("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
                     Console.ResetColor();
@@ -50,8 +50,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
                     Information.InputBar();
+                    Console.WriteLine("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
                     Console.ResetColor();

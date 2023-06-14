@@ -549,9 +549,9 @@ public class User
 
     public static string PasswordSequence()
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        Information.Progressbar(3, 8);
+        // Console.Clear();
+        // Information.DisplayLogo();
+        // Information.Progressbar(3, 8);
 
 
         string password = "";
@@ -559,6 +559,9 @@ public class User
 
         while (true)
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            Information.Progressbar(3, 8);
             Console.WriteLine(@"Vul een wachtwoord in van 8 of meer tekens met:
     - Ten minste 1 numerieke waarde (0-9)
     - Ten minste 1 speciale teken
@@ -574,23 +577,44 @@ public class User
             {
                 Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
                 Console.Write("Bevestig Uw wachtwoord: ");
-                confirmpassword = Console.ReadLine();
+                confirmpassword = CheckPassword(1, password, true);
 
                 // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
                 if (password != confirmpassword)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("De wachtwoorden komen niet overeen, probeer het opnieuw.\n");
+                    Console.WriteLine("De wachtwoorden komen niet overeen.\n");
+                    Console.WriteLine("Druk op enter om je wachtwoord opnieuw in te vullen.");
                     Console.ForegroundColor = ConsoleColor.White;
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        continue;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Je wachtwoord is bevestigd. Een moment alstublieft.");
-                    Thread.Sleep(750);
-                    return password;
+                    Console.WriteLine("Je wachtwoord is bevestigd. Druk op enter om door te gaan.");
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        return password;
+                    }
+                    
                 }
             }
-            // hier missen we nog specifiek laten zien waar user verkeerde input geeft
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nJe wachtwoord voldoet zich niet aan de bovengestelde eisen.\n");
+                Console.WriteLine("Druk op enter om door te gaan.");
+                Console.ForegroundColor = ConsoleColor.White;
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    continue;
+                }
+            }
 
         }
 
@@ -606,9 +630,9 @@ public class User
         return false;
     }
 
-    private static string CheckPassword()
+    private static string CheckPassword(int whitespace = 0, string comparePassword = "", bool checkSamePassword = false)
     {
-        return Input.GetInput(IsValidPassword, 23);
+        return Input.GetPasswordInput(IsValidPassword, 23 + whitespace, comparePassword, checkSamePassword);
     }
 
     private static bool ContainsSpecialChar(string password)
