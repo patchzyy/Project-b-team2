@@ -134,7 +134,7 @@ public class User
         }
         while (!validcountry);
 
-        return country;
+        return char.ToUpper(country[0]) + country.Substring(1);
     }
 
     public static string PassportSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
