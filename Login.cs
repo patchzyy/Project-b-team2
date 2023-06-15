@@ -26,8 +26,16 @@ class Login
             {
                 break;
             }
-            email = AskForEmail("De gegeven email is niet gevonden, probeer het opnieuw.");
+            if (RedirectToRegister())
+            {
+                return null;
+            }
+            else
+            {
+                email = AskForEmail("De gegeven email is niet gevonden, probeer het opnieuw.");
+            }
         }
+        
         bool falsePassword = false;
         while (true)
         {
@@ -39,7 +47,7 @@ class Login
                     Information.DisplayLogo();
                     Information.InputBar();
                     Console.WriteLine("Aanmelden");
-                    Console.WriteLine("Email: ");
+                    Console.Write("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
                     Console.ResetColor();
@@ -233,8 +241,12 @@ class Login
         return Input.GetInput(IsValidEmail, 7);
     }
 
-    private static User GetUser(string email)
+    private static User? GetUser(string email)
     {
+        if (email == null)
+        {
+            return null;
+        }
         connection.Open();
 
         string sql = "select * from [Users] where [email] = @email";
@@ -265,10 +277,10 @@ class Login
                 string passwordValue = reader.GetString(3);
                 string has_admin = reader.GetString(4);
                 string phonenumber = reader.GetString(5);
-                string dateofbirth = reader.GetString(5);
-                string can_book = reader.GetString(5);
-                string passport_number = reader.GetString(6);
-                string origin = reader.GetString(7);
+                string dateofbirth = reader.GetString(6);
+                string can_book = reader.GetString(7);
+                string passport_number = reader.GetString(8);
+                string origin = reader.GetString(9);
 
                 bool roleValue = has_admin == "1" ? true : false;
                 bool bookValue = can_book == "1" ? true : false;
@@ -392,5 +404,64 @@ class Login
             }
         }
         return false;
+    }
+
+    private static bool RedirectToRegister()
+    {
+        var cursorBegin = Console.GetCursorPosition();
+        Console.SetCursorPosition(0, cursorBegin.Top);
+        Console.WriteLine("Wat wilt u nu doen?");
+        List<string> choices = new() { "Terug Naar Menu", "Email Opnieuw Proberen" };
+        int selectedOption = 0;
+        while (true)
+        {
+            // Console.WriteLine();
+            var cursor = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, cursor.Top);
+            if (selectedOption == 0)
+            {
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write(choices[0]);
+                Console.ResetColor();
+                Console.Write("   ");
+                Console.Write(choices[1]);
+            }
+            else if (selectedOption == 1)
+            {
+                Console.Write(choices[0]);
+                Console.Write("   ");
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.Write(choices[1]);
+                Console.ResetColor();
+            }
+            var key = Console.ReadKey(true);
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (selectedOption > 0)
+                    {
+                        selectedOption--;
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    if (selectedOption < choices.Count - 1)
+                    {
+                        selectedOption++;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (selectedOption == 0)
+                    {
+                        Console.WriteLine("\n\n");
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+
+        }
     }
 }
