@@ -326,7 +326,7 @@ public class User
             }
             Console.Write("Vul uw voornaam in: ");
 
-            firstname = CheckFirstName().Trim();
+            firstname = CheckFirstName();
             if (firstname == null) return null;
             if (firstname.Length < 3) errortext = "Ingevoerde voornaam is te kort";
             if (firstname.Length > 30) errortext = "Ingevoerde voornaam is te lang";
@@ -335,7 +335,7 @@ public class User
                 errortext = "Je voornaam mag alleen letters bevatten.";
             }
 
-            if(Regex.IsMatch(firstname, pattern)) isValidInput = true;
+            if(Regex.IsMatch(firstname.Trim(), pattern)) isValidInput = true;
             else{
                 errortext = "De ingevoerde voornaam voeldoet niet aan de eisen\n-voornaam moet tussen de 3 en 30 tekens zijn.\n-voornaam mag geen speciale tekens bevatten.";
             }
@@ -348,7 +348,6 @@ public class User
 
     public static bool IsValidFirstName(string firstname)
     {
-        if(firstname.Replace(" ", "").Length < 3) return false;
         if(!Regex.IsMatch(firstname, @"^[A-Za-z\s'-]{3,30}$"))
             return false;
         return true;
@@ -356,6 +355,7 @@ public class User
 
     public static string CheckFirstName()
     {
+
         return Input.GetInput(IsValidFirstName, 20);
     }
 
@@ -381,7 +381,7 @@ public class User
             }
             errortext = "";
             Console.Write("Vul je achternaam (en tussenvoegsels) in: ");
-            lastname = CheckLastName().Trim();
+            lastname = CheckLastName();
             if (lastname == null) return null;
             if (lastname.Length < 3) errortext = "Je ingevoerde achternaam is te kort om gezien te worden als echt.";
             if (lastname.Length > 30) errortext = "Ingevoerde achternaam is te lang";
@@ -390,7 +390,7 @@ public class User
                 errortext = "Je achternaam mag alleen letters bevatten.";
             }
             
-            if(Regex.IsMatch(lastname, pattern)) isValidInput = true;
+            if(Regex.IsMatch(lastname.Trim(), pattern)) isValidInput = true;
             else{
                 errortext = "De ingevoerde achternaam voeldoet niet aan de eisen\n-Achternaam moet tussen de 3 en 30 tekens zijn.\n-Achternaam mag geen speciale tekens bevatten.";
             }
@@ -540,11 +540,6 @@ public class User
 
     public static string PasswordSequence()
     {
-        // Console.Clear();
-        // Information.DisplayLogo();
-        // Information.Progressbar(3, 8);
-
-
         string password = "";
         string? confirmpassword = "";
 
@@ -570,7 +565,6 @@ public class User
                 Console.Write("Bevestig Uw wachtwoord: ");
                 confirmpassword = CheckPassword(1, password, true);
 
-                // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
                 if (password != confirmpassword)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
