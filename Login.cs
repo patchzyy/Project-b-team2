@@ -410,7 +410,7 @@ class Login
         var cursorBegin = Console.GetCursorPosition();
         Console.SetCursorPosition(0, cursorBegin.Top);
         Console.WriteLine("Wat wilt u nu doen?");
-        List<string> choices = new() { "Terug Naar Menu", "Email Opnieuw Proberen" };
+        List<string> choices = new() { "Terug naar menu", "Email opnieuw proberen" };
         int selectedOption = 0;
         while (true)
         {
