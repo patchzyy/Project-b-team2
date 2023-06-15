@@ -118,9 +118,24 @@ public class Flight
         if (Duration % 60 == 0) FormattedDuration = $"{Duration / 60}u";
         else FormattedDuration = $"{Duration / 60}u en {Duration % 60}m";
 
-        return $"Datum: {Date,-15} - Tijd: {Time,-20} Vlucht duur: {FormattedDuration}";
+        return $"Datum: {Date,-10} - Tijd: {Time,-15} Vlucht duur: {FormattedDuration,-20}";
     }
 
+    public string ToString_admin()
+    {
+        string flightID = GenerateFlightID();
+
+        string origin = $"Van: {Origin}";
+        string destination = $"Naar: {Destination}";
+        string FormattedDuration;
+
+        if (Duration < 60) FormattedDuration = $"{Duration}u";
+        if (Duration % 60 == 0) FormattedDuration = $"{Duration / 60}u";
+        else FormattedDuration = $"{Duration / 60}u en {Duration % 60}m";
+
+        return $"Datum: {Date,-10} - Tijd: {Time,-15} Vlucht duur: {FormattedDuration,-20}" +
+            $"\n Vliegtuig: {Aircraft,-10} Gate: {Gate,-10} VluchtID: {flightID,-10}\n";
+    }
     public string GenerateFlightID()
     {
         // FlightID must start with RA- and end with 6 numbers that are unique and generated with the information used for this flight, and end with 2 letters of the destination

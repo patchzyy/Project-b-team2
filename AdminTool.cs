@@ -31,7 +31,7 @@ public static class AdminTool
     }
 
     //thanks dirk voor dit, hij returned nu de index van de list, en je kunt in princiepe elke soort list gebruiken (bij <t>)
-    public static int AskMultipleOptions<T>(string prompt, List<T> options)
+    public static int AskMultipleOptions<T>(string prompt, List<T> options, bool ToAdminString = false)
     {
         Console.CursorVisible = false;
 
