@@ -61,7 +61,15 @@ public static class Bookings
                 CorrectFlights.Add(flight);
             }
         }
-        Flight SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
+        Flight SelectedFlight;
+        try
+        {
+            SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
+        }
+        catch
+        {
+            return;
+        }
         List<Booking> bookings = Bookings.GetBookings(CurrentUser);
         foreach (Booking booking in bookings)
         {
