@@ -9,7 +9,6 @@ class Login
     {
         Console.Clear();
         Information.DisplayLogo();
-        // Console.WriteLine("Aanmelden\n");
 
         string email = AskForEmail(null);
         if (email == null)
@@ -228,7 +227,8 @@ class Login
         // }
         // return true;
 
-        string regex = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        string regex = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)?$";
+
         if (Regex.IsMatch(email, regex))
         {
             return true;
@@ -343,7 +343,6 @@ class Login
 
     private static string CheckPassword()
     {
-        // return Input.GetPasswordInput(IsValidPassword, 12);
         string? password = "";
         while (true)
         {
@@ -461,7 +460,6 @@ class Login
                         return false;
                     }
             }
-
         }
     }
 }
