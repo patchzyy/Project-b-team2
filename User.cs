@@ -101,31 +101,40 @@ public class User
 
     public static string OriginSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        if (!usedinbook) Information.Progressbar(7, 8);
-        else Information.Progressbar(step, maxstep);
-
 
         bool validcountry = false;
-        string pattern = @"^(?!.*\d)[^\n]{0,58}$";
+        string pattern = @"^[A-Za-z\s-]+$";
         string country;
+        string errortext = "";
 
         do
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            if (!usedinbook) Information.Progressbar(7, 8);
+            else Information.Progressbar(step, maxstep);
+
+            if (errortext != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(errortext + "\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
             Console.WriteLine("Wat is uw land van herkomst?");
             country = Console.ReadLine();
             if (Regex.IsMatch(country, pattern)) validcountry = true;
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Uw invoer is niet goed ingevuld, zorg ervoor dat het \n-Geen nummers heeft\n-Minder dan 58 tekens heeft.\n");
-                Console.ForegroundColor = ConsoleColor.White;
+                if(ContainsSpecialChar(country)){
+                    errortext = "Invoer bevat niet-toegestane karakters.";
+                }
+                errortext = "Invoer is incorrect";
             }
         }
         while (!validcountry);
 
-        return country;
+        return char.ToUpper(country[0]) + country.Substring(1);
     }
 
     public static string PassportSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
@@ -155,7 +164,7 @@ public class User
             else
             {
 
-                errortext = ("Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.\n");
+                errortext = "Zorg ervoor dat het passpoort nummer correct is ingevoerd\nHet bestaat uit 9 getallen en is te vinden op zowel uw id-kaart als passpoort.";
             }
 
         } while (!validnumber);
@@ -190,7 +199,7 @@ public class User
             }
             else
             {
-                errortext = ("Zorg ervoor dat het telefoon nummer correct is ingevoerd\n");
+                errortext = "Zorg ervoor dat het telefoon nummer correct is ingevoerd";
             }
 
         }
@@ -203,29 +212,30 @@ public class User
 
     public static DateOnly DateOfBirthSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        if (!usedinbook) Information.Progressbar(5, 8);
-        else Information.Progressbar(step, maxstep);
-
-        Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
-
         string pattern = @"^(0[1-9]|1\d|2\d|3[01])-(0[1-9]|1[0-2])-(19|20)\d{2}$";
         int day, month, year;
         string raw_date;
         bool isValidInput = false;
+        string errortext = "";
 
         do
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            if (!usedinbook) Information.Progressbar(5, 8);
+            else Information.Progressbar(step, maxstep);
+            if (errortext != null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(errortext + "\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine("Wat is uw geboorte datum\nDD-MM-JJJJ?\n");
             Console.WriteLine("Geboorte datum: ");
             raw_date = Console.ReadLine();
             if (Regex.IsMatch(raw_date, pattern)) isValidInput = true;
-
-            if (!isValidInput)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Datum verkeerd ingevoerd probeer het opniew (DD-MM-JJJJ)\n");
-                Console.ForegroundColor = ConsoleColor.White;
+            else{
+                errortext = "Datum verkeerd ingevoerd probeer het opniew (DD-MM-JJJJ)";
             }
         }
         while (!isValidInput);
@@ -299,51 +309,48 @@ public class User
     public static string FirstNameSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
         string firstname;
-        while (true)
-        {
+        string pattern = @"^[A-Za-z\s'-]{3,30}$";
+        string errortext = "";
+        bool isValidInput = false;
+
+        do{
             Console.Clear();
             Information.DisplayLogo();
             if (!usedinbook) Information.Progressbar(0, 8);
             else Information.Progressbar(step, maxstep);
-
-            Console.Write("\nVul uw voornaam in: ");
-            firstname = CheckFirstName();
-            if (firstname == null)
-            {
-                return null;
-            }
-
-
-            if (string.IsNullOrWhiteSpace(firstname))
+            if (errortext != null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je voornaam kan niet niks zijn.");
+                Console.WriteLine(errortext + "\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                continue;
             }
-            if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
+            Console.Write("Vul uw voornaam in: ");
+
+            firstname = CheckFirstName().Trim();
+            if (firstname == null) return null;
+            if (firstname.Length < 3) errortext = "Ingevoerde voornaam is te kort";
+            if (firstname.Length > 30) errortext = "Ingevoerde voornaam is te lang";
+            if (firstname.Any(char.IsDigit))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je voornaam mag alleen letters bevatten.");
-                Console.ForegroundColor = ConsoleColor.White;
-                continue;
+                errortext = "Je voornaam mag alleen letters bevatten.";
             }
 
-            return char.ToUpper(firstname[0]) + firstname.Substring(1);
+            if(Regex.IsMatch(firstname, pattern)) isValidInput = true;
+            else{
+                errortext = "De ingevoerde voornaam voeldoet niet aan de eisen\n-voornaam moet tussen de 3 en 30 tekens zijn.\n-voornaam mag geen speciale tekens bevatten.";
+            }
+
+
         }
+        while(!isValidInput);
+        return char.ToUpper(firstname[0]) + firstname.Substring(1);
     }
 
     public static bool IsValidFirstName(string firstname)
     {
-        if (string.IsNullOrWhiteSpace(firstname))
-        {
-
+        if(firstname.Replace(" ", "").Length < 3) return false;
+        if(!Regex.IsMatch(firstname, @"^[A-Za-z\s'-]{3,30}$"))
             return false;
-        }
-        if (firstname.Any(char.IsDigit) || ContainsSpecialChar(firstname))
-        {
-            return false;
-        }
         return true;
     }
 
@@ -356,71 +363,55 @@ public class User
     //last name
     public static string LastNameSequence(bool usedinbook = false, int step = 0, int maxstep = 0)
     {
+        string lastname;
+        string pattern = @"^[A-Za-z\s'-]{3,50}$";
+        string errortext = "";
+        bool isValidInput = false;
 
-        while (true)
-        {
+        do{
             Console.Clear();
             Information.DisplayLogo();
             if (!usedinbook) Information.Progressbar(1, 8);
             else Information.Progressbar(step, maxstep);
-
-            Console.Write("Vul je achternaam in: ");
-            string lastname = CheckLastName();
-            if (lastname == null)
+            if (errortext != null)
             {
-                return null;
-            }
-
-            if (string.IsNullOrWhiteSpace(lastname))
-            {
-                Console.Clear();
-                Information.DisplayLogo();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je achternaam kan niet leeg zijn.");
+                Console.WriteLine(errortext + "\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                continue;
+            }
+            errortext = "";
+            Console.Write("Vul je achternaam (en tussenvoegsels) in: ");
+            lastname = CheckLastName().Trim();
+            if (lastname == null) return null;
+            if (lastname.Length < 3) errortext = "Je ingevoerde achternaam is te kort om gezien te worden als echt.";
+            if (lastname.Length > 30) errortext = "Ingevoerde achternaam is te lang";
+            if (lastname.Any(char.IsDigit))
+            {
+                errortext = "Je achternaam mag alleen letters bevatten.";
+            }
+            
+            if(Regex.IsMatch(lastname, pattern)) isValidInput = true;
+            else{
+                errortext = "De ingevoerde achternaam voeldoet niet aan de eisen\n-Achternaam moet tussen de 3 en 30 tekens zijn.\n-Achternaam mag geen speciale tekens bevatten.";
             }
 
-            else if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
-            {
-                Console.Clear();
-                Information.DisplayLogo();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je achternaam kan alleen letters bevatten.");
-                Console.ForegroundColor = ConsoleColor.White;
-                continue;
-            }
-            if (lastname.Length < 3)
-            {
-                Console.Clear();
-                Information.DisplayLogo();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Je ingevoerde achternaam is te kort om gezien te worden als echt.");
-                Console.ForegroundColor = ConsoleColor.White;
-                continue;
-            }
-
-            return char.ToUpper(lastname[0]) + lastname.Substring(1);
         }
+        while(!isValidInput);
+        return char.ToUpper(lastname[0]) + lastname.Substring(1);
 
     }
 
     public static bool IsValidLastName(string lastname)
     {
-        if (string.IsNullOrWhiteSpace(lastname))
-        {
+        if(lastname.Replace(" ", "").Length < 3) return false;
+        if(!Regex.IsMatch(lastname, @"^[A-Za-z\s'-]{3,50}$"))
             return false;
-        }
-        if (lastname.Any(char.IsDigit) || ContainsSpecialChar(lastname))
-        {
-            return false;
-        }
         return true;
     }
 
     public static string CheckLastName()
     {
-        return Input.GetInput(IsValidLastName, 22);
+        return Input.GetInput(IsValidLastName, 42);
     }
 
     public static string EmailSequence()
@@ -549,9 +540,9 @@ public class User
 
     public static string PasswordSequence()
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        Information.Progressbar(3, 8);
+        // Console.Clear();
+        // Information.DisplayLogo();
+        // Information.Progressbar(3, 8);
 
 
         string password = "";
@@ -559,6 +550,9 @@ public class User
 
         while (true)
         {
+            Console.Clear();
+            Information.DisplayLogo();
+            Information.Progressbar(3, 8);
             Console.WriteLine(@"Vul een wachtwoord in van 8 of meer tekens met:
     - Ten minste 1 numerieke waarde (0-9)
     - Ten minste 1 speciale teken
@@ -574,23 +568,44 @@ public class User
             {
                 Console.WriteLine("Wachtwoord voldoet aan de eisen!\n");
                 Console.Write("Bevestig Uw wachtwoord: ");
-                confirmpassword = Console.ReadLine();
+                confirmpassword = CheckPassword(1, password, true);
 
                 // gebruiker optie geven nieuwe ww of opnieuw duplicate proberen
                 if (password != confirmpassword)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("De wachtwoorden komen niet overeen, probeer het opnieuw.\n");
+                    Console.WriteLine("De wachtwoorden komen niet overeen.\n");
+                    Console.WriteLine("Druk op enter om je wachtwoord opnieuw in te vullen.");
                     Console.ForegroundColor = ConsoleColor.White;
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        continue;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Je wachtwoord is bevestigd. Een moment alstublieft.");
-                    Thread.Sleep(750);
-                    return password;
+                    Console.WriteLine("Je wachtwoord is bevestigd. Druk op enter om door te gaan.");
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        return password;
+                    }
+                    
                 }
             }
-            // hier missen we nog specifiek laten zien waar user verkeerde input geeft
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nJe wachtwoord voldoet zich niet aan de bovengestelde eisen.\n");
+                Console.WriteLine("Druk op enter om door te gaan.");
+                Console.ForegroundColor = ConsoleColor.White;
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    continue;
+                }
+            }
 
         }
 
@@ -606,9 +621,9 @@ public class User
         return false;
     }
 
-    private static string CheckPassword()
+    private static string CheckPassword(int whitespace = 0, string comparePassword = "", bool checkSamePassword = false)
     {
-        return Input.GetInput(IsValidPassword, 23);
+        return Input.GetPasswordInput(IsValidPassword, 23 + whitespace, comparePassword, checkSamePassword);
     }
 
     private static bool ContainsSpecialChar(string password)

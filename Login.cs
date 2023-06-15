@@ -37,9 +37,9 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
                     Information.InputBar();
-                    Console.Write("Email: ");
+                    Console.WriteLine("Aanmelden");
+                    Console.WriteLine("Email: ");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(email);
                     Console.ResetColor();
@@ -50,8 +50,8 @@ class Login
                 {
                     Console.Clear();
                     Information.DisplayLogo();
-                    Console.Write("Aanmelden                 ");
                     Information.InputBar();
+                    Console.WriteLine("Aanmelden");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Verkeerde wachtwoord, probeer opnieuw.");
                     Console.ResetColor();
@@ -264,8 +264,20 @@ class Login
                 string emailValue = reader.GetString(2);
                 string passwordValue = reader.GetString(3);
                 string has_admin = reader.GetString(4);
+                string phonenumber = reader.GetString(5);
+                string dateofbirth = reader.GetString(5);
+                string can_book = reader.GetString(5);
+                string passport_number = reader.GetString(6);
+                string origin = reader.GetString(7);
+
                 bool roleValue = has_admin == "1" ? true : false;
+                bool bookValue = can_book == "1" ? true : false;
                 founduser = new(fnameValue, lnameValue, emailValue, passwordValue, roleValue);
+                founduser.Phonenumber = phonenumber;
+                founduser.Date_of_Birth = DateOnly.Parse(dateofbirth);
+                founduser.can_Book = bookValue;
+                founduser.Passport_Number = passport_number;
+                founduser.Origin = origin;
             }
         }
         else

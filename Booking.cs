@@ -133,6 +133,8 @@ public class Booking
         }
     }
 
+
+
     public void RemoveFromDatabase()
     {
         SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
@@ -158,6 +160,16 @@ public class Booking
         Console.WriteLine($"Vlucht: {Flight.GenerateFlightID()}");
         Console.WriteLine($"Gebruiker: {BookingsUser.Email}");
         Console.WriteLine($"Stoel: {Seat.SeatId}");
+        if (Seat.ExtraBeenRuimte)
+        {
+            Console.WriteLine("U heeft extra beenruimte");
+        }
+        if (Seat.IsClubClass)
+            Console.WriteLine("U heeft een club class stoel");
+        if (Seat.IsFrontSeat)
+        {
+            Console.WriteLine("U heeft een stoel aan de voorkant van het vliegtuig");
+        }
         // database connection
         string query = $"SELECT * FROM ExtraUsers WHERE BookingID = {GetBookingID()}";
         SqliteConnection connection = new("Data Source=airline_data.db");
@@ -170,19 +182,24 @@ public class Booking
             string firstName = reader.GetString(1);
             string lastName = reader.GetString(2);
             string seat = reader.GetString(4);
+            Console.WriteLine("\n");
             Console.WriteLine($"Extra gebruiker: {firstName} {lastName}");
             Console.WriteLine($"Stoel van {firstName} {lastName}: {seat}");
+            Seat seat_obj = Seat.seat_from_string(seat, Flight.Aircraft);
+
+            if (seat_obj.ExtraBeenRuimte)
+            {
+                Console.WriteLine("U heeft extra beenruimte");
+            }
+            if (seat_obj.IsClubClass)
+                Console.WriteLine("U heeft een club class stoel");
+            if (seat_obj.IsFrontSeat)
+            {
+                Console.WriteLine("U heeft een stoel aan de voorkant van het vliegtuig");
+            }
         }
-        if (HasBaggage)
-            Console.WriteLine("U heeft bagage");
-        if (HasVIP)
-            Console.WriteLine("U heeft VIP");
-        if (HasEntertainment)
-            Console.WriteLine("U heeft entertainment");
-        if (HasLounge)
-            Console.WriteLine("U heeft lounge-access");
-        if (HasInsurance)
-            Console.WriteLine("U bent verzekerd");
+
+
 
     }
     public static void MakeDatabaseTables()

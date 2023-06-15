@@ -192,12 +192,14 @@ class Menu
 
         else if (selectedOption == "Boeking annuleren")
         {
+            //weet je het zeker?
             booking.RemoveFromDatabase();
             Console.Clear();
             Information.DisplayLogo();
             Console.WriteLine("De Boeking is geannuleerd, druk op een toets om terug te gaan naar het menu.");
             Console.ReadKey();
             _menuStack.Pop();
+
         }
         else if (selectedOption == "Informatie over vlucht")
         {
@@ -245,7 +247,7 @@ class Menu
             if (!_currentUser.can_Book)
             {
                 AddMenu(new[] { "Helaas ben je te jong om te boeken! Je moet minstens 18 jaar oud zijn. Je kunt wel de vluchten bekijken.", "Terug" });
-            }
+             }
             else
             {
                 Bookings.BookingSequence(_currentUser);
