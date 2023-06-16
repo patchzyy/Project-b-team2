@@ -33,7 +33,7 @@ public class User
 
     override public string ToString()
     {
-        return $"email: {Email,-20}\t name: {First_Name} {Last_Name}";
+        return $"email: {Email,-20}\t naam: {First_Name} {Last_Name}";
 
     }
 
@@ -126,7 +126,8 @@ public class User
             if (Regex.IsMatch(country, pattern)) validcountry = true;
             else
             {
-                if(ContainsSpecialChar(country)){
+                if (ContainsSpecialChar(country))
+                {
                     errortext = "Invoer bevat niet-toegestane karakters.";
                 }
                 errortext = "Invoer is incorrect";
@@ -149,7 +150,7 @@ public class User
         {
             Console.Clear();
             Information.DisplayLogo();
-            if(!usedinbook) Information.Progressbar(6, 8);
+            if (!usedinbook) Information.Progressbar(6, 8);
             else Information.Progressbar(step, maxstep);
             if (errortext != null)
             {
@@ -234,7 +235,8 @@ public class User
             Console.WriteLine("Geboorte datum: ");
             raw_date = Console.ReadLine();
             if (Regex.IsMatch(raw_date, pattern)) isValidInput = true;
-            else{
+            else
+            {
                 errortext = "Datum verkeerd ingevoerd probeer het opniew (DD-MM-JJJJ)";
             }
         }
@@ -313,7 +315,8 @@ public class User
         string errortext = "";
         bool isValidInput = false;
 
-        do{
+        do
+        {
             Console.Clear();
             Information.DisplayLogo();
             if (!usedinbook) Information.Progressbar(0, 8);
@@ -335,20 +338,21 @@ public class User
                 errortext = "Je voornaam mag alleen letters bevatten.";
             }
 
-            if(Regex.IsMatch(firstname.Trim(), pattern)) isValidInput = true;
-            else{
+            if (Regex.IsMatch(firstname.Trim(), pattern)) isValidInput = true;
+            else
+            {
                 errortext = "De ingevoerde voornaam voeldoet niet aan de eisen\n-voornaam moet tussen de 3 en 30 tekens zijn.\n-voornaam mag geen speciale tekens bevatten.";
             }
 
 
         }
-        while(!isValidInput);
+        while (!isValidInput);
         return char.ToUpper(firstname[0]) + firstname.Substring(1);
     }
 
     public static bool IsValidFirstName(string firstname)
     {
-        if(!Regex.IsMatch(firstname, @"^[A-Za-z\s'-]{3,30}$"))
+        if (!Regex.IsMatch(firstname, @"^[A-Za-z\s'-]{3,30}$"))
             return false;
         return true;
     }
@@ -368,7 +372,8 @@ public class User
         string errortext = "";
         bool isValidInput = false;
 
-        do{
+        do
+        {
             Console.Clear();
             Information.DisplayLogo();
             if (!usedinbook) Information.Progressbar(1, 8);
@@ -389,22 +394,23 @@ public class User
             {
                 errortext = "Je achternaam mag alleen letters bevatten.";
             }
-            
-            if(Regex.IsMatch(lastname.Trim(), pattern)) isValidInput = true;
-            else{
+
+            if (Regex.IsMatch(lastname.Trim(), pattern)) isValidInput = true;
+            else
+            {
                 errortext = "De ingevoerde achternaam voeldoet niet aan de eisen\n-Achternaam moet tussen de 3 en 30 tekens zijn.\n-Achternaam mag geen speciale tekens bevatten.";
             }
 
         }
-        while(!isValidInput);
+        while (!isValidInput);
         return char.ToUpper(lastname[0]) + lastname.Substring(1);
 
     }
 
     public static bool IsValidLastName(string lastname)
     {
-        if(lastname.Replace(" ", "").Length < 3) return false;
-        if(!Regex.IsMatch(lastname, @"^[A-Za-z\s'-]{3,50}$"))
+        if (lastname.Replace(" ", "").Length < 3) return false;
+        if (!Regex.IsMatch(lastname, @"^[A-Za-z\s'-]{3,50}$"))
             return false;
         return true;
     }
@@ -585,7 +591,7 @@ public class User
                     {
                         return password;
                     }
-                    
+
                 }
             }
             else

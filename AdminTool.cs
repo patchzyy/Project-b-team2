@@ -663,7 +663,7 @@ public static class AdminTool
     public static string RandomDate()
     {
         Random random = new Random();
-        int month = random.Next(7, 9);
+        int month = random.Next(6, 9);
         int maxDays = 30;
 
         if (month == 2)

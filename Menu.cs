@@ -133,7 +133,7 @@ class Menu
             }
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             else
             {
@@ -173,6 +173,7 @@ class Menu
                 Console.Clear();
                 Information.DisplayLogo();
                 Console.WriteLine("U heeft nog geen boekingen gemaakt.");
+                Console.WriteLine("Druk op een toets om terug te gaan.");
                 Console.ReadKey();
             }
             else
@@ -230,7 +231,7 @@ class Menu
             }
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
         }
