@@ -237,42 +237,56 @@ public static class AdminTool
         {
             return;
         }
-        List<string> optionList = new List<string>() { "Duur", "Datum", "Tijd", "Afkomst", "Bestemming", "Vliegtuig", "Gate", "Vlucht annuleren", "Terug" };
+        List<string> optionList = new List<string>() { $"Duur: {selectedFlight.Duration} minuten", $"Datum: {selectedFlight.Date}", $"Tijd: {selectedFlight.Time}", $"Afkomst: {selectedFlight.Origin}",
+        $"Bestemming: {selectedFlight.Destination}", $"Vliegtuig: {selectedFlight.Aircraft}", $"Gate: {selectedFlight.Gate}", $"Vlucht annuleren", "Terug" };
         string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
         Console.WriteLine("Voer de nieuwe waarde in");
-        if (selectedOption == "Duur")
+        if (selectedOption == $"Duur: {selectedFlight.Duration} minuten")
         {
             int duration = DurationSequence();
+            selectedOption = selectedOption.Split(':')[0];
             selectedFlight.UpdateFlightInDatabase(selectedOption, Convert.ToString(duration));
         }
-        else if (selectedOption == "Datum")
+        else if (selectedOption == $"Datum: {selectedFlight.Date}")
         {
             string date = DateSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, date);
         }
-        else if (selectedOption == "Tijd")
+        else if (selectedOption == $"Tijd: {selectedFlight.Time}")
         {
             string time = TimeSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, time);
         }
-        else if (selectedOption == "Afkomst")
+        else if (selectedOption == $"Afkomst: {selectedFlight.Origin}")
         {
             string origin = OriginSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, origin);
         }
-        else if (selectedOption == "Bestemming")
+        else if (selectedOption == $"Bestemming: {selectedFlight.Destination}")
         {
             string destination = DestinationSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, destination);
         }
-        else if (selectedOption == "Vliegtuig")
+        else if (selectedOption == $"Vliegtuig: {selectedFlight.Aircraft}")
         {
             string aircraft = AircraftSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, aircraft);
         }
-        else if (selectedOption == "Gate")
+        else if (selectedOption == $"Gate: {selectedFlight.Gate}")
         {
             string gate = GateSequence();
+            selectedOption = selectedOption.Split(':')[0];
+
             selectedFlight.UpdateFlightInDatabase(selectedOption, gate);
         }
         else if (selectedOption == "Vlucht annuleren")
@@ -285,6 +299,7 @@ public static class AdminTool
             ChangeFlight();
         }
         Console.WriteLine("Gelukt! De aanpassingen aan de vlucht zijn doorgevoerd.");
+        Console.WriteLine("Druk op een toets om terug te gaan naar het vlucht menu.");
         Console.ReadKey();
     }
 
@@ -353,6 +368,7 @@ public static class AdminTool
                 if (number < min || number > max)
                 {
                     Console.WriteLine($"Ongeldige invoer. U kunt alleen maar tussen {min} en {max} kiezen.");
+                    Console.WriteLine("Druk op een toets om het opnieuw te proberen.");
                     Console.ReadKey(true);
                     continue;
                 }
@@ -361,6 +377,7 @@ public static class AdminTool
             catch
             {
                 Console.WriteLine("Ongeldige invoer.");
+                Console.WriteLine("Druk op een toets om het opnieuw te proberen.");
                 Console.ReadKey(true);
                 continue;
             }

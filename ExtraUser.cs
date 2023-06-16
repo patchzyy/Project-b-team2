@@ -60,7 +60,15 @@ public class ExtraUser
     public static ExtraUser AskForInformation(User user, Seat seat, Flight flight)
     {
         string firstName = User.FirstNameSequence(true, 0, 4);
+        if (firstName is null)
+        {
+            return null;
+        }
         string lastName = User.LastNameSequence(true, 1, 4);
+        if (lastName is null)
+        {
+            return null;
+        }
         DateOnly date_of_birth = User.DateOfBirthSequence(true, 2, 4);
         int age = DateOnly.FromDateTime(DateTime.Now).Year - date_of_birth.Year;
         string passportnumber = User.PassportSequence(true, 3, 4);

@@ -219,7 +219,11 @@ public class Flight
         else
         {
             Console.WriteLine("Vlucht informatie:");
-            Console.WriteLine($"Duur: {Duration}");
+            string FormattedDuration;
+            if (Duration < 60) FormattedDuration = $"{Duration}u";
+            if (Duration % 60 == 0) FormattedDuration = $"{Duration / 60}u";
+            else FormattedDuration = $"{Duration / 60}u en {Duration % 60}m";
+            Console.WriteLine($"Duur: {FormattedDuration}");
             Console.WriteLine($"Datum: {Date}");
             Console.WriteLine($"Tijd: {Time}");
             Console.WriteLine($"Afkomst: {Origin}");

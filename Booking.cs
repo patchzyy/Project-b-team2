@@ -168,7 +168,7 @@ public class Booking
             Console.WriteLine("U heeft een club class stoel");
         if (Seat.IsFrontSeat)
         {
-            Console.WriteLine("U heeft een stoel aan de voorkant van het vliegtuig");
+            Console.WriteLine("U heeft een stoel aan de voorkant van uw rij");
         }
         // database connection
         string query = $"SELECT * FROM ExtraUsers WHERE BookingID = {GetBookingID()}";

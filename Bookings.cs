@@ -52,6 +52,7 @@ public static class Bookings
         string Destination;
         try
         {
+            // remove flights from the past
             Destination = FlightStrings[AdminTool.AskMultipleOptions<string>("Selecteer een bestemming", FlightStrings)];
         }
         catch { return; }
@@ -68,7 +69,25 @@ public static class Bookings
         try
         {
             CorrectFlights = CorrectFlights.OrderBy(flight => DateTime.ParseExact(flight.Date, "dd-MM-yyyy", new CultureInfo("nl-NL"))).ToList();
-
+            // remove flights from the past
+            for (int i = 0; i < CorrectFlights.Count; i++)
+            {
+                if (AdminTool.ConvertTimeDate(CorrectFlights[i].Date, CorrectFlights[i].Time) < DateTime.Now)
+                {
+                    CorrectFlights.Remove(CorrectFlights[i]);
+                }
+            }
+            if (CorrectFlights.Count == 0)
+            {
+                Console.Clear();
+                Information.DisplayLogo();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Er zijn geen vluchten beschikbaar.");
+                Console.WriteLine("Klik op een toets om terug te gaan.");
+                Console.ResetColor();
+                Console.ReadKey();
+                return;
+            }
             SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
         }
         catch
@@ -89,8 +108,10 @@ public static class Bookings
                 return;
             }
         }
+        // check if list is not empty
+
         // ask for the amount of users
-        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt U boeken?\n U kunt voor maximaal 10 mensen boeken.");
+        AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt U boeken?\nU kunt voor maximaal 10 mensen boeken.");
 
         if (SelectedFlight.Aircraft == "Boeing 737")
         {
@@ -143,6 +164,12 @@ public static class Bookings
             Console.ReadKey();
             Seat ExtraSeat = seats[i + 1];
             ExtraUser extra = ExtraUser.AskForInformation(CurrentUser, ExtraSeat, SelectedFlight);
+            if (extra == null)
+            {
+                currentbooking.RemoveFromDatabase();
+                Bookings.BookingSequence(CurrentUser);
+                return;
+            };
             ExtraUsers.Add(extra);
         }
         // nu hebben we alle informatie die we nodig hebben om een booking te maken
