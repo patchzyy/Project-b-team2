@@ -7,7 +7,7 @@ class Program
         Console.ResetColor();
         Information.DisplayLogo();
         Thread.Sleep(2000);
-        Menu menu = new Menu(new[] { "Login", "Registreren", "Meer Informatie", "Fast", "Fast Admin" });
+        Menu menu = new Menu(new[] { "Login", "Registreren", "Meer Informatie" });
         menu.Run();
         //DrawBoeing737UI.SelectBoeing737(new Boeing737());
         //DrawBoeing787UI.SelectBoeing787(new Boeing787());

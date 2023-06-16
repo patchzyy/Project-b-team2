@@ -457,19 +457,7 @@ public static class AdminTool
 
     public static void AddUser()
     {
-        Console.Clear();
-        Information.DisplayLogo();
-        Console.WriteLine("Voeg een gebruiker toe.");
-        Console.WriteLine("dit is een tijdelijke implementatie, er word nog niks gechecked!");
-        Console.WriteLine("Vul de details in.");
-        string email = AskStringInformation("Email", 3);
-        string password = AskStringInformation("Wachtwoord", 3);
-        string first_name = AskStringInformation("Voornaam", 3);
-        string last_name = AskStringInformation("Achternaam", 3);
-        List<string> options = new List<string> { "true", "false" };
-        bool role = Convert.ToBoolean(options[AskMultipleOptions("admin?", options)]);
-        User user = new User(first_name, last_name, email, password, role);
-        user.AddToDatabase();
+        User.Register();
     }
     public static List<User> GetAllUsers()
     {
@@ -545,6 +533,7 @@ public static class AdminTool
         try
         {
             selectedUser = users[AskMultipleOptions<User>("Selecteer een gebruiker om aan te passen", users)];
+            if (selectedUser is null) return;
         }
         catch
         {
@@ -556,26 +545,32 @@ public static class AdminTool
         if (selectedOption == "Voornaam")
         {
             string first_name = User.FirstNameSequence();
+            if (first_name == null) ChangeUser();
+
             selectedUser.First_Name = first_name;
         }
         else if (selectedOption == "Achternaam")
         {
             string last_name = User.LastNameSequence();
+            if (last_name == null) ChangeUser();
             selectedUser.Last_Name = last_name;
         }
         else if (selectedOption == "Email")
         {
             string email = User.EmailSequence();
+            if (email == null) ChangeUser();
             selectedUser.Email = email;
         }
         else if (selectedOption == "Wachtwoord")
         {
             string password = User.PasswordSequence();
+            if (password == null) ChangeUser();
             selectedUser.Password = password;
         }
         else if (selectedOption == "Admin rechten")
         {
             int? has_admin = HasAdminSequence(selectedUser.has_Admin);
+            if (has_admin == null) ChangeUser();
             selectedUser.has_Admin = true ? has_admin == 1 : false;
         }
         else if (selectedOption == "Terug")

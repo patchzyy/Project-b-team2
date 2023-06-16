@@ -213,7 +213,7 @@ public static class Bookings
         }
         Console.Clear();
         Information.DisplayLogo();
-        Console.WriteLine($"De totale prijs is: {totalprice}");
+        Console.WriteLine($"De totale prijs is: {totalprice} EUR");
         Console.WriteLine("Druk op een knop om verder te gaan.");
         Console.ReadKey();
         List<string> options = new List<string>() { "Ja", "Nee" };

@@ -140,32 +140,32 @@ class Menu
                 AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
-        else if (selectedOption == "Fast")
-        {
-            _currentUser = new("Issam", "benmassoud", "issam@gmail.com", "Wachtwoord123!");
-            _currentUser.can_Book = true;
-            if (_currentUser.has_Admin)
-            {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
-            }
-            else
-            {
-                AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
-            }
-        }
-        else if (selectedOption == "Fast Admin")
-        {
-            _currentUser = new("Barrie", "Batsbak", "barriebatsbak@pruters.nl", "Gerrie123!", true);
-            _currentUser.can_Book = true;
-            if (_currentUser.has_Admin)
-            {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
-            }
-            else
-            {
-                AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
-            }
-        }
+        // else if (selectedOption == "Fast")
+        // {
+        //     _currentUser = new("Issam", "benmassoud", "issam@gmail.com", "Wachtwoord123!");
+        //     _currentUser.can_Book = true;
+        //     if (_currentUser.has_Admin)
+        //     {
+        //         AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Uitloggen" });
+        //     }
+        //     else
+        //     {
+        //         AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
+        //     }
+        // }
+        // else if (selectedOption == "Fast Admin")
+        // {
+        //     _currentUser = new("Barrie", "Batsbak", "barriebatsbak@pruters.nl", "Gerrie123!", true);
+        //     _currentUser.can_Book = true;
+        //     if (_currentUser.has_Admin)
+        //     {
+        //         AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
+        //     }
+        //     else
+        //     {
+        //         AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
+        //     }
+        // }
         else if (selectedOption == "Boekingen bekijken")
         {
             if (Bookings.GetBookings(_currentUser).Count == 0)
@@ -304,13 +304,13 @@ class Menu
 
         else if (selectedOption == "Vlucht Toevoegen")
         {
-            AddMenu(new[] { "Handmatig Toevoegen", "Automatish Genereren", "Terug" });
+            AddMenu(new[] { "Handmatig Toevoegen", "Automatisch Genereren", "Terug" });
         }
         else if (selectedOption == "Handmatig Toevoegen")
         {
             AdminTool.AddFlight();
         }
-        else if (selectedOption == "Automatish Genereren")
+        else if (selectedOption == "Automatisch Genereren")
         {
             AddMenu(new[] { "Genereer Aankomende Vluchten", "Genereer Vertrekkende Vluchten", "Terug" });
         }
@@ -325,14 +325,14 @@ class Menu
         }
         else if (selectedOption == "Vlucht Verwijderen")
         {
-            AddMenu(new[] { "Handmatig Verwijderen", "Alle Vluchten Automatish Verwijderen", "Terug" });
+            AddMenu(new[] { "Handmatig Verwijderen", "Alle Vluchten Automatisch Verwijderen", "Terug" });
         }
 
         else if (selectedOption == "Handmatig Verwijderen")
         {
             AdminTool.RemoveFlight();
         }
-        else if (selectedOption == "Alle Vluchten Automatish Verwijderen")
+        else if (selectedOption == "Alle Vluchten Automatisch Verwijderen")
         {
             AdminTool.RemoveAllFlights();
         }

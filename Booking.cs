@@ -154,12 +154,14 @@ public class Booking
 
     public void ShowInformation()
     {
+        double totalmoney;
         Console.Clear();
         Information.DisplayLogo();
         Console.WriteLine($"Boeking Informatie");
         Console.WriteLine($"Vlucht: {Flight.GenerateFlightID()}");
         Console.WriteLine($"Gebruiker: {BookingsUser.First_Name} {BookingsUser.Last_Name}");
         Console.WriteLine($"Stoel: {Seat.SeatId}");
+        totalmoney = Seat.GetTotalPrice(Flight);
         if (Seat.ExtraBeenRuimte)
         {
             Console.WriteLine("U heeft extra beenruimte");
@@ -177,6 +179,8 @@ public class Booking
         SqliteCommand DatabaseConnection = new(query, connection);
         DatabaseConnection.ExecuteNonQuery();
         SqliteDataReader reader = DatabaseConnection.ExecuteReader();
+
+
         while (reader.Read())
         {
             string firstName = reader.GetString(1);
@@ -197,7 +201,10 @@ public class Booking
             {
                 Console.WriteLine("U heeft een stoel aan de voorkant van het vliegtuig");
             }
+            totalmoney += seat_obj.GetTotalPrice(Flight);
         }
+        connection.Close();
+        Console.WriteLine($"Totale prijs: {totalmoney} EUR");
 
 
 
