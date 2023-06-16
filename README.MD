@@ -3,7 +3,7 @@ DOCUMENTATIE Rotterdam Airlines
 inlog gegevens admin:
 
 email:      admin@rotterdamairlines.nl
-Wachtwoord: adminzijnisfijn123
+Wachtwoord: adminzijnisfijn123!
 
 
 De Rotterdam Airlines Reserveringsconsole is een applicatie die is gemaakt om gebruikers in staat te stellen om vluchten met stoelen te reserveren en boekingen te maken.
