@@ -19,27 +19,6 @@ using System.Globalization;
 
 public static class Flights
 {
-    // public static void SetDailyFlightSchedule()
-    // {
-    //     SqliteConnection connection = new("Data Source=airline_data.db");
-    //     connection.Open();
-
-    //     List<string> sqlQueries = new List<string>()
-    //     {
-    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('07:00', 'Rotterdam', 'Londen', 'Airbus 330', 'Inactief', 'G6')",
-    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('20:00', 'Rotterdam', 'Milaan', 'Boeing 737', 'Inactief', 'C3')",
-    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Berlijn', 'Rotterdam', 'Airbus 330', 'Inactief', 'E5')",
-    //         "INSERT INTO Flights (time, origin, destination, aircraft, state, gate) VALUES ('08:00', 'Budapest', 'Rotterdam', 'Boeing 787', 'Inactief', 'E5')",
-    //     };
-
-    //     foreach (string sqlQuery in sqlQueries)
-    //     {
-    //         SqliteCommand command = new SqliteCommand(sqlQuery, connection);
-    //         command.ExecuteNonQuery();
-    //     }
-    //     connection.Close();
-    // }
-
     public static void GenerateDepartingFlightScedule(int amount)
     {
         List<Flight> flightlist = new List<Flight>();
@@ -53,6 +32,10 @@ public static class Flights
             Thread.Sleep(10);
             flightlist.Add(flight);
         }
+        // remove duplicate flights
+        flightlist = flightlist.Distinct().ToList();
+        //order flights by date
+        flightlist = flightlist.OrderBy(flight => flight.Date).ToList();
 
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
@@ -94,6 +77,10 @@ public static class Flights
             flightlist.Add(flight);
         }
 
+        // remove duplicate flights
+        flightlist = flightlist.Distinct().ToList();
+        //order flights by date
+        flightlist = flightlist.OrderBy(flight => flight.Date).ToList();
         // ask the admin if they want to check the flights or just commit them to the database
         ShowWithPages(flightlist);
         Console.WriteLine("Wilt u deze vluchten toevoegen aan de database? (ja/nee)");
@@ -142,6 +129,7 @@ public static class Flights
     {
         Console.Clear();
         Information.DisplayLogo();
+        Console.WriteLine($"Vluchten die vandaag {DateTime.Now.ToString("dd-MM-yyyy").Split()[0]} aankomen/vertrekken:\n");
         Flights.DisplayArrivingFlights();
         Console.WriteLine("");
         Flights.DisplayDepartingFlights();

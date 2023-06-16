@@ -1,4 +1,7 @@
 using Microsoft.Data.Sqlite;
+using System.Linq;
+using System.Globalization;
+
 public static class Bookings
 {
     public static void BookingSequence(User CurrentUser)
@@ -64,6 +67,8 @@ public static class Bookings
         Flight SelectedFlight;
         try
         {
+            CorrectFlights = CorrectFlights.OrderBy(flight => DateTime.ParseExact(flight.Date, "dd-MM-yyyy", new CultureInfo("nl-NL"))).ToList();
+
             SelectedFlight = CorrectFlights[AdminTool.AskMultipleOptions<Flight>("Selecteer een vlucht", CorrectFlights)];
         }
         catch

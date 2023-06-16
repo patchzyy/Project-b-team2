@@ -133,11 +133,11 @@ class Menu
             }
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
         else if (selectedOption == "Fast")
@@ -150,7 +150,7 @@ class Menu
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
         else if (selectedOption == "Fast Admin")
@@ -159,11 +159,11 @@ class Menu
             _currentUser.can_Book = true;
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
             else
             {
-                AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
         }
         else if (selectedOption == "Boekingen bekijken")
@@ -218,14 +218,14 @@ class Menu
             if (_currentUser == null)
             {
                 Console.ResetColor();
-                AddMenu(new[] { "Login", "Registreren", "Meer Informatie", "Fast", "Fast Admin" });
+                AddMenu(new[] { "Login", "Registreren", "Meer Informatie" });
                 return;
             }
             if (_currentUser.has_Admin)
             {
-                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Boeken", "Boekingen bekijken", "Uitloggen" });
+                AddMenu(new[] { "Vluchten bekijken", "Admin Menu", "Test vliegtuig selectie", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
             }
-            AddMenu(new[] { "Vluchten bekijken", "Boeken", "Boekingen bekijken", "Uitloggen" });
+            AddMenu(new[] { "Vluchten bekijken", "Vlucht Boeken", "Boekingen bekijken", "Uitloggen" });
         }
         else if (selectedOption == "Meer Informatie")
         {
@@ -235,19 +235,15 @@ class Menu
         {
             Flights.CheckFlights();
         }
-        else if (selectedOption == "Boeken")
-        {
-            AddMenu(new[] { "Vlucht boeken", "Terug" });
-        }
         else if (selectedOption == "Vluchten lijst bekijken")
         {
         }
-        else if (selectedOption == "Vlucht boeken")
+        else if (selectedOption == "Vlucht Boeken")
         {
             if (!_currentUser.can_Book)
             {
                 AddMenu(new[] { "Helaas ben je te jong om te boeken! Je moet minstens 18 jaar oud zijn. Je kunt wel de vluchten bekijken.", "Terug" });
-             }
+            }
             else
             {
                 Bookings.BookingSequence(_currentUser);
@@ -299,11 +295,11 @@ class Menu
         }
         else if (selectedOption == "Beheer Vluchten")
         {
-            AddMenu(new[] { "Vlucht Toevoegen", "Vlucht verwijderen", "Vlucht aanpassen", "Terug" });
+            AddMenu(new[] { "Vlucht Toevoegen", "Vlucht Verwijderen", "Vlucht Aanpassen", "Terug" });
         }
         else if (selectedOption == "Beheer Gebruikers")
         {
-            AddMenu(new[] { "Gebruiker Toevoegen", "Gebruiker Verwijderen", "Gebruiker aanpassen", "Terug" });
+            AddMenu(new[] { "Gebruiker Toevoegen", "Gebruiker Verwijderen", "Gebruiker Aanpassen", "Terug" });
         }
 
         else if (selectedOption == "Vlucht Toevoegen")
@@ -327,7 +323,7 @@ class Menu
         {
             AdminTool.GenerateDepartingFlights();
         }
-        else if (selectedOption == "Vlucht verwijderen")
+        else if (selectedOption == "Vlucht Verwijderen")
         {
             AddMenu(new[] { "Handmatig Verwijderen", "Alle Vluchten Automatish Verwijderen", "Terug" });
         }
@@ -340,7 +336,7 @@ class Menu
         {
             AdminTool.RemoveAllFlights();
         }
-        else if (selectedOption == "Vlucht aanpassen")
+        else if (selectedOption == "Vlucht Aanpassen")
         {
             AdminTool.ChangeFlight();
         }
@@ -352,7 +348,7 @@ class Menu
         {
             AdminTool.RemoveUser();
         }
-        else if (selectedOption == "Gebruiker aanpassen")
+        else if (selectedOption == "Gebruiker Aanpassen")
         {
             AdminTool.ChangeUser();
         }

@@ -34,7 +34,7 @@ class Login
                 email = AskForEmail("De gegeven email is niet gevonden, probeer het opnieuw.");
             }
         }
-        
+
         bool falsePassword = false;
         while (true)
         {
@@ -295,6 +295,9 @@ class Login
         else
         {
             Console.ForegroundColor = ConsoleColor.Red;
+            Console.Clear();
+            Information.DisplayLogo();
+            Information.InputBar();
             Console.WriteLine("De email is niet gevonden, probeer het opnieuw.\n");
             Console.ForegroundColor = ConsoleColor.White;
             return null;

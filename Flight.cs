@@ -118,7 +118,7 @@ public class Flight
         if (Duration % 60 == 0) FormattedDuration = $"{Duration / 60}u";
         else FormattedDuration = $"{Duration / 60}u en {Duration % 60}m";
 
-        return $"Datum: {Date,-10} - Tijd: {Time,-15} Vlucht duur: {FormattedDuration,-20}";
+        return $"Datum: {Date,-10} - Tijd: {Time,-15} Vlucht duur: {FormattedDuration,-10} VluchtID: {flightID,-10}";
     }
 
     public string ToString_admin()

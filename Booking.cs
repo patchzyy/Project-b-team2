@@ -158,7 +158,7 @@ public class Booking
         Information.DisplayLogo();
         Console.WriteLine($"Boeking Informatie");
         Console.WriteLine($"Vlucht: {Flight.GenerateFlightID()}");
-        Console.WriteLine($"Gebruiker: {BookingsUser.Email}");
+        Console.WriteLine($"Gebruiker: {BookingsUser.First_Name} {BookingsUser.Last_Name}");
         Console.WriteLine($"Stoel: {Seat.SeatId}");
         if (Seat.ExtraBeenRuimte)
         {
