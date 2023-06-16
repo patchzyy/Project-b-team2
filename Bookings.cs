@@ -109,6 +109,17 @@ public static class Bookings
             }
         }
         // check if list is not empty
+        DateTime FlightDate = DateTime.ParseExact(SelectedFlight.Date, "dd-MM-yyyy", new CultureInfo("nl-NL"));
+        if (FlightDate < DateTime.Now)
+        {
+            Console.Clear();
+            Information.DisplayLogo();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Deze vlucht is al geweest. Klik op een toets om terug te gaan.");
+            Console.ResetColor();
+            Console.ReadKey();
+            return;
+        }
 
         // ask for the amount of users
         AmountOfBookings = AdminTool.AskForInt(1, 10, "Voor hoeveel mensen wilt U boeken?\nU kunt voor maximaal 10 mensen boeken.");
