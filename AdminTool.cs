@@ -504,10 +504,22 @@ public static class AdminTool
         Console.Clear();
         Information.DisplayLogo();
         List<string> options = new List<string> { "Ja", "Nee" };
-        if (options[AskMultipleOptions($"Weet je zeker dat je {email} wilt verwijderen?", options)] == "Nee")
+        try
+        {
+            if (options[AskMultipleOptions($"Weet je zeker dat je {email} wilt verwijderen?", options)] == "Nee")
+            {
+                return;
+            }
+        }
+        catch
         {
             return;
         }
+        // if (options[AskMultipleOptions($"Weet je zeker dat je {email} wilt verwijderen?", options)] == "Nee")
+        // {
+        //     return;
+        // }
+
         // look thought the database and remove the matching email
         SqliteConnection connection = new SqliteConnection("Data Source=airline_data.db");
         connection.Open();
@@ -540,7 +552,17 @@ public static class AdminTool
             return;
         }
         List<string> optionList = new List<string>() { "Voornaam", "Achternaam", "Email", "Wachtwoord", "Admin rechten", "Terug" };
-        string selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+
+        string selectedOption;
+        try
+        {
+            selectedOption = optionList[AskMultipleOptions<string>("Selecteer het onderdeel dat u wilt aanpassen", optionList)];
+
+        }
+        catch
+        {
+            return;
+        }
         Console.WriteLine("Voer de nieuwe waarde in");
         if (selectedOption == "Voornaam")
         {

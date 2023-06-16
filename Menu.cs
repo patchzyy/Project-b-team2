@@ -177,16 +177,23 @@ class Menu
             }
             else
             {
-                booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar U de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
-                List<Booking> bookings = booking.GetExtraBookings();
-                if (booking.Flight.Time == "--:--")
+                try
                 {
-                    booking.Flight.CancelledMessage();
+                    booking = Bookings.GetBookings(_currentUser)[AdminTool.AskMultipleOptions<Booking>("Selecteer een booking waar U de informatie van wilt zien.", Bookings.GetBookings(_currentUser))];
+                    List<Booking> bookings = booking.GetExtraBookings();
+                    if (booking.Flight.Time == "--:--")
+                    {
+                        booking.Flight.CancelledMessage();
+                    }
+                    else
+                    {
+                        AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Boeking annuleren", "Terug" });
+                    }
                 }
-                else
+                catch
                 {
-                    AddMenu(new[] { $"Informatie over vlucht", "Informatie over boeking", "Boeking annuleren", "Terug" });
                 }
+
             }
         }
 
